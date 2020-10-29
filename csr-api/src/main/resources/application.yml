@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: csr-api
+  profiles:
+    active: dev
