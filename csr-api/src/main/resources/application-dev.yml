@@ -14,7 +14,7 @@ spring:
     username: root
     password: Gihtg@123
     # 监控统计拦截的filters
-    filters: stat,wall,log4j
+    filters: stat,wall,log4j2
     # 配置初始化大小/最小/最大
     initialSize: 5
     minIdle: 5
@@ -47,3 +47,13 @@ spring:
 mybatis-plus:
   configuration:
     cache-enabled: false
+
+logging:
+  config: classpath:log4j2.xml
+  level:
+    org:
+      springframework:
+        security: debug
+    com:
+      project:
+        csr: debug

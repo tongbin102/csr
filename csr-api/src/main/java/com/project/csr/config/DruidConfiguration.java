@@ -24,7 +24,6 @@ import java.sql.SQLException;
  * @date: 2020/10/29 14:03
  **/
 @Configuration
-// 该注解的参数对应的类必须存在，否则不解析该注解修饰的配置类
 @ConditionalOnClass(DruidDataSource.class)
 @EnableConfigurationProperties(DruidDataSourceProperties.class)
 public class DruidConfiguration {
@@ -59,7 +58,7 @@ public class DruidConfiguration {
         }
         try {
             // 开启Druid的监控统计功能，mergeStat代替stat表示sql合并,wall表示防御SQL注入攻击
-            dataSource.setFilters("mergeStat,wall,log4j");
+            dataSource.setFilters(druidDataSourceProperties.getFilters());
         } catch (SQLException e) {
             e.printStackTrace();
         }
