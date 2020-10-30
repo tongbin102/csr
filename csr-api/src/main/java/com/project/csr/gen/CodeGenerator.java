@@ -20,7 +20,6 @@ import java.util.List;
  **/
 public class CodeGenerator {
 
-
     private static final String AUTHOR = "bin.tong";
 
     /**
@@ -30,7 +29,13 @@ public class CodeGenerator {
     public static final String BASE_PACKAGE = "com.project";
     public static final String MODULE_PACAKAGE = "csr";
     public static final String TABLE_PREFIX = "";
-    public String[] table_names = {"test"};
+    public String[] table_names = {
+            "channel",
+            "element", "element_score", "element_score_channel",
+            "factor", "factor_channel_question", "question_assistance", "question_monitor", "question_survey", "rank",
+            "scope", "score_channel", "score_factor", "score_question", "store",
+            "role", "user"
+    };
 
     private static final String JDBC_URL = "jdbc:mysql://10.55.3.4:3306/csr?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8";
     private static final String JDBC_USERNAME = "root";

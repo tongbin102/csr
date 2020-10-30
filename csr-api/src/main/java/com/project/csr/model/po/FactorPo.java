@@ -11,20 +11,21 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ * 因子表
  * </p>
  *
  * @author bin.tong
- * @since 2020-10-29
+ * @since 2020-10-30
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("test")
-@ApiModel(value="TestPo对象", description="")
-public class TestPo extends BasePo {
+@TableName("factor")
+@ApiModel(value="FactorPo对象", description="因子表")
+public class FactorPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "因子名称")
     private String name;
 
 
