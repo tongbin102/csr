@@ -57,3 +57,10 @@ logging:
     com:
       project:
         csr: debug
+
+jwt:
+  security:
+    path: /auth
+    header: Authorization
+    secret: secret
+    expiration: 604800

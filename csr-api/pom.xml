@@ -61,16 +61,18 @@
             <optional>true</optional>
         </dependency>
 
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-security</artifactId>-->
-        <!--</dependency>-->
-        <!-- jwt依赖: https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
-        <!--<dependency>-->
-        <!--    <groupId>io.jsonwebtoken</groupId>-->
-        <!--    <artifactId>jjwt</artifactId>-->
-        <!--    <version>${jjwt.version}</version>-->
-        <!--</dependency>-->
+        <!--spring security-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--jwt依赖: https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
 
         <!-- mybatis-plus -->
         <dependency>
