@@ -48,10 +48,11 @@ public class JwtAuthenticationApi {
     }
 
     @GetMapping("/token")
-    public JwtUserDetails getAuthenticatedUser(HttpServletRequest request){
+    public BaseResponse<?> getAuthenticatedUser(HttpServletRequest request){
         String token= request.getHeader(jwtProperties.getTokenHeader()).substring(7);
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        return (JwtUserDetails)userDetailsService.loadUserByUsername(username);
+        JwtUserDetails userDetails =  (JwtUserDetails)userDetailsService.loadUserByUsername(username);
+        return BaseResponse.success(userDetails);
     }
 
     private void authenticate(String username, String password)throws Exception{
