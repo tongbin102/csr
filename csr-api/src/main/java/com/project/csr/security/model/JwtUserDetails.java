@@ -15,7 +15,7 @@ import java.util.Collection;
  * @date: 2020/10/30 17:25
  **/
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class JwtUserDetails extends UserPo implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
@@ -23,6 +23,9 @@ public class JwtUserDetails extends UserPo implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+    public JwtUserDetails(){
     }
 
     public JwtUserDetails(String userName, Collection<? extends GrantedAuthority> authorities) {

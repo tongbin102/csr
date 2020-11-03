@@ -36,4 +36,12 @@ public interface UserService extends IService<UserPo> {
      * @since 2020-10-30
      */
     boolean prohibitById(String id);
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param username
+     * @return
+     */
+    UserPo findByUsername(String username);
 }

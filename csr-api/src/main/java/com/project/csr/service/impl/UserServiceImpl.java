@@ -44,5 +44,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements 
         wrapper.eq(UserPo::getId, id);
         return userMapper.update(po, wrapper) >= 1;
     }
+
+    @Override
+    public UserPo findByUsername(String username) {
+        LambdaQueryWrapper<UserPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserPo::getUsername, username);
+        return userMapper.selectOne(wrapper);
+    }
+
 }
 
