@@ -147,9 +147,9 @@ public class BaseResponse<T> implements Serializable {
         return new BaseResponse(ResCodeEnum.RESCODE_SUCCESS, body);
     }
 
-    // public static BaseResponse fail(Object body) {
-    //     return new BaseResponse(ResCodeEnum.RESCODE_OTHER_ERROR, body);
-    // }
+    public static BaseResponse fail(Object body) {
+        return new BaseResponse(ResCodeEnum.RESCODE_BAD_REQUEST, body);
+    }
 
     public String getRequestUrl() {
         return requestUrl;

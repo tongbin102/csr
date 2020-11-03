@@ -16,9 +16,9 @@ public enum ResCodeEnum {
     RESCODE_SUCCESS(HttpServletResponse.SC_OK, "成功"),
 
     /**
-     * "400","无相关权限"
+     * "400","请求返回错误"
      */
-    RESCODE_BAD_REQUEST(HttpServletResponse.SC_BAD_REQUEST, "报文不可解析"),
+    RESCODE_BAD_REQUEST(HttpServletResponse.SC_BAD_REQUEST, "请求返回错误"),
 
     /**
      * "401","无相关权限"
@@ -53,8 +53,8 @@ public enum ResCodeEnum {
     /**
      * 失败
      */
-    // public static Integer FAIL = ResCodeEnum.RESCODE_OTHER_ERROR.getStatusCode();
-    // public static String FAIL_NAME = ResCodeEnum.RESCODE_OTHER_ERROR.getStatusName();
+    public static Integer FAIL = ResCodeEnum.RESCODE_BAD_REQUEST.getStatusCode();
+    public static String FAIL_NAME = ResCodeEnum.RESCODE_BAD_REQUEST.getStatusName();
 
 
     /**

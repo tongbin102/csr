@@ -3,6 +3,8 @@ package com.project.csr.security.config;
 import com.project.csr.properties.JwtProperties;
 import com.project.csr.security.entrypoint.JwtAuthenticationEntryPoint;
 import com.project.csr.security.filter.JwtAuthorizationTokenFilter;
+import com.project.csr.security.handle.JwtAuthenticationFailureHandler;
+import com.project.csr.security.handle.JwtAuthenticationSuccessHandler;
 import com.project.csr.security.service.impl.JwtUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 /**
  * @author: bin.tong
@@ -28,7 +31,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -39,6 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthorizationTokenFilter jwtAuthorizationTokenFilter;
+
+    @Autowired
+    private JwtAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private JwtAuthenticationFailureHandler authenticationFailureHandler;
+
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired
     private JwtProperties jwtProperties;
@@ -55,25 +67,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("authenticationPath: " + jwtProperties.getPath());
         http
                 .csrf().disable()                      // 禁用 Spring Security 自带的跨域处理
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
                 .antMatchers(jwtProperties.getPath()).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
                 .anyRequest().authenticated()       // 剩下所有的验证都需要验证.and()
                 .and()
-                .addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler)
+                .permitAll();
 
         // 定制我们自己的 session 策略：调整为让 Spring Security 不创建和使用 session
         // http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         // disable page caching
-        http
-                .headers()
-                .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
-                .cacheControl();
+        http.headers().frameOptions().sameOrigin().cacheControl();
+        http.addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
