@@ -16,6 +16,7 @@
                 <result column="create_time" property="createTime"/>
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
+                    <result column="code" property="code"/>
                     <result column="name" property="name"/>
         </resultMap>
 
@@ -27,7 +28,7 @@
                 create_time,
                 updater,
                 update_time,
-            name
+            code, name
         </sql>
 
 </mapper>

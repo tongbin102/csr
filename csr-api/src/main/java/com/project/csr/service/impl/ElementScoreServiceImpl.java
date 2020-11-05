@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-10-30
+ * @since 2020-11-05
  */
 @Service
 public class ElementScoreServiceImpl extends ServiceImpl<ElementScoreMapper, ElementScorePo> implements ElementScoreService {

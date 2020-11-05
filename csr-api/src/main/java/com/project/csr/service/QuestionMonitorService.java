@@ -13,7 +13,7 @@ import com.project.csr.model.vo.QuestionMonitorVo;
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-10-30
+ * @since 2020-11-05
  */
 public interface QuestionMonitorService extends IService<QuestionMonitorPo> {
 
@@ -23,7 +23,7 @@ public interface QuestionMonitorService extends IService<QuestionMonitorPo> {
      * @param questionMonitorVo 查询条件
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.QuestionMonitorPo>
      * @author bin.tong
-     * @since 2020-10-30
+     * @since 2020-11-05
      */
     IPage<QuestionMonitorPo> findListByPage(QuestionMonitorVo questionMonitorVo);
 
@@ -33,7 +33,7 @@ public interface QuestionMonitorService extends IService<QuestionMonitorPo> {
      * @param id 主键id
      * @return boolean
      * @author bin.tong
-     * @since 2020-10-30
+     * @since 2020-11-05
      */
     boolean prohibitById(String id);
 }

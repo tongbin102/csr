@@ -11,6 +11,11 @@
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="com.project.csr.model.po.StorePo">
                 <result column="id" property="id"/>
+                <result column="valid_ind" property="validInd"/>
+                <result column="creator" property="creator"/>
+                <result column="create_time" property="createTime"/>
+                <result column="updater" property="updater"/>
+                <result column="update_time" property="updateTime"/>
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
                     <result column="superior" property="superior"/>
@@ -23,6 +28,11 @@
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
                 id,
+                valid_ind,
+                creator,
+                create_time,
+                updater,
+                update_time,
             code, name, superior, scale, region, province, city
         </sql>
 

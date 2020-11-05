@@ -13,7 +13,7 @@ import com.project.csr.model.vo.ScopeVo;
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-10-30
+ * @since 2020-11-05
  */
 public interface ScopeService extends IService<ScopePo> {
 
@@ -23,7 +23,7 @@ public interface ScopeService extends IService<ScopePo> {
      * @param scopeVo 查询条件
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.ScopePo>
      * @author bin.tong
-     * @since 2020-10-30
+     * @since 2020-11-05
      */
     IPage<ScopePo> findListByPage(ScopeVo scopeVo);
 
@@ -33,7 +33,7 @@ public interface ScopeService extends IService<ScopePo> {
      * @param id 主键id
      * @return boolean
      * @author bin.tong
-     * @since 2020-10-30
+     * @since 2020-11-05
      */
     boolean prohibitById(String id);
 }

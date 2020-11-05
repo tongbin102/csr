@@ -17,7 +17,7 @@
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
                     <result column="channel_id" property="channelId"/>
-                    <result column="code" property="code"/>
+                    <result column="series_no" property="seriesNo"/>
                     <result column="desc" property="desc"/>
                     <result column="answer1" property="answer1"/>
                     <result column="answer2" property="answer2"/>
@@ -25,6 +25,7 @@
                     <result column="answer4" property="answer4"/>
                     <result column="answer5" property="answer5"/>
                     <result column="score_item" property="scoreItem"/>
+                    <result column="formula" property="formula"/>
                     <result column="excellent" property="excellent"/>
                     <result column="good" property="good"/>
                     <result column="standard" property="standard"/>
@@ -40,7 +41,7 @@
                 create_time,
                 updater,
                 update_time,
-            channel_id, code, desc, answer1, answer2, answer3, answer4, answer5, score_item, excellent, good, standard, weak, score_type
+            channel_id, series_no, desc, answer1, answer2, answer3, answer4, answer5, score_item, formula, excellent, good, standard, weak, score_type
         </sql>
 
 </mapper>

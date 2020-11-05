@@ -16,7 +16,7 @@
                 <result column="create_time" property="createTime"/>
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
-                    <result column="periods" property="periods"/>
+                    <result column="period" property="period"/>
                     <result column="scope_id" property="scopeId"/>
                     <result column="name" property="name"/>
                     <result column="element_id" property="elementId"/>
@@ -32,7 +32,7 @@
                 create_time,
                 updater,
                 update_time,
-            periods, scope_id, name, element_id, score, score_type
+            period, scope_id, name, element_id, score, score_type
         </sql>
 
 </mapper>

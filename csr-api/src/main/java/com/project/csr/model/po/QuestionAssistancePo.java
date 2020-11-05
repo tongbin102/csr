@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author bin.tong
- * @since 2020-10-30
+ * @since 2020-11-05
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -28,16 +28,16 @@ public class QuestionAssistancePo extends BasePo {
     @ApiModelProperty(value = "所属渠道")
     private Long channelId;
 
-    @ApiModelProperty(value = "问题code")
-    private String code;
+    @ApiModelProperty(value = "问题序号")
+    private String seriesNo;
 
-    @ApiModelProperty(value = "要点")
-    private String point;
+    @ApiModelProperty(value = "分析要点")
+    private String analysisPoint;
 
     @ApiModelProperty(value = "KPI指标")
-    private String target;
+    private String kpi;
 
-    @ApiModelProperty(value = "调研问题")
+    @ApiModelProperty(value = "KPI说明")
     private String desc;
 
     @ApiModelProperty(value = "优秀")

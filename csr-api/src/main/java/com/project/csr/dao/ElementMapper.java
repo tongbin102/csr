@@ -12,7 +12,7 @@ import com.project.csr.cache.MybatisRedisCache;
  * </p>
  *
  * @author bin.tong
- * @since 2020-10-30
+ * @since 2020-11-05
  */
 @CacheNamespace(implementation = MybatisRedisCache.class)
 public interface ElementMapper extends BaseMapper<ElementPo> {

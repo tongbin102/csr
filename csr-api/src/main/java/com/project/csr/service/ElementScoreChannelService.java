@@ -13,7 +13,7 @@ import com.project.csr.model.vo.ElementScoreChannelVo;
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-10-30
+ * @since 2020-11-05
  */
 public interface ElementScoreChannelService extends IService<ElementScoreChannelPo> {
 
@@ -23,7 +23,7 @@ public interface ElementScoreChannelService extends IService<ElementScoreChannel
      * @param elementScoreChannelVo 查询条件
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.ElementScoreChannelPo>
      * @author bin.tong
-     * @since 2020-10-30
+     * @since 2020-11-05
      */
     IPage<ElementScoreChannelPo> findListByPage(ElementScoreChannelVo elementScoreChannelVo);
 
@@ -33,7 +33,7 @@ public interface ElementScoreChannelService extends IService<ElementScoreChannel
      * @param id 主键id
      * @return boolean
      * @author bin.tong
-     * @since 2020-10-30
+     * @since 2020-11-05
      */
     boolean prohibitById(String id);
 }

@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author bin.tong
- * @since 2020-10-30
+ * @since 2020-11-05
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,7 +26,7 @@ public class ElementScorePo extends BasePo {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "期数")
-    private String periods;
+    private String period;
 
     @ApiModelProperty(value = "范围id")
     private Integer scopeId;
