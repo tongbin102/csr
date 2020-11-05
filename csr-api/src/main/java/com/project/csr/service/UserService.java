@@ -43,5 +43,5 @@ public interface UserService extends IService<UserPo> {
      * @param username
      * @return
      */
-    UserPo findByUsername(String username);
+    UserVo findByUsername(String username);
 }

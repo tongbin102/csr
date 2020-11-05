@@ -1,6 +1,6 @@
 package com.project.csr.security.model;
 
-import com.project.csr.model.po.UserPo;
+import com.project.csr.model.vo.UserVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,62 +17,62 @@ import java.util.Collection;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class JwtUserDetails extends UserPo implements UserDetails {
-    private Collection<? extends GrantedAuthority> authorities;
+public class JwtUserDetails extends UserVo implements UserDetails {
+	private Collection<? extends GrantedAuthority> authorities;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
 
-    public JwtUserDetails(){
-    }
+	public JwtUserDetails() {
+	}
 
-    public JwtUserDetails(String userName, Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-        this.setUsername(userName);
-        String encode = new BCryptPasswordEncoder().encode("123456");
-        this.setPassword(encode);
-        this.setAuthorities(authorities);
-    }
+	public JwtUserDetails(String userName, Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
+		this.setUsername(userName);
+		String encode = new BCryptPasswordEncoder().encode("123456");
+		this.setPassword(encode);
+		this.setAuthorities(authorities);
+	}
 
-    /**
-     * 账户是否过期
-     *
-     * @return
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	/**
+	 * 账户是否过期
+	 *
+	 * @return
+	 */
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    /**
-     * 是否禁用
-     *
-     * @return
-     */
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	/**
+	 * 是否禁用
+	 *
+	 * @return
+	 */
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    /**
-     * 密码是否过期
-     *
-     * @return
-     */
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	/**
+	 * 密码是否过期
+	 *
+	 * @return
+	 */
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    /**
-     * 是否启用
-     *
-     * @return
-     */
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+	/**
+	 * 是否启用
+	 *
+	 * @return
+	 */
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 }

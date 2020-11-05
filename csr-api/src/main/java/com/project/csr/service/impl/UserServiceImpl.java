@@ -6,9 +6,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.UserMapper;
+import com.project.csr.model.po.RolePo;
 import com.project.csr.model.po.UserPo;
 import com.project.csr.model.vo.UserVo;
+import com.project.csr.service.RoleService;
 import com.project.csr.service.UserService;
+import com.project.csr.utils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements 
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public IPage<UserPo> findListByPage(UserVo userVo) {
@@ -46,10 +52,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements 
     }
 
     @Override
-    public UserPo findByUsername(String username) {
+    public UserVo findByUsername(String username) {
         LambdaQueryWrapper<UserPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserPo::getUsername, username);
-        return userMapper.selectOne(wrapper);
+        UserPo userPo = userMapper.selectOne(wrapper);
+        RolePo rolePo = null;
+        if(null != userPo.getRoleId()){
+            rolePo = roleService.getById(userPo.getRoleId());
+        }
+        UserVo userVo = ConvertUtils.convert(userPo, UserVo.class);
+        userVo.setRoleName(rolePo.getName());
+        return userVo;
     }
 
 }
