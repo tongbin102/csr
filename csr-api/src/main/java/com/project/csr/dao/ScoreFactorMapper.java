@@ -1,10 +1,13 @@
 package com.project.csr.dao;
 
-import com.project.csr.model.po.ScoreFactorPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
-import org.apache.ibatis.annotations.CacheNamespace;
 import com.project.csr.cache.MybatisRedisCache;
+import com.project.csr.model.po.ScoreFactorPo;
+import com.project.csr.model.vo.ScoreFactorVo;
+import org.apache.ibatis.annotations.CacheNamespace;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>

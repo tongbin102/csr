@@ -5,12 +5,22 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.project.csr.dao.ChannelMapper;
 import com.project.csr.dao.ScoreChannelMapper;
+import com.project.csr.model.po.ChannelPo;
 import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.vo.ScoreChannelVo;
+import com.project.csr.service.ChannelService;
 import com.project.csr.service.ScoreChannelService;
+import com.project.csr.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -26,6 +36,9 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
 
     @Autowired
     private ScoreChannelMapper scoreChannelMapper;
+
+    @Autowired
+    private ChannelService channelService;
 
     @Override
     public IPage<ScoreChannelPo> findListByPage(ScoreChannelVo scoreChannelVo) {
@@ -43,6 +56,39 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
         LambdaQueryWrapper<ScoreChannelPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScoreChannelPo::getId, id);
         return scoreChannelMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod) throws ParseException {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+        LambdaQueryWrapper<ScoreChannelPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
+                .in(ScoreChannelPo::getPeriod, currentPeriod);
+        List<ScoreChannelPo> currentList = scoreChannelMapper.selectList(wrapper);
+        Map<String, Object> currentMap = convertListToMap(currentList);
+        currentMap.put("period", currentPeriod);
+        resultList.add(currentMap);
+
+        wrapper.clear();
+
+        String lastPeriod = DateUtils.getMonth(currentPeriod, -1, "yyyyMM");
+        wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
+                .in(ScoreChannelPo::getPeriod, lastPeriod);
+        List<ScoreChannelPo> lastList = scoreChannelMapper.selectList(wrapper);
+        Map<String, Object> lastMap = convertListToMap(lastList);
+        lastMap.put("period", lastPeriod);
+        resultList.add(lastMap);
+        return resultList;
+    }
+
+    private Map<String, Object> convertListToMap(List<ScoreChannelPo> scoreChannelPoList){
+        Map<String, Object> map = new HashMap<>();
+        for (int i = 0; i < scoreChannelPoList.size(); i++) {
+            ScoreChannelPo scoreChannelPo = scoreChannelPoList.get(i);
+            map.put(scoreChannelPo.getChannelId().toString(), scoreChannelPo.getScore());
+        }
+        return map;
     }
 }
 

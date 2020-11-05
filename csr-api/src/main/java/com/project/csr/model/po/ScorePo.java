@@ -19,9 +19,9 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("rank")
-@ApiModel(value="RankPo对象", description="成绩排名表")
-public class RankPo extends BasePo {
+@TableName("score")
+@ApiModel(value="ScorePo对象", description="成绩排名表")
+public class ScorePo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 

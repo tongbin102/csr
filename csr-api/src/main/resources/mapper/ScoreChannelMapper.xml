@@ -33,5 +33,4 @@
                 update_time,
             period, scope_id, name, channel_id, score
         </sql>
-
 </mapper>

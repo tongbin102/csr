@@ -1,7 +1,7 @@
 package com.project.csr.model.vo;
 
 
-import com.project.csr.model.po.RankPo;
+import com.project.csr.model.po.ScorePo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,6 +20,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class RankVo extends RankPo implements Serializable {
-
+public class ScoreVo extends ScorePo implements Serializable {
+    private Integer scoreDiff;
+    private Integer rankDiff;
 }

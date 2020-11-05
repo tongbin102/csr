@@ -1,6 +1,8 @@
 package com.project.csr.api;
 
+import com.project.csr.common.response.BaseResponse;
 import com.project.csr.model.vo.ScoreChannelVo;
+import com.project.csr.model.vo.ScoreVo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.project.csr.service.ScoreChannelService;
@@ -11,6 +13,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -70,4 +76,5 @@ public class ScoreChannelApi {
     public boolean prohibitById(@PathVariable String id) {
         return scoreChannelService.prohibitById(id);
     }
+
 }

@@ -5,6 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.csr.model.po.ScoreChannelPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.ScoreChannelVo;
+import com.project.csr.model.vo.ScoreVo;
+
+import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -36,4 +41,13 @@ public interface ScoreChannelService extends IService<ScoreChannelPo> {
      * @since 2020-11-05
      */
     boolean prohibitById(String id);
+
+    /**
+     * 获取分渠道得分信息
+     *
+     * @param scopeId
+     * @param currentPeriod
+     * @return
+     */
+    List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod) throws ParseException;
 }

@@ -6,11 +6,21 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.ScoreFactorMapper;
+import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.po.ScoreFactorPo;
+import com.project.csr.model.po.ScorePo;
 import com.project.csr.model.vo.ScoreFactorVo;
+import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.ScoreFactorService;
+import com.project.csr.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -44,5 +54,39 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
         wrapper.eq(ScoreFactorPo::getId, id);
         return scoreFactorMapper.update(po, wrapper) >= 1;
     }
+
+    @Override
+    public List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod) throws ParseException {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+        LambdaQueryWrapper<ScoreFactorPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScoreFactorPo::getScopeId, scopeId)
+                .in(ScoreFactorPo::getPeriod, currentPeriod);
+        List<ScoreFactorPo> currentList = scoreFactorMapper.selectList(wrapper);
+        Map<String, Object> currentMap = convertListToMap(currentList);
+        currentMap.put("period", currentPeriod);
+        resultList.add(currentMap);
+
+        wrapper.clear();
+
+        String lastPeriod = DateUtils.getMonth(currentPeriod, -1, "yyyyMM");
+        wrapper.eq(ScoreFactorPo::getScopeId, scopeId)
+                .in(ScoreFactorPo::getPeriod, lastPeriod);
+        List<ScoreFactorPo> lastList = scoreFactorMapper.selectList(wrapper);
+        Map<String, Object> lastMap = convertListToMap(lastList);
+        lastMap.put("period", lastPeriod);
+        resultList.add(lastMap);
+        return resultList;
+    }
+
+    private Map<String, Object> convertListToMap(List<ScoreFactorPo> scoreFactorPoList){
+        Map<String, Object> map = new HashMap<>();
+        for (int i = 0; i < scoreFactorPoList.size(); i++) {
+            ScoreFactorPo scoreFactorPo = scoreFactorPoList.get(i);
+            map.put(scoreFactorPo.getFactorId().toString(), scoreFactorPo.getScore());
+        }
+        return map;
+    }
+
 }
 

@@ -145,6 +145,11 @@
             <version>${fastjson.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
+        </dependency>
         <!-- AOP依赖 【注：系统日记需要此依赖】 -->
         <!--<dependency>-->
         <!--    <groupId>org.springframework.boot</groupId>-->
