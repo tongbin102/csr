@@ -1,5 +1,6 @@
 package com.project.csr.api;
 
+import com.project.csr.common.response.BaseResponse;
 import com.project.csr.model.vo.ChannelVo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,4 +71,11 @@ public class ChannelApi {
     public boolean prohibitById(@PathVariable String id) {
         return channelService.prohibitById(id);
     }
+
+    @ApiOperation("获取所有渠道列表")
+    @GetMapping("/findAll")
+    public BaseResponse<?> findAll(){
+        return BaseResponse.success(channelService.list());
+    }
+
 }
