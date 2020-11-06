@@ -24,11 +24,11 @@ import java.util.Map;
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
  * @version v1.0
+ * @since 2020-11-05
  */
 @Slf4j
-@Api(tags = {"ScoreChannelApi"},value = "分渠道成绩统计表")
+@Api(tags = {"ScoreChannelApi"}, value = "分渠道成绩统计表")
 @RestController
 @RequestMapping("/scoreChannelApi")
 public class ScoreChannelApi {
@@ -38,20 +38,20 @@ public class ScoreChannelApi {
 
     @ApiOperation(value = "查询分页分渠道成绩统计表数据")
     @PostMapping(value = "/findListByPage")
-    public IPage<ScoreChannelPo> findListByPage(@RequestBody ScoreChannelVo scoreChannelVo){
+    public IPage<ScoreChannelPo> findListByPage(@RequestBody ScoreChannelVo scoreChannelVo) {
         return scoreChannelService.findListByPage(scoreChannelVo);
     }
 
     @ApiOperation(value = "根据id查询分渠道成绩统计表数据")
     @GetMapping(value = "/findById/{id}")
-    public ScoreChannelVo findById(@PathVariable("id") String id){
+    public ScoreChannelVo findById(@PathVariable("id") String id) {
         ScoreChannelPo po = scoreChannelService.getById(id);
         return ConvertUtils.convert(po, ScoreChannelVo.class);
     }
 
     @ApiOperation(value = "新增分渠道成绩统计表数据")
     @PostMapping(value = "/add")
-    public ScoreChannelVo add(@RequestBody ScoreChannelVo scoreChannelVo){
+    public ScoreChannelVo add(@RequestBody ScoreChannelVo scoreChannelVo) {
         ScoreChannelPo po = ConvertUtils.convert(scoreChannelVo, ScoreChannelPo.class);
         scoreChannelService.save(po);
         return ConvertUtils.convert(po, ScoreChannelVo.class);
@@ -59,13 +59,13 @@ public class ScoreChannelApi {
 
     @ApiOperation(value = "删除分渠道成绩统计表数据")
     @DeleteMapping(value = "/delById/{id}")
-    public boolean delById(@PathVariable("id") String id){
+    public boolean delById(@PathVariable("id") String id) {
         return scoreChannelService.removeById(id);
     }
 
     @ApiOperation(value = "更新分渠道成绩统计表数据")
     @PutMapping(value = "/update")
-    public ScoreChannelVo update(@RequestBody ScoreChannelVo scoreChannelVo){
+    public ScoreChannelVo update(@RequestBody ScoreChannelVo scoreChannelVo) {
         ScoreChannelPo po = ConvertUtils.convert(scoreChannelVo, ScoreChannelPo.class);
         scoreChannelService.updateById(po);
         return ConvertUtils.convert(po, ScoreChannelVo.class);
@@ -77,4 +77,11 @@ public class ScoreChannelApi {
         return scoreChannelService.prohibitById(id);
     }
 
+    @ApiOperation("获取分渠道得分情况")
+    @GetMapping(value = "/findScoreChannelInfo")
+    public List<Map<String, Object>> findScoreChannelInfo(@RequestParam("store_id") Integer storeId,
+                                                    @RequestParam("current_period") String currentPeriod,
+                                                    @RequestParam("last_period") String lastPeriod) {
+        return scoreChannelService.findVoList(storeId, currentPeriod, lastPeriod);
+    }
 }

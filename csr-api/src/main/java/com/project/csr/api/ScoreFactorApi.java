@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 分因子成绩统计表 前端控制器
@@ -69,5 +72,13 @@ public class ScoreFactorApi {
     @PutMapping("/prohibitById/{id}")
     public boolean prohibitById(@PathVariable String id) {
         return scoreFactorService.prohibitById(id);
+    }
+
+    @ApiOperation("获取分因子得分情况")
+    @GetMapping(value = "/findScoreFactorInfo")
+    public List<Map<String, Object>> findScoreFactorInfo(@RequestParam("store_id") Integer storeId,
+                                                          @RequestParam("current_period") String currentPeriod,
+                                                          @RequestParam("last_period") String lastPeriod) {
+        return scoreFactorService.findVoList(storeId, currentPeriod, lastPeriod);
     }
 }

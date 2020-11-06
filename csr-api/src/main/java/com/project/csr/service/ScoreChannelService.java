@@ -49,5 +49,5 @@ public interface ScoreChannelService extends IService<ScoreChannelPo> {
      * @param currentPeriod
      * @return
      */
-    List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod, Integer storeId) throws ParseException;
+    List<Map<String, Object>> findVoList(Integer storeId, String currentPeriod, String lastPeriod);
 }

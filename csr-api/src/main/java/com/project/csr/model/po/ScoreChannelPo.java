@@ -32,6 +32,9 @@ public class ScoreChannelPo extends BasePo {
     @ApiModelProperty(value = "范围id")
     private Integer scopeId;
 
+    @ApiModelProperty(value = "storeId")
+    private Integer storeId;
+
     @ApiModelProperty(value = "名称")
     private String name;
 
