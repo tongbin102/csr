@@ -52,7 +52,8 @@
                current.updater,
                current.update_time,
                current.score - last.score               AS score_diff,
-               current.rank_country - last.rank_country AS rank_diff
+               current.rank_country - last.rank_country AS rank_country_diff
+               current.rank_area - last.rank_area AS rank_area_diff
         FROM store s
         LEFT JOIN score current
         ON current.store_id = s.id AND current.period = #{current_period}

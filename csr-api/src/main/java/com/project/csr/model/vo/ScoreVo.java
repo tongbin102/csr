@@ -21,7 +21,12 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class ScoreVo extends ScorePo implements Serializable {
+
     private String storeName;
+
     private Integer scoreDiff;
-    private Integer rankDiff;
+
+    private Integer rankCountryDiff;
+
+    private Integer rankAreaDiff;
 }
