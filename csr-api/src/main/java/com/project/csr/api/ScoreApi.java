@@ -85,8 +85,8 @@ public class ScoreApi {
     }
 
     @ApiOperation("获取得分情况")
-    @GetMapping(value = "/findScoreInfo")
-    public List<ScorePo> findScoreInfo(@RequestParam("scope_id") Integer scopeId,
+    @GetMapping(value = "/findVoList")
+    public List<ScorePo> findVoList(@RequestParam("scope_id") Integer scopeId,
                                              @RequestParam("period") String period, @RequestParam("store_ids") String storeIds) {
         return scoreService.findVoList(scopeId, period, storeIds);
     }
