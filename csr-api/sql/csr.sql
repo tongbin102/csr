@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-11-06 16:38:14
+Date: 2020-11-06 17:49:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -349,7 +349,7 @@ CREATE TABLE `role` (
 INSERT INTO `role` VALUES ('1', 'admin', 'admin', 'admin', '', '1', '2020-10-30 09:21:29', '1', '2020-10-30 09:21:29');
 INSERT INTO `role` VALUES ('2', 'vendor', 'vendor', 'vendor', '', '1', '2020-10-30 09:21:29', '1', '2020-07-20 13:45:39');
 INSERT INTO `role` VALUES ('3', 'region', 'region', 'region', '', '1', '2020-10-30 09:21:29', '1', '2020-07-20 13:45:39');
-INSERT INTO `role` VALUES ('4', 'area', 'area', 'area', '', '1', '2020-10-30 09:21:29', '1', '2020-07-20 13:45:39');
+INSERT INTO `role` VALUES ('4', 'province', 'province', 'province', '', '1', '2020-10-30 09:21:29', '1', '2020-07-20 13:45:39');
 INSERT INTO `role` VALUES ('5', 'city', 'city', 'city', '', '1', '2020-10-30 09:21:29', '1', '2020-07-20 13:45:39');
 INSERT INTO `role` VALUES ('6', 'superior', 'superior', 'superior', '', '1', '2020-10-30 09:21:29', '1', '2020-07-20 13:45:39');
 INSERT INTO `role` VALUES ('7', 'store', 'store', 'store', '', '1', '2020-10-30 09:21:29', '1', '2020-07-20 13:45:39');
@@ -375,7 +375,7 @@ CREATE TABLE `scope` (
 -- ----------------------------
 INSERT INTO `scope` VALUES ('1', 'country', '全国', '', '1', '2020-10-30 14:14:32', '1', '2020-10-30 14:14:32');
 INSERT INTO `scope` VALUES ('2', 'region', '大区', '', '1', '2020-10-30 14:14:32', '1', '2020-10-30 14:14:32');
-INSERT INTO `scope` VALUES ('3', 'area', '辖区', '', '1', '2020-10-30 14:14:32', '1', '2020-10-30 14:14:32');
+INSERT INTO `scope` VALUES ('3', 'province', '省份', '', '1', '2020-10-30 14:14:32', '1', '2020-10-30 14:14:32');
 INSERT INTO `scope` VALUES ('4', 'city', '城市', '', '1', '2020-10-30 14:14:32', '1', '2020-10-30 14:14:32');
 INSERT INTO `scope` VALUES ('5', 'superior', '一级店', '', '1', '2020-10-30 14:14:32', '1', '2020-10-30 14:14:32');
 INSERT INTO `scope` VALUES ('6', 'store', '经销店', '', '1', '2020-10-30 14:14:32', '1', '2020-10-30 14:14:32');
@@ -392,7 +392,7 @@ CREATE TABLE `score` (
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
   `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '总分数',
   `rank_country` int(11) DEFAULT NULL COMMENT '排名',
-  `rank_region` int(11) DEFAULT NULL COMMENT '区域排名',
+  `rank_scope` int(11) DEFAULT NULL COMMENT '区域排名',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -404,46 +404,90 @@ CREATE TABLE `score` (
 -- ----------------------------
 -- Records of score
 -- ----------------------------
-INSERT INTO `score` VALUES ('1', '202011', null, '1', '', '1000', null, null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('2', '202010', null, '1', '', '995', null, null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('3', '202011', null, '2', '', '900', '1', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('4', '202011', null, '3', '', '840', '2', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('5', '202011', null, '4', '', '720', '3', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('6', '202011', null, '5', '', '900', '4', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('7', '202011', null, '6', '', '800', '5', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('8', '202011', null, '7', '', '200', '6', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('9', '202011', null, '8', '', '300', '7', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('10', '202011', null, '9', '', '400', '8', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('11', '202010', null, '2', '', '898', '8', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('12', '202010', null, '3', '', '835', '7', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('13', '202010', null, '4', '', '722', '6', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('14', '202010', null, '5', '', '909', '5', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('15', '202010', null, '6', '', '700', '4', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('16', '202010', null, '7', '', '200', '3', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('17', '202010', null, '8', '', '300', '2', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('18', '202010', null, '9', '', '500', '1', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('19', '202011', null, '10', '', '1000', '1', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('20', '202011', null, '11', '', '995', '2', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('21', '202011', null, '12', '', '900', '3', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('22', '202011', null, '13', '', '840', '4', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('23', '202011', null, '14', '', '720', '5', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('24', '202011', null, '15', '', '900', '6', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('25', '202011', null, '16', '', '800', '7', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('26', '202011', null, '17', '', '200', '8', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('27', '202011', null, '18', '', '300', '9', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('28', '202011', null, '19', '', '400', '10', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('29', '202011', null, '20', '', '898', '11', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('30', '202010', null, '10', '', '835', '11', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('31', '202010', null, '11', '', '722', '10', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('32', '202010', null, '12', '', '909', '9', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('33', '202010', null, '13', '', '700', '8', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('34', '202010', null, '14', '', '200', '7', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('35', '202010', null, '15', '', '300', '6', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('36', '202010', null, '16', '', '500', '5', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('37', '202010', null, '17', '', '722', '4', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('38', '202010', null, '18', '', '909', '3', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('39', '202010', null, '19', '', '700', '2', null, null, null, null, null, null);
-INSERT INTO `score` VALUES ('40', '202010', null, '20', '', '200', '1', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('1', '202011', null, '1', '', '1000', null, null, '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('2', '202010', null, '1', '', '995', null, null, '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('3', '202011', null, '2', '', '900', '1', '1', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('4', '202011', null, '3', '', '840', '2', '2', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('5', '202011', null, '4', '', '720', '3', '3', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('6', '202011', null, '5', '', '900', '4', '4', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('7', '202011', null, '6', '', '800', '5', '5', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('8', '202011', null, '7', '', '200', '6', '6', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('9', '202011', null, '8', '', '300', '7', '7', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('10', '202011', null, '9', '', '400', '8', '8', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('11', '202010', null, '2', '', '898', '8', '8', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('12', '202010', null, '3', '', '835', '7', '7', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('13', '202010', null, '4', '', '722', '6', '6', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('14', '202010', null, '5', '', '909', '5', '5', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('15', '202010', null, '6', '', '700', '4', '4', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('16', '202010', null, '7', '', '200', '3', '3', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('17', '202010', null, '8', '', '300', '2', '2', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('18', '202010', null, '9', '', '500', '1', '1', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('19', '202011', null, '10', '', '1000', '1', '1', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('20', '202011', null, '11', '', '995', '2', '2', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('21', '202011', null, '12', '', '900', '3', '3', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('22', '202011', null, '13', '', '840', '4', '4', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('23', '202011', null, '14', '', '720', '5', '5', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('24', '202011', null, '15', '', '900', '6', '6', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('25', '202011', null, '16', '', '800', '7', '7', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('26', '202011', null, '17', '', '200', '8', '8', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('27', '202011', null, '18', '', '300', '9', '9', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('28', '202011', null, '19', '', '400', '10', '10', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('29', '202011', null, '20', '', '898', '11', '11', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('30', '202011', null, '21', '', '200', '12', '12', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('31', '202011', null, '22', '', '300', '13', '13', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('32', '202011', null, '23', '', '500', '14', '14', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('33', '202011', null, '24', '', '1000', '15', '15', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('34', '202011', null, '25', '', '995', '16', '16', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('35', '202011', null, '26', '', '900', '17', '17', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('36', '202011', null, '27', '', '840', '18', '18', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('37', '202011', null, '28', '', '720', '19', '19', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('38', '202011', null, '29', '', '1000', '20', '20', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('39', '202011', null, '30', '', '995', '21', '21', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('40', '202011', null, '31', '', '900', '22', '22', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('41', '202011', null, '32', '', '840', '23', '23', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('42', '202011', null, '33', '', '720', '24', '24', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('43', '202011', null, '34', '', '900', '25', '25', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('44', '202011', null, '35', '', '800', '26', '26', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('45', '202011', null, '36', '', '200', '27', '27', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('46', '202011', null, '37', '', '300', '28', '28', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('47', '202011', null, '38', '', '400', '29', '29', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('48', '202011', null, '39', '', '898', '30', '30', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('49', '202011', null, '40', '', '200', '31', '31', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('50', '202010', null, '10', '', '300', '31', '31', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('51', '202010', null, '11', '', '500', '30', '30', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('52', '202010', null, '12', '', '1000', '29', '29', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('53', '202010', null, '13', '', '700', '28', '28', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('54', '202010', null, '14', '', '200', '27', '27', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('55', '202010', null, '15', '', '300', '26', '26', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('56', '202010', null, '16', '', '400', '25', '25', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('57', '202010', null, '17', '', '898', '24', '24', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('58', '202010', null, '18', '', '200', '23', '23', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('59', '202010', null, '19', '', '300', '22', '22', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('60', '202010', null, '20', '', '500', '21', '21', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('61', '202010', null, '21', '', '1000', '20', '20', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('62', '202010', null, '22', '', '700', '19', '19', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('63', '202010', null, '23', '', '200', '18', '18', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('64', '202010', null, '24', '', '300', '17', '17', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('65', '202010', null, '25', '', '500', '16', '16', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('66', '202010', null, '26', '', '722', '15', '15', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('67', '202010', null, '27', '', '909', '14', '14', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('68', '202010', null, '28', '', '700', '13', '13', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('69', '202010', null, '29', '', '200', '12', '12', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('70', '202010', null, '30', '', '300', '11', '11', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('71', '202010', null, '31', '', '500', '10', '10', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('72', '202010', null, '32', '', '722', '9', '9', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('73', '202010', null, '33', '', '500', '8', '8', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('74', '202010', null, '34', '', '1000', '7', '7', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('75', '202010', null, '35', '', '700', '6', '6', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('76', '202010', null, '36', '', '200', '5', '5', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('77', '202010', null, '37', '', '300', '4', '4', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('78', '202010', null, '38', '', '500', '3', '3', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('79', '202010', null, '39', '', '722', '2', '2', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('80', '202010', null, '40', '', '909', '1', '1', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('81', '202011', null, '41', '', '500', '1', '1', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('82', '202011', null, '42', '', '1000', '2', '2', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('83', '202010', null, '41', '', '700', '2', '2', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
+INSERT INTO `score` VALUES ('84', '202010', null, '42', '', '200', '1', '1', '', '1', '2020-11-06 17:49:18', '1', '2020-11-06 17:49:18');
 
 -- ----------------------------
 -- Table structure for score_channel
