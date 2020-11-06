@@ -78,8 +78,8 @@ public class ScoreChannelApi {
     }
 
     @ApiOperation("获取分渠道得分情况")
-    @GetMapping(value = "/findScoreChannelInfo")
-    public List<Map<String, Object>> findScoreChannelInfo(@RequestParam("store_id") Integer storeId,
+    @GetMapping(value = "/findInfo")
+    public List<Map<String, Object>> findInfo(@RequestParam("store_id") Integer storeId,
                                                     @RequestParam("current_period") String currentPeriod,
                                                     @RequestParam("last_period") String lastPeriod) {
         return scoreChannelService.findVoList(storeId, currentPeriod, lastPeriod);

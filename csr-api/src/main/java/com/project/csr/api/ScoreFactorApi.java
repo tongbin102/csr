@@ -75,8 +75,8 @@ public class ScoreFactorApi {
     }
 
     @ApiOperation("获取分因子得分情况")
-    @GetMapping(value = "/findScoreFactorInfo")
-    public List<Map<String, Object>> findScoreFactorInfo(@RequestParam("store_id") Integer storeId,
+    @GetMapping(value = "/findInfo")
+    public List<Map<String, Object>> findInfo(@RequestParam("store_id") Integer storeId,
                                                           @RequestParam("current_period") String currentPeriod,
                                                           @RequestParam("last_period") String lastPeriod) {
         return scoreFactorService.findVoList(storeId, currentPeriod, lastPeriod);

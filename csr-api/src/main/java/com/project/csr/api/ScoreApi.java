@@ -91,8 +91,8 @@ public class ScoreApi {
     }
 
     @ApiOperation("获取得分情况")
-    @GetMapping(value = "/findScoreInfo")
-    public List<ScoreVo> findScoreInfo(@RequestParam("parent_id") Integer parentId,
+    @GetMapping(value = "/findInfo")
+    public List<ScoreVo> findInfo(@RequestParam("parent_id") Integer parentId,
                                     @RequestParam("current_period") String currentPeriod,
                                     @RequestParam("last_period") String lastPeriod) {
         return scoreService.findScoreInfo(parentId, currentPeriod, lastPeriod);
