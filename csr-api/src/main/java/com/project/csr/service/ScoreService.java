@@ -46,5 +46,5 @@ public interface ScoreService extends IService<ScorePo> {
      * @param currentPeriod
      * @return
      */
-    List<ScoreVo> findVoList(Integer scopeId, String currentPeriod);
+    List<ScorePo> findVoList(Integer scopeId, String currentPeriod, String storeIds);
 }

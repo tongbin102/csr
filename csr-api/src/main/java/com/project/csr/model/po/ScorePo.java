@@ -31,6 +31,9 @@ public class ScorePo extends BasePo {
     @ApiModelProperty(value = "范围id")
     private Integer scopeId;
 
+    @ApiModelProperty(value = "store_id")
+    private Integer storeId;
+
     @ApiModelProperty(value = "名称")
     private String name;
 

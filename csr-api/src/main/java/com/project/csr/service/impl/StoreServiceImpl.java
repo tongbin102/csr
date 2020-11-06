@@ -12,9 +12,11 @@ import com.project.csr.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author bin.tong
@@ -43,6 +45,12 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, StorePo> implemen
         LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(StorePo::getId, id);
         return storeMapper.update(po, wrapper) >= 1;
+    }
+
+    public List<StorePo> findByParentId(Integer parentId) {
+        LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(StorePo::getParentId, parentId);
+        return storeMapper.selectList(wrapper);
     }
 }
 

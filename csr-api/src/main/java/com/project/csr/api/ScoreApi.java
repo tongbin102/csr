@@ -86,17 +86,8 @@ public class ScoreApi {
 
     @ApiOperation("获取得分情况")
     @GetMapping(value = "/findScoreInfo")
-    public Map<String, Object> findScoreInfo(@RequestParam("scope_id") Integer scopeId,
-                                                     @RequestParam("period") String period) {
-        Map<String, Object> resultMap = new HashMap<>();
-        try {
-            resultMap.put("scoreTotal", scoreService.findVoList(scopeId, period));
-            resultMap.put("scoreSeparate", scoreService.findVoList(scopeId + 1, period));
-            resultMap.put("scoreChannel", scoreChannelService.findVoList(scopeId, period));
-            resultMap.put("scoreFactor", scoreFactorService.findVoList(scopeId, period));
-        } catch (ParseException e) {
-            log.info("期数格式错误");
-        }
-        return resultMap;
+    public List<ScorePo> findScoreInfo(@RequestParam("scope_id") Integer scopeId,
+                                             @RequestParam("period") String period, @RequestParam("store_ids") String storeIds) {
+        return scoreService.findVoList(scopeId, period, storeIds);
     }
 }

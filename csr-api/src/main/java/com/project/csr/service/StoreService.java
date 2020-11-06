@@ -6,6 +6,8 @@ import com.project.csr.model.po.StorePo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.StoreVo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -36,4 +38,11 @@ public interface StoreService extends IService<StorePo> {
      * @since 2020-11-06
      */
     boolean prohibitById(String id);
+
+    /**
+     * 根据父节点id获取store列表
+     * @param parentId
+     * @return
+     */
+    List<StorePo> findByParentId(Integer parentId);
 }

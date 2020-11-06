@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.ScoreMapper;
+import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.po.ScorePo;
 import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.ScoreService;
@@ -57,17 +58,13 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
     }
 
     @Override
-    public List<ScoreVo> findVoList(Integer scopeId, String currentPeriod) {
-        Map<String, Object> params = new HashMap<>();
-        try {
-            params.put("current_period", currentPeriod);
-            params.put("last_period", DateUtils.getMonth(currentPeriod, -1, "yyyyMM"));
-            params.put("scope_id", scopeId);
-        } catch (ParseException e) {
-            log.error("日期转换失败：" + currentPeriod);
-            e.printStackTrace();
-        }
-        return scoreMapper.findVoList(params);
+    public List<ScorePo> findVoList(Integer scopeId, String period, String storeIds) {
+
+        LambdaQueryWrapper<ScorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScorePo::getScopeId, scopeId)
+                .eq(ScorePo::getPeriod, period)
+                .in(ScorePo::getStoreId, storeIds);
+        return scoreMapper.selectList(wrapper);
     }
 }
 

@@ -56,7 +56,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
     }
 
     @Override
-    public List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod) throws ParseException {
+    public List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod, Integer storeId) throws ParseException {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
         LambdaQueryWrapper<ScoreFactorPo> wrapper = Wrappers.lambdaQuery();
@@ -79,7 +79,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
         return resultList;
     }
 
-    private Map<String, Object> convertListToMap(List<ScoreFactorPo> scoreFactorPoList){
+    private Map<String, Object> convertListToMap(List<ScoreFactorPo> scoreFactorPoList) {
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < scoreFactorPoList.size(); i++) {
             ScoreFactorPo scoreFactorPo = scoreFactorPoList.get(i);

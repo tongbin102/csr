@@ -49,5 +49,5 @@ public interface ScoreFactorService extends IService<ScoreFactorPo> {
      * @param currentPeriod
      * @return
      */
-    List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod) throws ParseException;
+    List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod, Integer storeId) throws ParseException;
 }

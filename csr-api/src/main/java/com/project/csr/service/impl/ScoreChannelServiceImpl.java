@@ -59,30 +59,30 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
     }
 
     @Override
-    public List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod) throws ParseException {
+    public List<Map<String, Object>> findVoList(Integer scopeId, String currentPeriod, Integer storeId) throws ParseException {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
         LambdaQueryWrapper<ScoreChannelPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
-                .in(ScoreChannelPo::getPeriod, currentPeriod);
+                .eq(ScoreChannelPo::getPeriod, currentPeriod);
         List<ScoreChannelPo> currentList = scoreChannelMapper.selectList(wrapper);
         Map<String, Object> currentMap = convertListToMap(currentList);
-        currentMap.put("period", currentPeriod);
+        currentMap.put("period", "本期");
         resultList.add(currentMap);
 
         wrapper.clear();
 
         String lastPeriod = DateUtils.getMonth(currentPeriod, -1, "yyyyMM");
         wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
-                .in(ScoreChannelPo::getPeriod, lastPeriod);
+                .eq(ScoreChannelPo::getPeriod, lastPeriod);
         List<ScoreChannelPo> lastList = scoreChannelMapper.selectList(wrapper);
         Map<String, Object> lastMap = convertListToMap(lastList);
-        lastMap.put("period", lastPeriod);
+        lastMap.put("period", "上期");
         resultList.add(lastMap);
         return resultList;
     }
 
-    private Map<String, Object> convertListToMap(List<ScoreChannelPo> scoreChannelPoList){
+    private Map<String, Object> convertListToMap(List<ScoreChannelPo> scoreChannelPoList) {
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < scoreChannelPoList.size(); i++) {
             ScoreChannelPo scoreChannelPo = scoreChannelPoList.get(i);
