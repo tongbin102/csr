@@ -63,7 +63,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
         LambdaQueryWrapper<ScorePo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScorePo::getScopeId, scopeId)
                 .eq(ScorePo::getPeriod, period)
-                .in(ScorePo::getStoreId, storeIds);
+                .in(ScorePo::getStoreId, storeIds.split(","));
         return scoreMapper.selectList(wrapper);
     }
 }
