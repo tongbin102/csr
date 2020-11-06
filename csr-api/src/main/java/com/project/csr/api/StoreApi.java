@@ -1,18 +1,23 @@
 package com.project.csr.api;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.project.csr.common.response.BaseResponse;
+import com.project.csr.model.po.StorePo;
 import com.project.csr.model.vo.StoreVo;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.project.csr.service.StoreService;
 import com.project.csr.utils.ConvertUtils;
-import com.project.csr.model.po.StorePo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * <p>
@@ -40,9 +45,9 @@ public class StoreApi {
 
     @ApiOperation(value = "根据id查询数据")
     @GetMapping(value = "/findById/{id}")
-    public StoreVo findById(@PathVariable("id") String id) {
+    public BaseResponse<StoreVo> findById(@PathVariable("id") String id) {
         StorePo po = storeService.getById(id);
-        return ConvertUtils.convert(po, StoreVo.class);
+        return BaseResponse.success(ConvertUtils.convert(po, StoreVo.class));
     }
 
     @ApiOperation(value = "新增数据")
