@@ -86,7 +86,7 @@ public class ScoreApi {
 
     @ApiOperation("获取得分情况")
     @GetMapping(value = "/findScoreInfo")
-    public BaseResponse<?> findScoreInfo(@RequestParam("scope_id") Integer scopeId,
+    public Map<String, Object> findScoreInfo(@RequestParam("scope_id") Integer scopeId,
                                                      @RequestParam("period") String period) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
@@ -96,8 +96,7 @@ public class ScoreApi {
             resultMap.put("scoreFactor", scoreFactorService.findVoList(scopeId, period));
         } catch (ParseException e) {
             log.info("期数格式错误");
-            return BaseResponse.fail("期数格式错误");
         }
-        return BaseResponse.success(resultMap);
+        return resultMap;
     }
 }

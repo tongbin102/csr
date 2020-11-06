@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-06
  */
 @Service
 public class StoreServiceImpl extends ServiceImpl<StoreMapper, StorePo> implements StoreService {

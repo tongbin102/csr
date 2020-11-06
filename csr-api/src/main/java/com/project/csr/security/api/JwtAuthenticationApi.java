@@ -39,20 +39,20 @@ public class JwtAuthenticationApi {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("${jwt.security.path}")
-    public BaseResponse<?> createAuthenticationToken(@RequestBody UserPo user) throws Exception{
+    public String createAuthenticationToken(@RequestBody UserPo user) throws Exception{
         log.info("username: "+user.getUsername() + ", password: "+user.getPassword());
         authenticate(user.getUsername(),user.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return BaseResponse.success(token);
+        return token;
     }
 
     @GetMapping("/token")
-    public BaseResponse<?> getAuthenticatedUser(HttpServletRequest request){
+    public JwtUserDetails getAuthenticatedUser(HttpServletRequest request){
         String token= request.getHeader(jwtProperties.getTokenHeader()).substring(7);
         String username = jwtTokenUtil.getUsernameFromToken(token);
         JwtUserDetails userDetails =  (JwtUserDetails)userDetailsService.loadUserByUsername(username);
-        return BaseResponse.success(userDetails);
+        return userDetails;
     }
 
     private void authenticate(String username, String password)throws Exception{

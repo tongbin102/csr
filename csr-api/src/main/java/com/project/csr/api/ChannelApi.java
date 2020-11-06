@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * 渠道表 前端控制器
@@ -74,8 +76,8 @@ public class ChannelApi {
 
     @ApiOperation("获取所有渠道列表")
     @GetMapping("/findAll")
-    public BaseResponse<?> findAll(){
-        return BaseResponse.success(channelService.list());
+    public List<ChannelPo> findAll(){
+        return channelService.list();
     }
 
 }

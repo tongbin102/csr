@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 因子表 前端控制器
@@ -73,8 +75,8 @@ public class FactorApi {
 
     @ApiOperation("获取所有因子列表")
     @GetMapping("/findAll")
-    public BaseResponse<?> findAll() {
-        return BaseResponse.success(factorService.list());
+    public List<FactorPo> findAll() {
+        return factorService.list();
     }
 
 }

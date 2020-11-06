@@ -18,11 +18,8 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
-                    <result column="superior" property="superior"/>
-                    <result column="scale" property="scale"/>
-                    <result column="region" property="region"/>
-                    <result column="province" property="province"/>
-                    <result column="city" property="city"/>
+                    <result column="scope_id" property="scopeId"/>
+                    <result column="parent_id" property="parentId"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -33,7 +30,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, name, superior, scale, region, province, city
+            code, name, scope_id, parent_id
         </sql>
 
 </mapper>

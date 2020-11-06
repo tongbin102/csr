@@ -30,10 +30,11 @@ public class CodeGenerator {
     public static final String MODULE_PACAKAGE = "csr";
     public static final String TABLE_PREFIX = "";
     public String[] table_names = {
-            // "channel", "factor", "element", "factor_channel_question", "scope", "store",
+            // "channel", "factor", "element", "factor_channel_question", "scope",
             // "element_score", "element_score_channel",
             // "question_assistance", "question_monitor", "question_survey",
-            "score",
+            // "score",
+            "store",
             // "score_channel", "score_factor", "score_question",
             // "role", "user"
     };

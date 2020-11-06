@@ -13,7 +13,7 @@ import com.project.csr.model.vo.StoreVo;
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-06
  */
 public interface StoreService extends IService<StorePo> {
 
@@ -23,7 +23,7 @@ public interface StoreService extends IService<StorePo> {
      * @param storeVo 查询条件
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.StorePo>
      * @author bin.tong
-     * @since 2020-11-05
+     * @since 2020-11-06
      */
     IPage<StorePo> findListByPage(StoreVo storeVo);
 
@@ -33,7 +33,7 @@ public interface StoreService extends IService<StorePo> {
      * @param id 主键id
      * @return boolean
      * @author bin.tong
-     * @since 2020-11-05
+     * @since 2020-11-06
      */
     boolean prohibitById(String id);
 }

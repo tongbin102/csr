@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-06
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -25,26 +25,17 @@ public class StorePo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "单位代码")
+    @ApiModelProperty(value = "单位code")
     private String code;
 
     @ApiModelProperty(value = "经销店名")
     private String name;
 
-    @ApiModelProperty(value = "所属一级")
-    private String superior;
+    @ApiModelProperty(value = "范围id")
+    private Long scopeId;
 
-    @ApiModelProperty(value = "规模")
-    private String scale;
-
-    @ApiModelProperty(value = "全国大区")
-    private String region;
-
-    @ApiModelProperty(value = "省份")
-    private String province;
-
-    @ApiModelProperty(value = "城市")
-    private String city;
+    @ApiModelProperty(value = "上级id")
+    private Long parentId;
 
 
 }
