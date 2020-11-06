@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-11-06 15:44:47
+Date: 2020-11-06 16:38:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -404,16 +404,46 @@ CREATE TABLE `score` (
 -- ----------------------------
 -- Records of score
 -- ----------------------------
-INSERT INTO `score` VALUES ('1', '202011', '1', '1', null, '1000', null, null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('2', '202011', '2', '2', null, '900', '2', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('3', '202011', '2', '3', null, '840', '3', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('4', '202011', '2', '4', null, '720', '4', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('5', '202011', '2', '5', null, '900', '6', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('6', '202010', '1', '1', null, '995', null, null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('7', '202010', '2', '2', null, '898', '7', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('8', '202010', '2', '3', null, '835', '5', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('9', '202010', '2', '4', null, '722', '2', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
-INSERT INTO `score` VALUES ('10', '202010', '2', '5', null, '909', '4', null, '', '1', '2020-11-05 10:59:29', '1', '2020-11-05 10:59:29');
+INSERT INTO `score` VALUES ('1', '202011', null, '1', '', '1000', null, null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('2', '202010', null, '1', '', '995', null, null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('3', '202011', null, '2', '', '900', '1', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('4', '202011', null, '3', '', '840', '2', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('5', '202011', null, '4', '', '720', '3', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('6', '202011', null, '5', '', '900', '4', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('7', '202011', null, '6', '', '800', '5', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('8', '202011', null, '7', '', '200', '6', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('9', '202011', null, '8', '', '300', '7', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('10', '202011', null, '9', '', '400', '8', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('11', '202010', null, '2', '', '898', '8', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('12', '202010', null, '3', '', '835', '7', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('13', '202010', null, '4', '', '722', '6', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('14', '202010', null, '5', '', '909', '5', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('15', '202010', null, '6', '', '700', '4', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('16', '202010', null, '7', '', '200', '3', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('17', '202010', null, '8', '', '300', '2', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('18', '202010', null, '9', '', '500', '1', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('19', '202011', null, '10', '', '1000', '1', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('20', '202011', null, '11', '', '995', '2', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('21', '202011', null, '12', '', '900', '3', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('22', '202011', null, '13', '', '840', '4', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('23', '202011', null, '14', '', '720', '5', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('24', '202011', null, '15', '', '900', '6', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('25', '202011', null, '16', '', '800', '7', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('26', '202011', null, '17', '', '200', '8', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('27', '202011', null, '18', '', '300', '9', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('28', '202011', null, '19', '', '400', '10', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('29', '202011', null, '20', '', '898', '11', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('30', '202010', null, '10', '', '835', '11', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('31', '202010', null, '11', '', '722', '10', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('32', '202010', null, '12', '', '909', '9', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('33', '202010', null, '13', '', '700', '8', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('34', '202010', null, '14', '', '200', '7', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('35', '202010', null, '15', '', '300', '6', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('36', '202010', null, '16', '', '500', '5', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('37', '202010', null, '17', '', '722', '4', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('38', '202010', null, '18', '', '909', '3', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('39', '202010', null, '19', '', '700', '2', null, null, null, null, null, null);
+INSERT INTO `score` VALUES ('40', '202010', null, '20', '', '200', '1', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for score_channel
