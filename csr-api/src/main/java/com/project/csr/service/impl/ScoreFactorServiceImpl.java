@@ -64,7 +64,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
                 .eq(ScoreFactorPo::getPeriod, currentPeriod);
         List<ScoreFactorPo> currentList = scoreFactorMapper.selectList(wrapper);
         Map<String, Object> currentMap = convertListToMap(currentList);
-        currentMap.put("period", currentPeriod);
+        currentMap.put("period", "本期");
         resultList.add(currentMap);
 
         wrapper.clear();
@@ -73,7 +73,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
                 .eq(ScoreFactorPo::getPeriod, lastPeriod);
         List<ScoreFactorPo> lastList = scoreFactorMapper.selectList(wrapper);
         Map<String, Object> lastMap = convertListToMap(lastList);
-        lastMap.put("period", lastPeriod);
+        lastMap.put("period", "上期");
         resultList.add(lastMap);
         return resultList;
     }
