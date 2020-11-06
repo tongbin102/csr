@@ -44,7 +44,7 @@ public class ScorePo extends BasePo {
     private Integer rankCountry;
 
     @ApiModelProperty(value = "区域排名")
-    private Integer rankRegion;
+    private Integer rankScope;
 
 
 }

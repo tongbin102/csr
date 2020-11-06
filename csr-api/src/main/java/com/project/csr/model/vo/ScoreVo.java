@@ -28,5 +28,5 @@ public class ScoreVo extends ScorePo implements Serializable {
 
     private Integer rankCountryDiff;
 
-    private Integer rankAreaDiff;
+    private Integer rankScopeDiff;
 }

@@ -22,7 +22,7 @@
                     <result column="name" property="name"/>
                     <result column="score" property="score"/>
                     <result column="rank_country" property="rankCountry"/>
-                    <result column="rank_region" property="rankRegion"/>
+                    <result column="rank_scope" property="rankScope"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -33,7 +33,7 @@
                 create_time,
                 updater,
                 update_time,
-            period, scope_id, store_id, name, score, rank_country, rank_region
+            period, scope_id, store_id, name, score, rank_country, rank_scope
         </sql>
 
     <select id="findVoList" resultType="com.project.csr.model.vo.ScoreVo">
@@ -45,15 +45,15 @@
                s.name AS store_name,
                current.score,
                current.rank_country,
-               current.rank_region,
+               current.rank_scope,
                current.valid_ind,
                current.creator,
                current.create_time,
                current.updater,
                current.update_time,
                current.score - last.score               AS score_diff,
-               current.rank_country - last.rank_country AS rank_country_diff
-               current.rank_area - last.rank_area AS rank_area_diff
+               current.rank_country - last.rank_country AS rank_country_diff,
+               current.rank_scope - last.rank_scope AS rank_scope_diff
         FROM store s
         LEFT JOIN score current
         ON current.store_id = s.id AND current.period = #{current_period}
