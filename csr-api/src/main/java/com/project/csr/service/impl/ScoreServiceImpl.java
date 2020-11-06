@@ -7,10 +7,13 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.ScoreMapper;
+import com.project.csr.dao.StoreMapper;
 import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.po.ScorePo;
+import com.project.csr.model.po.StorePo;
 import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.ScoreService;
+import com.project.csr.service.StoreService;
 import com.project.csr.utils.ConvertUtils;
 import com.project.csr.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -38,6 +42,9 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
 
     @Autowired
     private ScoreMapper scoreMapper;
+
+    @Autowired
+    private StoreService storeService;
 
     @Override
     public IPage<ScorePo> findListByPage(ScoreVo scoreVo) {
@@ -58,13 +65,25 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
     }
 
     @Override
-    public List<ScorePo> findVoList(Integer scopeId, String period, String storeIds) {
-
-        LambdaQueryWrapper<ScorePo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(ScorePo::getScopeId, scopeId)
-                .eq(ScorePo::getPeriod, period)
-                .in(ScorePo::getStoreId, storeIds.split(","));
-        return scoreMapper.selectList(wrapper);
+    public List<ScoreVo> findScoreInfo(Integer parentId, String currentPeriod, String lastPeriod) {
+        List<StorePo> childStoreList = storeService.findByParentId(parentId);
+        if (null != childStoreList && childStoreList.size() > 0) {
+            String childStoreIds = childStoreList.stream().map(StorePo::getId).collect(Collectors.joining(","));
+            List<ScoreVo> scoreVoList =  this.findVoList(childStoreIds, currentPeriod, lastPeriod);
+            log.info("aaa",scoreVoList);
+            return scoreVoList;
+        }
+        return null;
     }
+
+    private List<ScoreVo> findVoList(String storeIds, String currentPeriod, String lastPeriod) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("current_period", currentPeriod);
+        params.put("last_period", lastPeriod);
+        params.put("store_ids", storeIds.split(","));
+        return scoreMapper.findVoList(params);
+    }
+
+
 }
 

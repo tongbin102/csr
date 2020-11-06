@@ -39,12 +39,16 @@ public interface ScoreService extends IService<ScorePo> {
      */
     boolean prohibitById(String id);
 
+    // List<ScoreVo> findVoList(Integer scopeId, String currentPeriod, String lastPeriod, String storeIds);
+
     /**
      * 获取得分信息
      *
      * @param scopeId
      * @param currentPeriod
+     * @param lastPeriod
+     * @param parentId
      * @return
      */
-    List<ScorePo> findVoList(Integer scopeId, String currentPeriod, String storeIds);
+    List<ScoreVo> findScoreInfo(Integer parentId, String currentPeriod, String lastPeriod);
 }

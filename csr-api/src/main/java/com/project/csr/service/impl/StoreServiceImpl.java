@@ -47,6 +47,7 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, StorePo> implemen
         return storeMapper.update(po, wrapper) >= 1;
     }
 
+    @Override
     public List<StorePo> findByParentId(Integer parentId) {
         LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(StorePo::getParentId, parentId);

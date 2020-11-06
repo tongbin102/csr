@@ -73,9 +73,4 @@ public class StoreApi {
         return storeService.prohibitById(id);
     }
 
-    @ApiOperation("根据父节点id获取Store列表")
-    @GetMapping("/findByParentId/{parent_id}")
-    public List<StorePo> findByParentId(@PathVariable("parent_id") Integer parentId) {
-        return storeService.findByParentId(parentId);
-    }
 }

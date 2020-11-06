@@ -42,6 +42,7 @@
                current.scope_id,
                current.store_id,
                current.name,
+               s.name AS store_name,
                current.score,
                current.rank_country,
                current.rank_region,
@@ -52,12 +53,19 @@
                current.update_time,
                current.score - last.score               AS score_diff,
                current.rank_country - last.rank_country AS rank_diff
-        FROM score current
-        LEFT JOIN score last ON last.name = current.name AND last.period = #{last_period}
-        WHERE current.period = #{current_period}
-        AND current.scope_id = #{scope_id}
-        <if test="store_id != null">
-        AND current.store_id = #{store_id}
+        FROM store s
+        LEFT JOIN score current
+        ON current.store_id = s.id AND current.period = #{current_period}
+        <if test="scope_id != null">
+            AND current.scope_id = #{scope_id}
+        </if>
+        LEFT JOIN score last ON last.store_id = s.id AND last.period = #{last_period}
+        WHERE 1 = 1
+        <if test="store_ids != null">
+            AND s.id IN
+            <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
+                #{store_id}
+            </foreach>
         </if>
     </select>
 </mapper>

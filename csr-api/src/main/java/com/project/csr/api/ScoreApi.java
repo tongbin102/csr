@@ -3,10 +3,12 @@ package com.project.csr.api;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.csr.common.response.BaseResponse;
 import com.project.csr.model.po.ScorePo;
+import com.project.csr.model.po.StorePo;
 import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.ScoreChannelService;
 import com.project.csr.service.ScoreFactorService;
 import com.project.csr.service.ScoreService;
+import com.project.csr.service.StoreService;
 import com.project.csr.utils.ConvertUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +20,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -42,6 +45,9 @@ public class ScoreApi {
 
     @Autowired
     private ScoreFactorService scoreFactorService;
+
+    @Autowired
+    private StoreService storeService;
 
     @ApiOperation(value = "查询分页成绩排名表数据")
     @PostMapping(value = "/findListByPage")
@@ -85,9 +91,10 @@ public class ScoreApi {
     }
 
     @ApiOperation("获取得分情况")
-    @GetMapping(value = "/findVoList")
-    public List<ScorePo> findVoList(@RequestParam("scope_id") Integer scopeId,
-                                             @RequestParam("period") String period, @RequestParam("store_ids") String storeIds) {
-        return scoreService.findVoList(scopeId, period, storeIds);
+    @GetMapping(value = "/findScoreInfo")
+    public List<ScoreVo> findScoreInfo(@RequestParam("parent_id") Integer parentId,
+                                    @RequestParam("current_period") String currentPeriod,
+                                    @RequestParam("last_period") String lastPeriod) {
+        return scoreService.findScoreInfo(parentId, currentPeriod, lastPeriod);
     }
 }
