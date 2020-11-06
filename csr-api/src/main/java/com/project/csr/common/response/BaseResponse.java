@@ -1,6 +1,7 @@
 package com.project.csr.common.response;
 
 import com.project.csr.common.enums.ResCodeEnum;
+import lombok.Builder;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.io.Serializable;

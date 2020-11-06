@@ -1,6 +1,6 @@
 package com.project.csr.utils;
 
-import com.project.csr.exceptions.NullBeanException;
+import com.project.csr.common.exceptions.NullBeanException;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;

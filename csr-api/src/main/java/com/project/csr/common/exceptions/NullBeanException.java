@@ -1,4 +1,4 @@
-package com.project.csr.exceptions;
+package com.project.csr.common.exceptions;
 
 /**
  * 获取Bean异常

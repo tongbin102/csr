@@ -1,6 +1,10 @@
 package com.project.csr.security.entrypoint;
 
+import com.alibaba.fastjson.JSON;
+import com.project.csr.common.enums.ResCodeEnum;
+import com.project.csr.common.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -26,7 +30,13 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
                          HttpServletResponse response,
                          AuthenticationException authException)
             throws IOException, ServletException {
-        log.info("JwtAuthenticationEntryPoint:" + authException.getMessage());
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED");
+        log.info("JwtAuthenticationEntryPoint: " + authException.getMessage());
+
+        response.setStatus(HttpStatus.OK.value());
+        response.setHeader("Content-Type", "application/json;charset=UTF-8");
+        BaseResponse responseBody = new BaseResponse(ResCodeEnum.RESCODE_UNAUTHORIZED, "UNAUTHORIZED");
+        response.getWriter().write(JSON.toJSONString(responseBody));
+        // response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED");
+
     }
 }
