@@ -31,5 +31,8 @@ public class ChannelPo extends BasePo {
     @ApiModelProperty(value = "渠道名称")
     private String name;
 
+    @ApiModelProperty(value = "渠道类型（1考核；2扣分）")
+    private Integer ctype;
+
 
 }

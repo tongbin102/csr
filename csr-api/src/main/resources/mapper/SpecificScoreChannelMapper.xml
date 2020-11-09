@@ -36,4 +36,31 @@
             period, store_id, specific_id, channel_id, score_type, score, grade
         </sql>
 
+    <select id="findVoList" resultType="com.project.csr.model.vo.SpecificScoreChannelVo">
+        SELECT
+            ssc.id,
+            ssc.period,
+            ssc.store_id,
+            e.id AS element_id,
+            e.`name` AS element_name,
+            ssc.specific_id,
+            s.`name` AS specific_name,
+            ssc.channel_id,
+            ssc.score_type,
+            ssc.score,
+            ssc.grade,
+            ssc.valid_ind,
+            ssc.creator,
+            ssc.create_time,
+            ssc.updater,
+            ssc.update_time
+        FROM element e
+        LEFT JOIN `specific` s ON s.element_id = e.id
+        LEFT JOIN specific_score_channel ssc ON ssc.specific_id = s.id
+        WHERE ssc.period = #{period}
+          AND e.factor_id = #{factor_id}
+          AND ssc.store_id = #{store_id}
+        ORDER BY e.id, s.id, ssc.channel_id, ssc.score_type
+    </select>
+
 </mapper>

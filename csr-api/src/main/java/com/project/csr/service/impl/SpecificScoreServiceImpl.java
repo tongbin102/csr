@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.SpecificScoreMapper;
 import com.project.csr.model.po.SpecificScorePo;
 import com.project.csr.model.vo.SpecificScoreVo;
+import com.project.csr.service.SpecificScoreChannelService;
 import com.project.csr.service.SpecificScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class SpecificScoreServiceImpl extends ServiceImpl<SpecificScoreMapper, S
 
     @Autowired
     private SpecificScoreMapper specificScoreMapper;
+
+    @Autowired
+    private SpecificScoreChannelService specificScoreChannelService;
 
     @Override
     public IPage<SpecificScorePo> findListByPage(SpecificScoreVo specificScoreVo) {
@@ -56,6 +60,27 @@ public class SpecificScoreServiceImpl extends ServiceImpl<SpecificScoreMapper, S
         params.put("period", period);
         params.put("factor_id", factorId);
         return specificScoreMapper.findVoList(params);
+    }
+
+    @Override
+    public List<SpecificScoreVo> findInfo(Long storeId, String period, Long factorId) {
+
+        List<SpecificScoreVo> specificScoreVoList = this.findVoList(storeId, period, factorId);
+        List<Map<String, Object>> mapList = specificScoreChannelService.findMapList(storeId, period, factorId);
+        specificScoreVoList.stream().forEach(item -> {
+            item.setSpecificScoreChannelMap(getSpecificScoreMap(item.getSpecificId(), mapList));
+        });
+        return specificScoreVoList;
+    }
+
+    private Map<String, Object> getSpecificScoreMap(Long specificId, List<Map<String, Object>> mapList) {
+        for (int i = 0; i < mapList.size(); i++) {
+            Map<String, Object> map = mapList.get(i);
+            if (map.get("specific_id").equals(specificId)) {
+                return map;
+            }
+        }
+        return null;
     }
 }
 

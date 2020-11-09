@@ -2,8 +2,8 @@
 package com.project.csr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.project.csr.model.po.SpecificScorePo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.project.csr.model.po.SpecificScorePo;
 import com.project.csr.model.vo.SpecificScoreVo;
 
 import java.util.List;
@@ -40,11 +40,12 @@ public interface SpecificScoreService extends IService<SpecificScorePo> {
     boolean prohibitById(String id);
 
     /**
-     *
      * @param storeId
      * @param period
      * @param factorId
      * @return
      */
     List<SpecificScoreVo> findVoList(Long storeId, String period, Long factorId);
+
+    List<SpecificScoreVo> findInfo(Long storeId, String period, Long factorId);
 }

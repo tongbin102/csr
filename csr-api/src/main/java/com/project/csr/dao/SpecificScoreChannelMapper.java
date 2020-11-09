@@ -3,8 +3,13 @@ package com.project.csr.dao;
 import com.project.csr.model.po.SpecificScoreChannelPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import com.project.csr.model.vo.SpecificScoreChannelVo;
+import com.project.csr.model.vo.SpecificScoreVo;
 import org.apache.ibatis.annotations.CacheNamespace;
 import com.project.csr.cache.MybatisRedisCache;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,5 +21,7 @@ import com.project.csr.cache.MybatisRedisCache;
  */
 @CacheNamespace(implementation = MybatisRedisCache.class)
 public interface SpecificScoreChannelMapper extends BaseMapper<SpecificScoreChannelPo> {
+
+    List<SpecificScoreChannelVo> findVoList(Map<String, Object> params);
 
 }

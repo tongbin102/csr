@@ -6,6 +6,8 @@ import com.project.csr.model.po.ChannelPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.ChannelVo;
 
+import java.util.List;
+
 /**
  * <p>
  * 渠道表 服务类
@@ -36,4 +38,6 @@ public interface ChannelService extends IService<ChannelPo> {
      * @since 2020-11-05
      */
     boolean prohibitById(String id);
+
+    List<ChannelPo> findListByCtype(Integer ctype);
 }

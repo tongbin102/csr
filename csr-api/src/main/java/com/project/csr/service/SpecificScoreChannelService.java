@@ -6,6 +6,9 @@ import com.project.csr.model.po.SpecificScoreChannelPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.SpecificScoreChannelVo;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 细则-分渠道得分关系表 服务类
@@ -36,4 +39,6 @@ public interface SpecificScoreChannelService extends IService<SpecificScoreChann
      * @since 2020-11-09
      */
     boolean prohibitById(String id);
+
+    List<Map<String, Object>> findMapList(Long storeId, String period, Long factorId);
 }

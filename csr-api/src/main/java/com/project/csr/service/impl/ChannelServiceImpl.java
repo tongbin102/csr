@@ -12,6 +12,8 @@ import com.project.csr.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 渠道表 服务实现类
@@ -43,6 +45,13 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, ChannelPo> im
         LambdaQueryWrapper<ChannelPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ChannelPo::getId, id);
         return channelMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public List<ChannelPo> findListByCtype(Integer ctype) {
+        LambdaQueryWrapper<ChannelPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ChannelPo::getCtype, ctype);
+        return channelMapper.selectList(wrapper);
     }
 }
 

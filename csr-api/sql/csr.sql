@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-11-09 17:50:13
+Date: 2020-11-09 21:09:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,6 +23,7 @@ CREATE TABLE `channel` (
   `id` bigint(20) NOT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道code',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道名称',
+  `ctype` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道类型（1考核；2扣分）',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -34,9 +35,12 @@ CREATE TABLE `channel` (
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
-INSERT INTO `channel` VALUES ('1', 'survey', '客户调研', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
-INSERT INTO `channel` VALUES ('2', 'monitor', '过程监控', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
-INSERT INTO `channel` VALUES ('3', 'assistant', '服务助手', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
+INSERT INTO `channel` VALUES ('1', 'survey', '客户调研', '1', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
+INSERT INTO `channel` VALUES ('2', 'monitor', '过程监控', '1', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
+INSERT INTO `channel` VALUES ('3', 'assistant', '服务助手', '1', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
+INSERT INTO `channel` VALUES ('4', null, '投诉扣分', '2', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
+INSERT INTO `channel` VALUES ('5', null, '道路救援扣分', '2', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
+INSERT INTO `channel` VALUES ('6', null, '数据准确扣分', '2', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
 
 -- ----------------------------
 -- Table structure for element
@@ -890,7 +894,7 @@ CREATE TABLE `specific_score_channel` (
   `store_id` bigint(20) DEFAULT NULL COMMENT 'storeId',
   `specific_id` bigint(20) DEFAULT NULL COMMENT '细则id',
   `channel_id` bigint(20) DEFAULT NULL COMMENT '渠道id',
-  `score_type` bit(1) DEFAULT NULL COMMENT '成绩类型：1.考核项目 2. 加分项',
+  `score_type` int(1) DEFAULT NULL COMMENT '成绩类型：1.考核项目 2. 加分项',
   `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分数',
   `grade` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '等级',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
@@ -904,6 +908,51 @@ CREATE TABLE `specific_score_channel` (
 -- ----------------------------
 -- Records of specific_score_channel
 -- ----------------------------
+INSERT INTO `specific_score_channel` VALUES ('1', '202011', '1158', '1', '3', '2', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('2', '202011', '1158', '1', '2', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('3', '202011', '1158', '2', '2', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('4', '202011', '1158', '3', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('5', '202011', '1158', '3', '2', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('6', '202011', '1158', '4', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('7', '202011', '1158', '5', '1', '2', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('8', '202011', '1158', '6', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('9', '202011', '1158', '7', '3', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('10', '202011', '1158', '8', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('11', '202011', '1158', '9', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('12', '202011', '1158', '10', '1', '2', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('13', '202011', '1158', '11', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('14', '202011', '1158', '12', '1', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('15', '202011', '1158', '13', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('16', '202011', '1158', '14', '2', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('17', '202011', '1158', '15', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('18', '202011', '1158', '16', '1', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('19', '202011', '1158', '17', '1', '2', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('20', '202011', '1158', '18', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('21', '202011', '1158', '19', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('22', '202011', '1158', '20', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('23', '202011', '1158', '21', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('24', '202011', '1158', '22', '1', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('25', '202011', '1158', '23', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('26', '202011', '1158', '24', '3', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('27', '202011', '1158', '25', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('28', '202011', '1158', '26', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('29', '202011', '1158', '27', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('30', '202011', '1158', '28', '2', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('31', '202011', '1158', '29', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('32', '202011', '1158', '30', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('33', '202011', '1158', '31', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('34', '202011', '1158', '32', '1', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('35', '202011', '1158', '33', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('36', '202011', '1158', '34', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('37', '202011', '1158', '35', '3', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('38', '202011', '1158', '36', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('39', '202011', '1158', '37', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('40', '202011', '1158', '38', '3', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('41', '202011', '1158', '39', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('42', '202011', '1158', '40', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('43', '202011', '1158', '41', '1', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('44', '202011', '1158', '1', '3', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `specific_score_channel` VALUES ('45', '202011', '1158', '1', '1', '2', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
 
 -- ----------------------------
 -- Table structure for store

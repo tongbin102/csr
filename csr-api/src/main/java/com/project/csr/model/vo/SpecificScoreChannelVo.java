@@ -22,4 +22,10 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class SpecificScoreChannelVo extends SpecificScoreChannelPo implements Serializable {
 
+    private Long elementId;
+
+    private String elementName;
+
+    private String specificName;
+
 }

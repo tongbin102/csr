@@ -38,7 +38,7 @@ public class SpecificScoreChannelPo extends BasePo {
     private Long channelId;
 
     @ApiModelProperty(value = "成绩类型：1.考核项目 2. 加分项")
-    private Boolean scoreType;
+    private Integer scoreType;
 
     @ApiModelProperty(value = "分数")
     private String score;

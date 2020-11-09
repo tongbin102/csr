@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 细则-分渠道得分关系表 前端控制器
@@ -69,5 +72,14 @@ public class SpecificScoreChannelApi {
     @PutMapping("/prohibitById/{id}")
     public boolean prohibitById(@PathVariable String id) {
         return specificScoreChannelService.prohibitById(id);
+    }
+
+
+    @ApiOperation("获取分渠道得分情况")
+    @GetMapping(value = "/findInfo")
+    public List<Map<String, Object>> findInfo(@RequestParam("store_id") Long storeId,
+                                              @RequestParam("period") String period,
+                                              @RequestParam("factor_id") Long factorId) {
+        return specificScoreChannelService.findMapList(storeId, period, factorId);
     }
 }

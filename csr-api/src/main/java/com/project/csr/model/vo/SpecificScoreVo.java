@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,4 +28,6 @@ public class SpecificScoreVo extends SpecificScorePo implements Serializable {
     private String elementName;
 
     private String specificName;
+
+    private Map<String, Object> specificScoreChannelMap;
 }
