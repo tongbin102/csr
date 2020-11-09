@@ -1,12 +1,9 @@
 package com.project.csr.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.project.csr.common.model.BasePo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -43,6 +40,12 @@ public class ScoreChannelPo extends BasePo {
 
     @ApiModelProperty(value = "分渠道分数")
     private String score;
+
+    @ApiModelProperty(value = "排名")
+    private Integer rankCountry;
+
+    @ApiModelProperty(value = "区域排名")
+    private Integer rankScope;
 
 
 }

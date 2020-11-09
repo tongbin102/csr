@@ -1,27 +1,20 @@
 package com.project.csr.service.impl;
 
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.ScoreMapper;
-import com.project.csr.dao.StoreMapper;
-import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.po.ScorePo;
 import com.project.csr.model.po.StorePo;
 import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.ScoreService;
 import com.project.csr.service.StoreService;
-import com.project.csr.utils.ConvertUtils;
-import com.project.csr.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +69,8 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
         return null;
     }
 
-    private List<ScoreVo> findVoList(String storeIds, String currentPeriod, String lastPeriod) {
+    @Override
+    public List<ScoreVo> findVoList(String storeIds, String currentPeriod, String lastPeriod) {
         Map<String, Object> params = new HashMap<>();
         params.put("current_period", currentPeriod);
         params.put("last_period", lastPeriod);

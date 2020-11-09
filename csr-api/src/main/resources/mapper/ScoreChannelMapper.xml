@@ -22,6 +22,8 @@
                     <result column="name" property="name"/>
                     <result column="channel_id" property="channelId"/>
                     <result column="score" property="score"/>
+            <result column="rank_country" property="rankCountry"/>
+            <result column="rank_scope" property="rankScope"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -32,6 +34,6 @@
                 create_time,
                 updater,
                 update_time,
-            period, scope_id, store_id, name, channel_id, score
+            period, scope_id, store_id, name, channel_id, score, rank_country, rank_scope
         </sql>
 </mapper>

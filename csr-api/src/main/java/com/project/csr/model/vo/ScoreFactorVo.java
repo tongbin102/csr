@@ -22,4 +22,12 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class ScoreFactorVo extends ScoreFactorPo implements Serializable {
 
+	private String factorName;
+
+	private Integer scoreDiff;
+
+	private Integer rankCountryDiff;
+
+	private Integer rankScopeDiff;
+
 }

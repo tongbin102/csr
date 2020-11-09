@@ -22,4 +22,12 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class ScoreChannelVo extends ScoreChannelPo implements Serializable {
 
+	private String channelName;
+
+	private Integer scoreDiff;
+
+	private Integer rankCountryDiff;
+
+	private Integer rankScopeDiff;
+
 }

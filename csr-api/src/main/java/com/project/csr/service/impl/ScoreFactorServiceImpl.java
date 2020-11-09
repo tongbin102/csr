@@ -6,17 +6,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.ScoreFactorMapper;
-import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.po.ScoreFactorPo;
-import com.project.csr.model.po.ScorePo;
 import com.project.csr.model.vo.ScoreFactorVo;
-import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.ScoreFactorService;
-import com.project.csr.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +51,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
     }
 
     @Override
-    public List<Map<String, Object>> findVoList(Integer storeId, String currentPeriod, String lastPeriod) {
+    public List<Map<String, Object>> findMapList(Integer storeId, String currentPeriod, String lastPeriod) {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
         LambdaQueryWrapper<ScoreFactorPo> wrapper = Wrappers.lambdaQuery();
@@ -87,5 +82,9 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
         return map;
     }
 
+    @Override
+    public List<ScoreFactorVo> findVoList(Map<String, Object> params) {
+        return scoreFactorMapper.findVoList(params);
+    }
 }
 

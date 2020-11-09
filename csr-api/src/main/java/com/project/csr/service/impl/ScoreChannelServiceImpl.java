@@ -5,18 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.project.csr.dao.ChannelMapper;
 import com.project.csr.dao.ScoreChannelMapper;
-import com.project.csr.model.po.ChannelPo;
 import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.vo.ScoreChannelVo;
 import com.project.csr.service.ChannelService;
 import com.project.csr.service.ScoreChannelService;
-import com.project.csr.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,5 +85,6 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
         }
         return map;
     }
+
 }
 
