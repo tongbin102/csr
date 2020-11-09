@@ -25,12 +25,13 @@ public class FactorChannelQuestionPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "因子id")
     private Long factorId;
 
-    private Integer channelId;
+    @ApiModelProperty(value = "渠道id")
+    private Long channelId;
 
     @ApiModelProperty(value = "对应题目")
     private String questions;
-
 
 }

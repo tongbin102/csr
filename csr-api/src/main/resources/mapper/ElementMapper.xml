@@ -18,9 +18,7 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="code" property="code"/>
                     <result column="factor_id" property="factorId"/>
-                    <result column="factor_name" property="factorName"/>
-                    <result column="element" property="element"/>
-                    <result column="specific" property="specific"/>
+                    <result column="name" property="name"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -31,7 +29,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, factor_id, factor_name, element, specific
+            code, factor_id, name
         </sql>
 
 </mapper>

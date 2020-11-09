@@ -11,34 +11,25 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 分项成绩统计表
+ * 细则
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-09
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("score_question")
-@ApiModel(value="ScoreQuestionPo对象", description="分项成绩统计表")
-public class ScoreQuestionPo extends BasePo {
+@TableName("specific")
+@ApiModel(value="SpecificPo对象", description="细则")
+public class SpecificPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "期数")
-    private String period;
+    @ApiModelProperty(value = "因子要素id")
+    private Long elementId;
 
-    @ApiModelProperty(value = "范围id")
-    private Long scopeId;
-
-    @ApiModelProperty(value = "名称")
+    @ApiModelProperty(value = "细则描述")
     private String name;
-
-    @ApiModelProperty(value = "问题code")
-    private String question;
-
-    @ApiModelProperty(value = "分因子分数")
-    private String score;
 
 
 }

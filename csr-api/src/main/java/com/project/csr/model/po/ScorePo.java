@@ -29,10 +29,10 @@ public class ScorePo extends BasePo {
     private String period;
 
     @ApiModelProperty(value = "范围id")
-    private Integer scopeId;
+    private Long scopeId;
 
     @ApiModelProperty(value = "storeId")
-    private Integer storeId;
+    private Long storeId;
 
     @ApiModelProperty(value = "名称")
     private String name;
@@ -45,6 +45,5 @@ public class ScorePo extends BasePo {
 
     @ApiModelProperty(value = "区域排名")
     private Integer rankScope;
-
 
 }

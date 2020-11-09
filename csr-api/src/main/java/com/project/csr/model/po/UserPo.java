@@ -59,5 +59,4 @@ public class UserPo extends BasePo {
     @ApiModelProperty(value = "用户描述")
     private String description;
 
-
 }

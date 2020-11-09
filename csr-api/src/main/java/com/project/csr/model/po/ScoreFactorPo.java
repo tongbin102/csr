@@ -27,16 +27,16 @@ public class ScoreFactorPo extends BasePo {
     private String period;
 
     @ApiModelProperty(value = "范围id")
-    private Integer scopeId;
+    private Long scopeId;
 
     @ApiModelProperty(value = "storeId")
-    private Integer storeId;
+    private Long storeId;
 
     @ApiModelProperty(value = "名称")
     private String name;
 
     @ApiModelProperty(value = "因子id")
-    private Integer factorId;
+    private Long factorId;
 
     @ApiModelProperty(value = "分因子分数")
     private String score;

@@ -31,14 +31,7 @@ public class ElementPo extends BasePo {
     @ApiModelProperty(value = "因子")
     private Long factorId;
 
-    @ApiModelProperty(value = "因子名称")
-    private String factorName;
-
     @ApiModelProperty(value = "考核单元")
-    private String element;
-
-    @ApiModelProperty(value = "细项要求")
-    private String specific;
-
+    private String name;
 
 }

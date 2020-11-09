@@ -27,16 +27,16 @@ public class ScoreChannelPo extends BasePo {
     private String period;
 
     @ApiModelProperty(value = "范围id")
-    private Integer scopeId;
+    private Long scopeId;
 
     @ApiModelProperty(value = "storeId")
-    private Integer storeId;
+    private Long storeId;
 
     @ApiModelProperty(value = "名称")
     private String name;
 
     @ApiModelProperty(value = "渠道id")
-    private Integer channelId;
+    private Long channelId;
 
     @ApiModelProperty(value = "分渠道分数")
     private String score;

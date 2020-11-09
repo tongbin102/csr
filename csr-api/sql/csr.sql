@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-11-06 17:54:34
+Date: 2020-11-09 17:50:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
-  `id` bigint(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道code',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道名称',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
@@ -43,12 +43,10 @@ INSERT INTO `channel` VALUES ('3', 'assistant', '服务助手', '', '1', '2020-
 -- ----------------------------
 DROP TABLE IF EXISTS `element`;
 CREATE TABLE `element` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
   `code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '要素code',
-  `factor_id` bigint(255) DEFAULT NULL COMMENT '因子',
-  `factor_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '因子名称',
-  `element` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '考核单元',
-  `specific` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细项要求',
+  `factor_id` bigint(20) DEFAULT NULL COMMENT '因子id',
+  `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '考核单元',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -60,92 +58,49 @@ CREATE TABLE `element` (
 -- ----------------------------
 -- Records of element
 -- ----------------------------
-INSERT INTO `element` VALUES ('1', null, '1', null, '预约沟通准备', '沟通准备', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('2', null, '1', null, '预约时间管理', '削峰填谷', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('3', null, '1', null, '预约沟通内容', '预约记录', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('4', null, '1', null, '预约沟通内容', '预约确认', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('5', null, '1', null, '预约沟通内容', '主管监控', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('6', null, '1', null, '预约沟通/话术', '微笑沟通', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('7', null, '1', null, '预约沟通/话术', '话术培训', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('8', null, '1', null, '预约沟通/话术', '录音抽查', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('9', null, '1', null, '预约提醒', '预约提醒', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('10', null, '1', null, '预约客户欢迎', '欢迎看板', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('11', null, '1', null, '预约客户欢迎', '数字化欢迎', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('12', null, '1', null, '进度实时更新', '菱菱邦进度查询', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('13', null, '1', null, '进度实时更新', '人工进度更新', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('14', null, '1', null, '投诉发生', '投诉发生', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('15', null, '2', null, '前台热情接待', '微笑服务', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('16', null, '2', null, '前台热情接待', '外置接待台', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('17', null, '2', null, '前台个性化接待', '个性化服务', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('18', null, '2', null, '现场及时接待', '及时接待', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('19', null, '2', null, '预检接待礼仪', '预检邀约', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('20', null, '2', null, '预检接待礼仪', '免费项目提醒', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('21', null, '2', null, '预检专业接待', '环车检查', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('22', null, '2', null, '预检专业接待', '问题诊断', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('23', null, '2', null, '预检专业接待', '旧件沟通', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('24', null, '2', null, '预检专业接待', '话术培训', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('25', null, '2', null, '项目洽谈专业接待', '交付时间预估', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('26', null, '2', null, '项目洽谈专业接待', '清晰解释', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('27', null, '2', null, '项目洽谈专业接待', '钥匙管理', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('28', null, '2', null, '项目洽谈透明化沟通', '逐条解释', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('29', null, '2', null, '项目洽谈透明化沟通', '标准项目', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-INSERT INTO `element` VALUES ('30', null, '2', null, '项目洽谈透明化沟通', '竞品价格解释', '', '1', '2020-10-30 11:02:17', '1', '2020-10-30 11:02:17');
-
--- ----------------------------
--- Table structure for element_score
--- ----------------------------
-DROP TABLE IF EXISTS `element_score`;
-CREATE TABLE `element_score` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
-  `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-  `scope_id` int(11) DEFAULT NULL COMMENT '范围id',
-  `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
-  `element_id` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '因子要素id',
-  `channel_id` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道id',
-  `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分因子分数',
-  `score_type` bit(1) DEFAULT NULL COMMENT '成绩类型：1.考核项目 2. 加分项',
-  `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
-  `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `updater` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-  `update_time` datetime DEFAULT NULL COMMENT '最后更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='分项成绩统计表';
-
--- ----------------------------
--- Records of element_score
--- ----------------------------
-
--- ----------------------------
--- Table structure for element_score_channel
--- ----------------------------
-DROP TABLE IF EXISTS `element_score_channel`;
-CREATE TABLE `element_score_channel` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
-  `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-  `scope_id` int(11) DEFAULT NULL COMMENT '范围id',
-  `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
-  `element_id` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '因子要素id',
-  `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分因子分数',
-  `score_type` bit(1) DEFAULT NULL COMMENT '成绩类型：1.考核项目 2. 加分项',
-  `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
-  `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `updater` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-  `update_time` datetime DEFAULT NULL COMMENT '最后更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='分渠道因子要素分布表';
-
--- ----------------------------
--- Records of element_score_channel
--- ----------------------------
+INSERT INTO `element` VALUES ('1', '', '1', '投诉发生', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('2', '', '1', '预约时间管理', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('3', '', '3', '派工管理', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('4', '', '1', '预约快速通道', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('5', '', '2', '项目洽谈专业接待', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('6', '', '5', '项目洽谈专业接待', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('7', '', '1', '预约沟通内容', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('8', '', '1', '预约沟通/话术', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('9', '', '1', '预约提醒', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('10', '', '1', '预约接待准备', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('11', '', '2', '前台热情接待', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('12', '', '2', '预检专业接待', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('13', '', '5', '三级质检', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('14', '', '6', '投诉管理', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('15', '', '4', '道路救援', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('16', '', '1', '预约沟通准备', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('17', '', '1', '预约客户欢迎', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('18', '', '1', '专属接待', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('19', '', '1', '预约优惠政策', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('20', '', '1', '进度实时更新', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('21', '', '2', '现场及时接待', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('22', '', '2', '预检接待礼仪', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('23', '', '2', '项目洽谈透明化沟通', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('24', '', '5', '项目洽谈透明化沟通', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('25', '', '2', '休息区热情接待', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('26', '', '2', '交车礼仪', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('27', '', '5', '交车-旧件展示', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('28', '', '3', '洗车管理', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('29', '', '2', '结算礼仪', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('30', '', '2', '服务回访', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('31', '', '4', '停车区管理', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('32', '', '4', '客休区服务配置', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('33', '', '5', '旧件增项沟通', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('34', '', '6', '客户忠诚度活动', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('35', '', '6', '专属客户服务', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
+INSERT INTO `element` VALUES ('36', '', '3', '车辆流转效率管理', '', '1', '2020-11-09 17:02:15', '1', '2020-11-09 17:02:15');
 
 -- ----------------------------
 -- Table structure for factor
 -- ----------------------------
 DROP TABLE IF EXISTS `factor`;
 CREATE TABLE `factor` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
   `code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '因子code',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '因子名称',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
@@ -171,9 +126,9 @@ INSERT INTO `factor` VALUES ('6', null, '服务价值', '', '1', '2020-10-30 14
 -- ----------------------------
 DROP TABLE IF EXISTS `factor_channel_question`;
 CREATE TABLE `factor_channel_question` (
-  `id` bigint(11) NOT NULL,
-  `factor_id` bigint(11) DEFAULT NULL,
-  `channel_id` int(11) DEFAULT NULL,
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `factor_id` bigint(20) DEFAULT NULL COMMENT '因子id',
+  `channel_id` bigint(20) DEFAULT NULL COMMENT '渠道id',
   `questions` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '对应题目',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
@@ -204,8 +159,8 @@ INSERT INTO `factor_channel_question` VALUES ('12', '24', '3', 'F20-1', '', '1'
 -- ----------------------------
 DROP TABLE IF EXISTS `question_assistance`;
 CREATE TABLE `question_assistance` (
-  `id` bigint(11) NOT NULL,
-  `channel_id` bigint(11) DEFAULT NULL COMMENT '所属渠道',
+  `id` bigint(20) NOT NULL,
+  `channel_id` bigint(20) DEFAULT NULL COMMENT '所属渠道',
   `series_no` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '问题序号',
   `analysis_point` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
   `kpi` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
@@ -238,8 +193,8 @@ INSERT INTO `question_assistance` VALUES ('6', '3', 'R30-1', '道路救援', '�
 -- ----------------------------
 DROP TABLE IF EXISTS `question_monitor`;
 CREATE TABLE `question_monitor` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
-  `channel_id` bigint(11) DEFAULT NULL COMMENT '所属渠道',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `channel_id` bigint(20) DEFAULT NULL COMMENT '所属渠道',
   `series_no` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '问题序号',
   `desc` varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '调研问题',
   `illustration` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '相关说明',
@@ -275,8 +230,8 @@ INSERT INTO `question_monitor` VALUES ('10', '2', 'P39-2', '提报三级质检�
 -- ----------------------------
 DROP TABLE IF EXISTS `question_survey`;
 CREATE TABLE `question_survey` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
-  `channel_id` bigint(11) DEFAULT NULL COMMENT '所属渠道',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `channel_id` bigint(20) DEFAULT NULL COMMENT '所属渠道',
   `series_no` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '问题序号',
   `desc` varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '调研问题',
   `answer1` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '答案1',
@@ -359,7 +314,7 @@ INSERT INTO `role` VALUES ('7', 'store', 'store', 'store', '', '1', '2020-10-30
 -- ----------------------------
 DROP TABLE IF EXISTS `scope`;
 CREATE TABLE `scope` (
-  `id` bigint(11) NOT NULL COMMENT '主键',
+  `id` bigint(20) NOT NULL COMMENT '主键',
   `code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '范围code',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '范围名称',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
@@ -385,14 +340,14 @@ INSERT INTO `scope` VALUES ('6', 'store', '经销店', '', '1', '2020-10-30 14:
 -- ----------------------------
 DROP TABLE IF EXISTS `score`;
 CREATE TABLE `score` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
   `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-  `scope_id` bigint(11) DEFAULT NULL COMMENT '范围id',
+  `scope_id` bigint(20) DEFAULT NULL COMMENT '范围id',
   `store_id` bigint(20) DEFAULT NULL COMMENT 'store_id',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
   `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '总分数',
-  `rank_country` int(11) DEFAULT NULL COMMENT '排名',
-  `rank_scope` int(11) DEFAULT NULL COMMENT '区域排名',
+  `rank_country` int(20) DEFAULT NULL COMMENT '排名',
+  `rank_scope` int(20) DEFAULT NULL COMMENT '区域排名',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -506,13 +461,15 @@ INSERT INTO `score` VALUES ('96', '202010', null, '1161', '', '1000', '1', '1', 
 -- ----------------------------
 DROP TABLE IF EXISTS `score_channel`;
 CREATE TABLE `score_channel` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
   `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-  `scope_id` int(11) DEFAULT NULL COMMENT '范围id',
+  `scope_id` bigint(20) DEFAULT NULL COMMENT '范围id',
   `store_id` bigint(20) DEFAULT NULL COMMENT 'store_id',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
-  `channel_id` int(11) DEFAULT NULL COMMENT '渠道id',
+  `channel_id` bigint(20) DEFAULT NULL COMMENT '渠道id',
   `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分渠道分数',
+  `rank_country` int(11) DEFAULT NULL COMMENT '全国排名',
+  `rank_scope` int(11) DEFAULT NULL COMMENT '区域排名',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -524,99 +481,101 @@ CREATE TABLE `score_channel` (
 -- ----------------------------
 -- Records of score_channel
 -- ----------------------------
-INSERT INTO `score_channel` VALUES ('1', '202011', null, '1', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('2', '202011', null, '1', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('3', '202011', null, '1', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('4', '202011', null, '1', '', '4', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('5', '202010', null, '1', '', '1', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('6', '202010', null, '1', '', '2', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('7', '202010', null, '1', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('8', '202010', null, '1', '', '4', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('9', '202011', null, '2', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('10', '202011', null, '2', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('11', '202011', null, '2', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('12', '202011', null, '2', '', '4', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('13', '202010', null, '2', '', '1', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('14', '202010', null, '2', '', '2', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('15', '202010', null, '2', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('16', '202010', null, '2', '', '4', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('17', '202011', null, '3', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('18', '202011', null, '3', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('19', '202011', null, '3', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('20', '202011', null, '3', '', '4', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('21', '202010', null, '3', '', '1', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('22', '202010', null, '3', '', '2', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('23', '202010', null, '3', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('24', '202010', null, '3', '', '4', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('25', '202011', null, '4', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('26', '202011', null, '4', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('27', '202011', null, '4', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('28', '202011', null, '4', '', '4', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('29', '202010', null, '4', '', '1', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('30', '202010', null, '4', '', '2', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('31', '202010', null, '4', '', '3', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('32', '202010', null, '4', '', '4', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('33', '202011', null, '5', '', '1', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('34', '202011', null, '5', '', '2', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('35', '202011', null, '5', '', '3', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('36', '202011', null, '5', '', '4', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('37', '202010', null, '5', '', '1', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('38', '202010', null, '5', '', '2', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('39', '202010', null, '5', '', '3', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('40', '202010', null, '5', '', '4', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('41', '202011', null, '6', '', '1', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('42', '202011', null, '6', '', '2', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('43', '202011', null, '6', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('44', '202011', null, '6', '', '4', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('45', '202010', null, '6', '', '1', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('46', '202010', null, '6', '', '2', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('47', '202010', null, '6', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('48', '202010', null, '6', '', '4', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('49', '202011', null, '7', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('50', '202011', null, '7', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('51', '202011', null, '7', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('52', '202011', null, '7', '', '4', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('53', '202010', null, '7', '', '1', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('54', '202010', null, '7', '', '2', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('55', '202010', null, '7', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('56', '202010', null, '7', '', '4', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('57', '202011', null, '8', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('58', '202011', null, '8', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('59', '202011', null, '8', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('60', '202011', null, '8', '', '4', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('61', '202010', null, '8', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('62', '202010', null, '8', '', '2', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('63', '202010', null, '8', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('64', '202010', null, '8', '', '4', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('65', '202011', null, '9', '', '1', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('66', '202011', null, '9', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('67', '202011', null, '9', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('68', '202011', null, '9', '', '4', '-20', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('69', '202010', null, '9', '', '1', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('70', '202010', null, '9', '', '2', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('71', '202010', null, '9', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('72', '202010', null, '9', '', '4', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('73', '202011', null, '10', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('74', '202011', null, '10', '', '2', '1000', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('75', '202011', null, '10', '', '3', '600', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('76', '202011', null, '10', '', '4', '900', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('77', '202010', null, '10', '', '1', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('78', '202010', null, '10', '', '2', '-200', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('79', '202010', null, '10', '', '3', '800', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
-INSERT INTO `score_channel` VALUES ('80', '202010', null, '10', '', '4', '700', '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('1', '202011', null, '1', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('2', '202011', null, '1', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('3', '202011', null, '1', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('4', '202011', null, '1', '', '4', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('5', '202010', null, '1', '', '1', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('6', '202010', null, '1', '', '2', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('7', '202010', null, '1', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('8', '202010', null, '1', '', '4', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('9', '202011', null, '2', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('10', '202011', null, '2', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('11', '202011', null, '2', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('12', '202011', null, '2', '', '4', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('13', '202010', null, '2', '', '1', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('14', '202010', null, '2', '', '2', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('15', '202010', null, '2', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('16', '202010', null, '2', '', '4', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('17', '202011', null, '3', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('18', '202011', null, '3', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('19', '202011', null, '3', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('20', '202011', null, '3', '', '4', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('21', '202010', null, '3', '', '1', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('22', '202010', null, '3', '', '2', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('23', '202010', null, '3', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('24', '202010', null, '3', '', '4', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('25', '202011', null, '4', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('26', '202011', null, '4', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('27', '202011', null, '4', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('28', '202011', null, '4', '', '4', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('29', '202010', null, '4', '', '1', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('30', '202010', null, '4', '', '2', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('31', '202010', null, '4', '', '3', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('32', '202010', null, '4', '', '4', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('33', '202011', null, '5', '', '1', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('34', '202011', null, '5', '', '2', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('35', '202011', null, '5', '', '3', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('36', '202011', null, '5', '', '4', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('37', '202010', null, '5', '', '1', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('38', '202010', null, '5', '', '2', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('39', '202010', null, '5', '', '3', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('40', '202010', null, '5', '', '4', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('41', '202011', null, '6', '', '1', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('42', '202011', null, '6', '', '2', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('43', '202011', null, '6', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('44', '202011', null, '6', '', '4', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('45', '202010', null, '6', '', '1', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('46', '202010', null, '6', '', '2', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('47', '202010', null, '6', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('48', '202010', null, '6', '', '4', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('49', '202011', null, '7', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('50', '202011', null, '7', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('51', '202011', null, '7', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('52', '202011', null, '7', '', '4', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('53', '202010', null, '7', '', '1', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('54', '202010', null, '7', '', '2', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('55', '202010', null, '7', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('56', '202010', null, '7', '', '4', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('57', '202011', null, '8', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('58', '202011', null, '8', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('59', '202011', null, '8', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('60', '202011', null, '8', '', '4', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('61', '202010', null, '8', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('62', '202010', null, '8', '', '2', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('63', '202010', null, '8', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('64', '202010', null, '8', '', '4', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('65', '202011', null, '9', '', '1', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('66', '202011', null, '9', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('67', '202011', null, '9', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('68', '202011', null, '9', '', '4', '-20', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('69', '202010', null, '9', '', '1', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('70', '202010', null, '9', '', '2', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('71', '202010', null, '9', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('72', '202010', null, '9', '', '4', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('73', '202011', null, '10', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('74', '202011', null, '10', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('75', '202011', null, '10', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('76', '202011', null, '10', '', '4', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('77', '202010', null, '10', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('78', '202010', null, '10', '', '2', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('79', '202010', null, '10', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('80', '202010', null, '10', '', '4', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
 
 -- ----------------------------
 -- Table structure for score_factor
 -- ----------------------------
 DROP TABLE IF EXISTS `score_factor`;
 CREATE TABLE `score_factor` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
   `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-  `scope_id` int(11) DEFAULT NULL COMMENT '范围id',
+  `scope_id` bigint(20) DEFAULT NULL COMMENT '范围id',
   `store_id` bigint(20) DEFAULT NULL COMMENT 'store_id',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
-  `factor_id` int(11) DEFAULT NULL COMMENT '因子id',
+  `factor_id` bigint(20) DEFAULT NULL COMMENT '因子id',
   `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分因子分数',
+  `rank_country` int(11) DEFAULT NULL COMMENT '全国排名',
+  `rank_scope` int(11) DEFAULT NULL COMMENT '区域排名',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -628,159 +587,159 @@ CREATE TABLE `score_factor` (
 -- ----------------------------
 -- Records of score_factor
 -- ----------------------------
-INSERT INTO `score_factor` VALUES ('1', '202011', null, '1', '', '1', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('2', '202011', null, '1', '', '2', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('3', '202011', null, '1', '', '3', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('4', '202011', null, '1', '', '4', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('5', '202011', null, '1', '', '5', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('6', '202011', null, '1', '', '6', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('7', '202010', null, '1', '', '1', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('8', '202010', null, '1', '', '2', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('9', '202010', null, '1', '', '3', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('10', '202010', null, '1', '', '4', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('11', '202010', null, '1', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('12', '202010', null, '1', '', '6', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('13', '202011', null, '2', '', '1', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('14', '202011', null, '2', '', '2', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('15', '202011', null, '2', '', '3', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('16', '202011', null, '2', '', '4', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('17', '202011', null, '2', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('18', '202011', null, '2', '', '6', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('19', '202010', null, '2', '', '1', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('20', '202010', null, '2', '', '2', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('21', '202010', null, '2', '', '3', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('22', '202010', null, '2', '', '4', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('23', '202010', null, '2', '', '5', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('24', '202010', null, '2', '', '6', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('25', '202011', null, '3', '', '1', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('26', '202011', null, '3', '', '2', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('27', '202011', null, '3', '', '3', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('28', '202011', null, '3', '', '4', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('29', '202011', null, '3', '', '5', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('30', '202011', null, '3', '', '6', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('31', '202010', null, '3', '', '1', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('32', '202010', null, '3', '', '2', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('33', '202010', null, '3', '', '3', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('34', '202010', null, '3', '', '4', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('35', '202010', null, '3', '', '5', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('36', '202010', null, '3', '', '6', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('37', '202011', null, '4', '', '1', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('38', '202011', null, '4', '', '2', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('39', '202011', null, '4', '', '3', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('40', '202011', null, '4', '', '4', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('41', '202011', null, '4', '', '5', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('42', '202011', null, '4', '', '6', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('43', '202010', null, '4', '', '1', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('44', '202010', null, '4', '', '2', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('45', '202010', null, '4', '', '3', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('46', '202010', null, '4', '', '4', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('47', '202010', null, '4', '', '5', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('48', '202010', null, '4', '', '6', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('49', '202011', null, '5', '', '1', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('50', '202011', null, '5', '', '2', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('51', '202011', null, '5', '', '3', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('52', '202011', null, '5', '', '4', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('53', '202011', null, '5', '', '5', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('54', '202011', null, '5', '', '6', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('55', '202010', null, '5', '', '1', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('56', '202010', null, '5', '', '2', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('57', '202010', null, '5', '', '3', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('58', '202010', null, '5', '', '4', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('59', '202010', null, '5', '', '5', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('60', '202010', null, '5', '', '6', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('61', '202011', null, '6', '', '1', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('62', '202011', null, '6', '', '2', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('63', '202011', null, '6', '', '3', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('64', '202011', null, '6', '', '4', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('65', '202011', null, '6', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('66', '202011', null, '6', '', '6', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('67', '202010', null, '6', '', '1', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('68', '202010', null, '6', '', '2', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('69', '202010', null, '6', '', '3', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('70', '202010', null, '6', '', '4', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('71', '202010', null, '6', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('72', '202010', null, '6', '', '6', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('73', '202011', null, '7', '', '1', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('74', '202011', null, '7', '', '2', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('75', '202011', null, '7', '', '3', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('76', '202011', null, '7', '', '4', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('77', '202011', null, '7', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('78', '202011', null, '7', '', '6', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('79', '202010', null, '7', '', '1', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('80', '202010', null, '7', '', '2', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('81', '202010', null, '7', '', '3', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('82', '202010', null, '7', '', '4', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('83', '202010', null, '7', '', '5', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('84', '202010', null, '7', '', '6', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('85', '202011', null, '8', '', '1', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('86', '202011', null, '8', '', '2', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('87', '202011', null, '8', '', '3', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('88', '202011', null, '8', '', '4', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('89', '202011', null, '8', '', '5', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('90', '202011', null, '8', '', '6', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('91', '202010', null, '8', '', '1', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('92', '202010', null, '8', '', '2', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('93', '202010', null, '8', '', '3', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('94', '202010', null, '8', '', '4', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('95', '202010', null, '8', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('96', '202010', null, '8', '', '6', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('97', '202011', null, '9', '', '1', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('98', '202011', null, '9', '', '2', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('99', '202011', null, '9', '', '3', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('100', '202011', null, '9', '', '4', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('101', '202011', null, '9', '', '5', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('102', '202011', null, '9', '', '6', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('103', '202010', null, '9', '', '1', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('104', '202010', null, '9', '', '2', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('105', '202010', null, '9', '', '3', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('106', '202010', null, '9', '', '4', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('107', '202010', null, '9', '', '5', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('108', '202010', null, '9', '', '6', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('109', '202011', null, '10', '', '1', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('110', '202011', null, '10', '', '2', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('111', '202011', null, '10', '', '3', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('112', '202011', null, '10', '', '4', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('113', '202011', null, '10', '', '5', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('114', '202011', null, '10', '', '6', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('115', '202010', null, '10', '', '1', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('116', '202010', null, '10', '', '2', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('117', '202010', null, '10', '', '3', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('118', '202010', null, '10', '', '4', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('119', '202010', null, '10', '', '5', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('120', '202010', null, '10', '', '6', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('121', '202011', null, '11', '', '1', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('122', '202011', null, '11', '', '2', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('123', '202011', null, '11', '', '3', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('124', '202011', null, '11', '', '4', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('125', '202011', null, '11', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('126', '202011', null, '11', '', '6', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('127', '202010', null, '11', '', '1', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('128', '202010', null, '11', '', '2', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('129', '202010', null, '11', '', '3', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('130', '202010', null, '11', '', '4', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('131', '202010', null, '11', '', '5', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('132', '202010', null, '11', '', '6', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('133', '202011', null, '12', '', '1', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('134', '202011', null, '12', '', '2', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('135', '202011', null, '12', '', '3', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('136', '202011', null, '12', '', '4', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('137', '202011', null, '12', '', '5', '800', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('138', '202011', null, '12', '', '6', '-200', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('139', '202010', null, '12', '', '1', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('140', '202010', null, '12', '', '2', '-20', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('141', '202010', null, '12', '', '3', '1000', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('142', '202010', null, '12', '', '4', '600', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('143', '202010', null, '12', '', '5', '700', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
-INSERT INTO `score_factor` VALUES ('144', '202010', null, '12', '', '6', '900', '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('1', '202011', null, '1', '', '1', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('2', '202011', null, '1', '', '2', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('3', '202011', null, '1', '', '3', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('4', '202011', null, '1', '', '4', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('5', '202011', null, '1', '', '5', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('6', '202011', null, '1', '', '6', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('7', '202010', null, '1', '', '1', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('8', '202010', null, '1', '', '2', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('9', '202010', null, '1', '', '3', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('10', '202010', null, '1', '', '4', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('11', '202010', null, '1', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('12', '202010', null, '1', '', '6', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('13', '202011', null, '2', '', '1', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('14', '202011', null, '2', '', '2', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('15', '202011', null, '2', '', '3', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('16', '202011', null, '2', '', '4', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('17', '202011', null, '2', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('18', '202011', null, '2', '', '6', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('19', '202010', null, '2', '', '1', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('20', '202010', null, '2', '', '2', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('21', '202010', null, '2', '', '3', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('22', '202010', null, '2', '', '4', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('23', '202010', null, '2', '', '5', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('24', '202010', null, '2', '', '6', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('25', '202011', null, '3', '', '1', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('26', '202011', null, '3', '', '2', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('27', '202011', null, '3', '', '3', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('28', '202011', null, '3', '', '4', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('29', '202011', null, '3', '', '5', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('30', '202011', null, '3', '', '6', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('31', '202010', null, '3', '', '1', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('32', '202010', null, '3', '', '2', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('33', '202010', null, '3', '', '3', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('34', '202010', null, '3', '', '4', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('35', '202010', null, '3', '', '5', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('36', '202010', null, '3', '', '6', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('37', '202011', null, '4', '', '1', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('38', '202011', null, '4', '', '2', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('39', '202011', null, '4', '', '3', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('40', '202011', null, '4', '', '4', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('41', '202011', null, '4', '', '5', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('42', '202011', null, '4', '', '6', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('43', '202010', null, '4', '', '1', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('44', '202010', null, '4', '', '2', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('45', '202010', null, '4', '', '3', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('46', '202010', null, '4', '', '4', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('47', '202010', null, '4', '', '5', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('48', '202010', null, '4', '', '6', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('49', '202011', null, '5', '', '1', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('50', '202011', null, '5', '', '2', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('51', '202011', null, '5', '', '3', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('52', '202011', null, '5', '', '4', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('53', '202011', null, '5', '', '5', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('54', '202011', null, '5', '', '6', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('55', '202010', null, '5', '', '1', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('56', '202010', null, '5', '', '2', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('57', '202010', null, '5', '', '3', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('58', '202010', null, '5', '', '4', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('59', '202010', null, '5', '', '5', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('60', '202010', null, '5', '', '6', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('61', '202011', null, '6', '', '1', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('62', '202011', null, '6', '', '2', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('63', '202011', null, '6', '', '3', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('64', '202011', null, '6', '', '4', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('65', '202011', null, '6', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('66', '202011', null, '6', '', '6', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('67', '202010', null, '6', '', '1', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('68', '202010', null, '6', '', '2', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('69', '202010', null, '6', '', '3', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('70', '202010', null, '6', '', '4', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('71', '202010', null, '6', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('72', '202010', null, '6', '', '6', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('73', '202011', null, '7', '', '1', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('74', '202011', null, '7', '', '2', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('75', '202011', null, '7', '', '3', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('76', '202011', null, '7', '', '4', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('77', '202011', null, '7', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('78', '202011', null, '7', '', '6', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('79', '202010', null, '7', '', '1', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('80', '202010', null, '7', '', '2', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('81', '202010', null, '7', '', '3', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('82', '202010', null, '7', '', '4', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('83', '202010', null, '7', '', '5', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('84', '202010', null, '7', '', '6', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('85', '202011', null, '8', '', '1', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('86', '202011', null, '8', '', '2', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('87', '202011', null, '8', '', '3', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('88', '202011', null, '8', '', '4', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('89', '202011', null, '8', '', '5', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('90', '202011', null, '8', '', '6', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('91', '202010', null, '8', '', '1', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('92', '202010', null, '8', '', '2', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('93', '202010', null, '8', '', '3', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('94', '202010', null, '8', '', '4', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('95', '202010', null, '8', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('96', '202010', null, '8', '', '6', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('97', '202011', null, '9', '', '1', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('98', '202011', null, '9', '', '2', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('99', '202011', null, '9', '', '3', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('100', '202011', null, '9', '', '4', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('101', '202011', null, '9', '', '5', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('102', '202011', null, '9', '', '6', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('103', '202010', null, '9', '', '1', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('104', '202010', null, '9', '', '2', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('105', '202010', null, '9', '', '3', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('106', '202010', null, '9', '', '4', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('107', '202010', null, '9', '', '5', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('108', '202010', null, '9', '', '6', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('109', '202011', null, '10', '', '1', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('110', '202011', null, '10', '', '2', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('111', '202011', null, '10', '', '3', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('112', '202011', null, '10', '', '4', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('113', '202011', null, '10', '', '5', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('114', '202011', null, '10', '', '6', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('115', '202010', null, '10', '', '1', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('116', '202010', null, '10', '', '2', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('117', '202010', null, '10', '', '3', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('118', '202010', null, '10', '', '4', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('119', '202010', null, '10', '', '5', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('120', '202010', null, '10', '', '6', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('121', '202011', null, '11', '', '1', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('122', '202011', null, '11', '', '2', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('123', '202011', null, '11', '', '3', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('124', '202011', null, '11', '', '4', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('125', '202011', null, '11', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('126', '202011', null, '11', '', '6', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('127', '202010', null, '11', '', '1', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('128', '202010', null, '11', '', '2', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('129', '202010', null, '11', '', '3', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('130', '202010', null, '11', '', '4', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('131', '202010', null, '11', '', '5', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('132', '202010', null, '11', '', '6', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('133', '202011', null, '12', '', '1', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('134', '202011', null, '12', '', '2', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('135', '202011', null, '12', '', '3', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('136', '202011', null, '12', '', '4', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('137', '202011', null, '12', '', '5', '800', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('138', '202011', null, '12', '', '6', '-200', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('139', '202010', null, '12', '', '1', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('140', '202010', null, '12', '', '2', '-20', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('141', '202010', null, '12', '', '3', '1000', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('142', '202010', null, '12', '', '4', '600', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('143', '202010', null, '12', '', '5', '700', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
+INSERT INTO `score_factor` VALUES ('144', '202010', null, '12', '', '6', '900', null, null, '', '1', '2020-11-06 15:43:59', '1', '2020-11-06 15:43:59');
 
 -- ----------------------------
 -- Table structure for score_question
 -- ----------------------------
 DROP TABLE IF EXISTS `score_question`;
 CREATE TABLE `score_question` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
   `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-  `scope_id` int(11) DEFAULT NULL COMMENT '范围id',
+  `scope_id` bigint(20) DEFAULT NULL COMMENT '范围id',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
   `question` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '问题code',
   `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分因子分数',
@@ -797,14 +756,164 @@ CREATE TABLE `score_question` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for specific
+-- ----------------------------
+DROP TABLE IF EXISTS `specific`;
+CREATE TABLE `specific` (
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `element_id` bigint(20) DEFAULT NULL COMMENT '因子要素id',
+  `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
+  `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
+  `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `updater` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '最后更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='细则';
+
+-- ----------------------------
+-- Records of specific
+-- ----------------------------
+INSERT INTO `specific` VALUES ('1', '1', '投诉发生', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('2', '2', '削峰填谷', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('3', '3', '派工管理', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('4', '4', '预约优先', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('5', '4', '专属工位', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('6', '5', '交付时间预估 清晰解释 钥匙管理', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('7', '7', '预约记录 预约确认 主管监控', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('8', '8', '话术培训', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('9', '8', '录音抽查', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('10', '9', '预约提醒', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('11', '10', '晨会准备', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('12', '10', 'SA准备', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('13', '11', '外置接待台', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('14', '12', '话术培训', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('15', '13', '三级质检执行', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('16', '13', '三级质检研讨会', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('17', '14', '及时投诉处理 投诉记录 投诉专题会 投诉改善', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('18', '15', '道路救援及时性 道路救援专业性', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('19', '16', '沟通准备', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('20', '8', '微笑沟通', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('21', '17', '欢迎看板 数字化欢迎', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('22', '18', '专属服务顾问 双顾问交车', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('23', '19', '预约优惠', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('24', '20', '菱菱邦进度查询 人工进度更新', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('25', '11', '微笑服务', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('26', '21', '及时接待', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('27', '22', '预检邀约 免费项目提醒', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('28', '12', '环车检查 问题诊断 旧件沟通', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('29', '23', '逐条解释 标准项目 竞品价格解释', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('30', '25', '微笑接待', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('31', '26', '项目交车 超值惊喜服务 项目验收、试车', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('32', '27', '旧件展示', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('33', '28', '洗车管理', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('34', '29', '结算礼仪', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('35', '30', '客服回访 服务顾问回访', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('36', '31', '客户停车区 预检验车区 交车区 专业车位管理', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('37', '32', '服务配置 功能配置 娱乐设置', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('38', '33', '增项沟通', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('39', '34', '客户忠诚度活动', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('40', '35', '专属客户服务', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+INSERT INTO `specific` VALUES ('41', '36', '车辆流转监控 步话机提醒', '', '1', '2020-11-09 17:04:33', '1', '2020-11-09 17:04:33');
+
+-- ----------------------------
+-- Table structure for specific_score
+-- ----------------------------
+DROP TABLE IF EXISTS `specific_score`;
+CREATE TABLE `specific_score` (
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
+  `store_id` bigint(20) DEFAULT NULL COMMENT 'storeId',
+  `specific_id` bigint(20) DEFAULT NULL COMMENT '细则id',
+  `evaluate_score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '考核项',
+  `bonus_score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '加分项',
+  `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
+  `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `updater` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '最后更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='细则-分数关系表';
+
+-- ----------------------------
+-- Records of specific_score
+-- ----------------------------
+INSERT INTO `specific_score` VALUES ('1', '202011', '1158', '1', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('2', '202011', '1158', '2', '600', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('3', '202011', '1158', '3', '', '200', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('4', '202011', '1158', '4', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('5', '202011', '1158', '5', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('6', '202011', '1158', '6', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('7', '202011', '1158', '7', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('8', '202011', '1158', '8', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('9', '202011', '1158', '9', '400', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('10', '202011', '1158', '10', '', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('11', '202011', '1158', '11', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('12', '202011', '1158', '12', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('13', '202011', '1158', '13', '600', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('14', '202011', '1158', '14', '', '200', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('15', '202011', '1158', '15', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('16', '202011', '1158', '16', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('17', '202011', '1158', '17', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('18', '202011', '1158', '18', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('19', '202011', '1158', '19', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('20', '202011', '1158', '20', '400', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('21', '202011', '1158', '21', '', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('22', '202011', '1158', '22', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('23', '202011', '1158', '23', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('24', '202011', '1158', '24', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('25', '202011', '1158', '25', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('26', '202011', '1158', '26', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('27', '202011', '1158', '27', '400', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('28', '202011', '1158', '28', '', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('29', '202011', '1158', '29', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('30', '202011', '1158', '30', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('31', '202011', '1158', '31', '600', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('32', '202011', '1158', '32', '', '200', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('33', '202011', '1158', '33', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('34', '202011', '1158', '34', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('35', '202011', '1158', '35', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('36', '202011', '1158', '36', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('37', '202011', '1158', '37', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('38', '202011', '1158', '38', '400', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('39', '202011', '1158', '39', '', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('40', '202011', '1158', '40', '800', '', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+INSERT INTO `specific_score` VALUES ('41', '202011', '1158', '41', '', '100', '', '1', '2020-11-09 17:07:41', '1', '2020-11-09 17:07:41');
+
+-- ----------------------------
+-- Table structure for specific_score_channel
+-- ----------------------------
+DROP TABLE IF EXISTS `specific_score_channel`;
+CREATE TABLE `specific_score_channel` (
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
+  `store_id` bigint(20) DEFAULT NULL COMMENT 'storeId',
+  `specific_id` bigint(20) DEFAULT NULL COMMENT '细则id',
+  `channel_id` bigint(20) DEFAULT NULL COMMENT '渠道id',
+  `score_type` bit(1) DEFAULT NULL COMMENT '成绩类型：1.考核项目 2. 加分项',
+  `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分数',
+  `grade` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '等级',
+  `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
+  `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `updater` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '最后更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='细则-分渠道得分关系表';
+
+-- ----------------------------
+-- Records of specific_score_channel
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for store
 -- ----------------------------
 DROP TABLE IF EXISTS `store`;
 CREATE TABLE `store` (
-  `id` bigint(11) NOT NULL COMMENT '主键id',
+  `id` bigint(20) NOT NULL COMMENT '主键id',
   `code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '单位code',
   `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '经销店名',
-  `scope_id` bigint(11) DEFAULT NULL COMMENT '范围id',
+  `scope_id` bigint(20) DEFAULT NULL COMMENT '范围id',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '上级id',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',

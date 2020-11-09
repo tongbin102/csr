@@ -11,37 +11,40 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 分渠道因子要素分布表
+ * 细则-分渠道得分关系表
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-09
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("element_score_channel")
-@ApiModel(value="ElementScoreChannelPo对象", description="分渠道因子要素分布表")
-public class ElementScoreChannelPo extends BasePo {
+@TableName("specific_score_channel")
+@ApiModel(value="SpecificScoreChannelPo对象", description="细则-分渠道得分关系表")
+public class SpecificScoreChannelPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "期数")
     private String period;
 
-    @ApiModelProperty(value = "范围id")
-    private Integer scopeId;
+    @ApiModelProperty(value = "storeId")
+    private Long storeId;
 
-    @ApiModelProperty(value = "名称")
-    private String name;
+    @ApiModelProperty(value = "细则id")
+    private Long specificId;
 
-    @ApiModelProperty(value = "因子要素id")
-    private String elementId;
-
-    @ApiModelProperty(value = "分因子分数")
-    private String score;
+    @ApiModelProperty(value = "渠道id")
+    private Long channelId;
 
     @ApiModelProperty(value = "成绩类型：1.考核项目 2. 加分项")
     private Boolean scoreType;
+
+    @ApiModelProperty(value = "分数")
+    private String score;
+
+    @ApiModelProperty(value = "等级")
+    private String grade;
 
 
 }
