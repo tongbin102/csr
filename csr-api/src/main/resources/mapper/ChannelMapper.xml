@@ -19,6 +19,7 @@
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
                     <result column="ctype" property="ctype"/>
+                    <result column="question_prefix" property="questionPrefix"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -29,7 +30,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, name, ctype
+            code, name, ctype, question_prefix
         </sql>
 
 </mapper>

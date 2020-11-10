@@ -7,19 +7,22 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.QuestionMonitorMapper;
 import com.project.csr.model.po.QuestionMonitorPo;
+import com.project.csr.model.po.QuestionSurveyPo;
 import com.project.csr.model.vo.QuestionMonitorVo;
 import com.project.csr.service.QuestionMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
- * TSS-3 过程监控要求 服务实现类
+ * 过程监控-题目明细表 服务实现类
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Service
 public class QuestionMonitorServiceImpl extends ServiceImpl<QuestionMonitorMapper, QuestionMonitorPo> implements QuestionMonitorService {
@@ -43,6 +46,13 @@ public class QuestionMonitorServiceImpl extends ServiceImpl<QuestionMonitorMappe
         LambdaQueryWrapper<QuestionMonitorPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionMonitorPo::getId, id);
         return questionMonitorMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public List<QuestionMonitorPo> findListBySpecificId(Long specificId) {
+        LambdaQueryWrapper<QuestionMonitorPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(QuestionMonitorPo::getSpecificId, specificId);
+        return questionMonitorMapper.selectList(wrapper);
     }
 }
 

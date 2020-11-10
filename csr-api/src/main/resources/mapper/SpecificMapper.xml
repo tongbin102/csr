@@ -17,7 +17,8 @@
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
                     <result column="element_id" property="elementId"/>
-                    <result column="name" property="name"/>
+                    <result column="desc" property="desc"/>
+                    <result column="score_type" property="scoreType"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -28,7 +29,7 @@
                 create_time,
                 updater,
                 update_time,
-            element_id, name
+            element_id, desc, score_type
         </sql>
 
 </mapper>

@@ -10,12 +10,12 @@ import java.io.Serializable;
 
 /**
  * <p>
- * TSS-4 服务助手及道路救援 信息
+ * 服务助手-题目明细表 信息
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Data
 @Accessors(chain = true)

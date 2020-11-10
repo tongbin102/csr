@@ -8,11 +8,11 @@ import com.project.csr.cache.MybatisRedisCache;
 
 /**
  * <p>
- * TSS-3 过程监控要求 Mapper 接口
+ * 过程监控-题目明细表 Mapper 接口
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @CacheNamespace(implementation = MybatisRedisCache.class)
 public interface QuestionMonitorMapper extends BaseMapper<QuestionMonitorPo> {

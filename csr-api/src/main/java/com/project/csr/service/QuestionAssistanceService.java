@@ -4,16 +4,19 @@ package com.project.csr.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.csr.model.po.QuestionAssistancePo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.project.csr.model.po.QuestionSurveyPo;
 import com.project.csr.model.vo.QuestionAssistanceVo;
+
+import java.util.List;
 
 /**
  * <p>
- * TSS-4 服务助手及道路救援 服务类
+ * 服务助手-题目明细表 服务类
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 public interface QuestionAssistanceService extends IService<QuestionAssistancePo> {
 
@@ -23,7 +26,7 @@ public interface QuestionAssistanceService extends IService<QuestionAssistancePo
      * @param questionAssistanceVo 查询条件
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.QuestionAssistancePo>
      * @author bin.tong
-     * @since 2020-11-05
+     * @since 2020-11-10
      */
     IPage<QuestionAssistancePo> findListByPage(QuestionAssistanceVo questionAssistanceVo);
 
@@ -33,7 +36,9 @@ public interface QuestionAssistanceService extends IService<QuestionAssistancePo
      * @param id 主键id
      * @return boolean
      * @author bin.tong
-     * @since 2020-11-05
+     * @since 2020-11-10
      */
     boolean prohibitById(String id);
+
+    List<QuestionAssistancePo> findListBySpecificId(Long specificId);
 }

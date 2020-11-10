@@ -11,24 +11,24 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * TSS-4 服务助手及道路救援
+ * 服务助手-题目明细表
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("question_assistance")
-@ApiModel(value="QuestionAssistancePo对象", description="TSS-4 服务助手及道路救援")
+@ApiModel(value="QuestionAssistancePo对象", description="服务助手-题目明细表")
 public class QuestionAssistancePo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "所属渠道")
-    private Long channelId;
+    @ApiModelProperty(value = "细则id")
+    private Long specificId;
 
-    @ApiModelProperty(value = "问题序号")
+    @ApiModelProperty(value = "题目序号")
     private String seriesNo;
 
     @ApiModelProperty(value = "分析要点")
@@ -38,7 +38,7 @@ public class QuestionAssistancePo extends BasePo {
     private String kpi;
 
     @ApiModelProperty(value = "KPI说明")
-    private String desc;
+    private String kpiDesc;
 
     @ApiModelProperty(value = "优秀")
     private String excellent;
@@ -51,9 +51,6 @@ public class QuestionAssistancePo extends BasePo {
 
     @ApiModelProperty(value = "薄弱")
     private String weak;
-
-    @ApiModelProperty(value = "类别")
-    private String scoreType;
 
 
 }

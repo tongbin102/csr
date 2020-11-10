@@ -16,16 +16,15 @@
                 <result column="create_time" property="createTime"/>
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
-                    <result column="channel_id" property="channelId"/>
+                    <result column="specific_id" property="specificId"/>
                     <result column="series_no" property="seriesNo"/>
                     <result column="analysis_point" property="analysisPoint"/>
                     <result column="kpi" property="kpi"/>
-                    <result column="desc" property="desc"/>
+                    <result column="kpi_desc" property="kpiDesc"/>
                     <result column="excellent" property="excellent"/>
                     <result column="good" property="good"/>
                     <result column="standard" property="standard"/>
                     <result column="weak" property="weak"/>
-                    <result column="score_type" property="scoreType"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -36,7 +35,7 @@
                 create_time,
                 updater,
                 update_time,
-            channel_id, series_no, analysis_point, kpi, desc, excellent, good, standard, weak, score_type
+            specific_id, series_no, analysis_point, kpi, kpi_desc, excellent, good, standard, weak
         </sql>
 
 </mapper>

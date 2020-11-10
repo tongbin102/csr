@@ -11,31 +11,31 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * TSS-3 过程监控要求
+ * 过程监控-题目明细表
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("question_monitor")
-@ApiModel(value="QuestionMonitorPo对象", description="TSS-3 过程监控要求")
+@ApiModel(value="QuestionMonitorPo对象", description="过程监控-题目明细表")
 public class QuestionMonitorPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "所属渠道")
-    private Long channelId;
+    @ApiModelProperty(value = "细则id")
+    private Long specificId;
 
-    @ApiModelProperty(value = "问题序号")
+    @ApiModelProperty(value = "题目序号")
     private String seriesNo;
 
-    @ApiModelProperty(value = "调研问题")
-    private String desc;
+    @ApiModelProperty(value = "考核方法建议")
+    private String suggestion;
 
     @ApiModelProperty(value = "相关说明")
-    private String illustration;
+    private String desc;
 
     @ApiModelProperty(value = "优秀")
     private String excellent;
@@ -48,9 +48,6 @@ public class QuestionMonitorPo extends BasePo {
 
     @ApiModelProperty(value = "薄弱")
     private String weak;
-
-    @ApiModelProperty(value = "类别")
-    private String scoreType;
 
 
 }

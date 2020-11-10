@@ -30,15 +30,15 @@ public class CodeGenerator {
     public static final String MODULE_PACAKAGE = "csr";
     public static final String TABLE_PREFIX = "";
     public String[] table_names = {
-            // "channel", "factor", "element", "factor_channel_question", "scope",
+            // "channel", "factor", "element", "scope",
             // "element_score", "element_score_channel",
-            // "question_assistance", "question_monitor", "question_survey",
             // "score",
             // "store",
             // "score_channel", "score_factor", "score_question",
             // "role", "user",
             // "specific",
-            "specific_score","specific_score_channel"
+            // "specific_score","specific_score_channel",
+            "question_assistance", "question_monitor", "question_survey"
     };
 
     private static final String JDBC_URL = "jdbc:mysql://10.55.3.4:3306/csr?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8";

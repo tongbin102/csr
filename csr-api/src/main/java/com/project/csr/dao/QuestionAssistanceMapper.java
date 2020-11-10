@@ -8,11 +8,11 @@ import com.project.csr.cache.MybatisRedisCache;
 
 /**
  * <p>
- * TSS-4 服务助手及道路救援 Mapper 接口
+ * 服务助手-题目明细表 Mapper 接口
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @CacheNamespace(implementation = MybatisRedisCache.class)
 public interface QuestionAssistanceMapper extends BaseMapper<QuestionAssistancePo> {

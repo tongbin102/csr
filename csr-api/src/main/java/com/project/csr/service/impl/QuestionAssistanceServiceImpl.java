@@ -7,19 +7,22 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.QuestionAssistanceMapper;
 import com.project.csr.model.po.QuestionAssistancePo;
+import com.project.csr.model.po.QuestionSurveyPo;
 import com.project.csr.model.vo.QuestionAssistanceVo;
 import com.project.csr.service.QuestionAssistanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
- * TSS-4 服务助手及道路救援 服务实现类
+ * 服务助手-题目明细表 服务实现类
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Service
 public class QuestionAssistanceServiceImpl extends ServiceImpl<QuestionAssistanceMapper, QuestionAssistancePo> implements QuestionAssistanceService {
@@ -43,6 +46,13 @@ public class QuestionAssistanceServiceImpl extends ServiceImpl<QuestionAssistanc
         LambdaQueryWrapper<QuestionAssistancePo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionAssistancePo::getId, id);
         return questionAssistanceMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public List<QuestionAssistancePo> findListBySpecificId(Long specificId) {
+        LambdaQueryWrapper<QuestionAssistancePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(QuestionAssistancePo::getSpecificId, specificId);
+        return questionAssistanceMapper.selectList(wrapper);
     }
 }
 

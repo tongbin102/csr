@@ -10,12 +10,12 @@ import java.io.Serializable;
 
 /**
  * <p>
- * TSS-3 过程监控要求 信息
+ * 过程监控-题目明细表 信息
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Data
 @Accessors(chain = true)

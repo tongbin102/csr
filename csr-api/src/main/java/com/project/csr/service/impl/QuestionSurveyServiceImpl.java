@@ -12,14 +12,16 @@ import com.project.csr.service.QuestionSurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
- * TSS-2 调研问卷评分规则配置表 服务实现类
+ * 客户调研-题目明细表 服务实现类
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Service
 public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper, QuestionSurveyPo> implements QuestionSurveyService {
@@ -43,6 +45,13 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
         LambdaQueryWrapper<QuestionSurveyPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionSurveyPo::getId, id);
         return questionSurveyMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public List<QuestionSurveyPo> findListBySpecificId(Long specificId) {
+        LambdaQueryWrapper<QuestionSurveyPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(QuestionSurveyPo::getSpecificId, specificId);
+        return questionSurveyMapper.selectList(wrapper);
     }
 }
 

@@ -11,27 +11,27 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * TSS-2 调研问卷评分规则配置表
+ * 客户调研-题目明细表
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("question_survey")
-@ApiModel(value="QuestionSurveyPo对象", description="TSS-2 调研问卷评分规则配置表")
+@ApiModel(value="QuestionSurveyPo对象", description="客户调研-题目明细表")
 public class QuestionSurveyPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "所属渠道")
-    private Long channelId;
+    @ApiModelProperty(value = "细则id")
+    private Long specificId;
 
-    @ApiModelProperty(value = "问题序号")
+    @ApiModelProperty(value = "题目序号")
     private String seriesNo;
 
-    @ApiModelProperty(value = "调研问题")
+    @ApiModelProperty(value = "题目描述")
     private String desc;
 
     @ApiModelProperty(value = "答案1")
@@ -66,9 +66,6 @@ public class QuestionSurveyPo extends BasePo {
 
     @ApiModelProperty(value = "薄弱")
     private String weak;
-
-    @ApiModelProperty(value = "类别")
-    private String scoreType;
 
 
 }

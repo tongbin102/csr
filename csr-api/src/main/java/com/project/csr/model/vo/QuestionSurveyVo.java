@@ -10,12 +10,12 @@ import java.io.Serializable;
 
 /**
  * <p>
- * TSS-2 调研问卷评分规则配置表 信息
+ * 客户调研-题目明细表 信息
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-10
  */
 @Data
 @Accessors(chain = true)

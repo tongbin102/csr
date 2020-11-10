@@ -29,7 +29,10 @@ public class SpecificPo extends BasePo {
     private Long elementId;
 
     @ApiModelProperty(value = "细则描述")
-    private String name;
+    private String desc;
+
+    @ApiModelProperty(value = "类别")
+    private String score_type;
 
 
 }
