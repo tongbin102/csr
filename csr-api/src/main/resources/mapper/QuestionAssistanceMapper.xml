@@ -16,11 +16,11 @@
                 <result column="create_time" property="createTime"/>
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
-                    <result column="specific_id" property="specificId"/>
+                    <result column="regulation_id" property="regulationId"/>
                     <result column="series_no" property="seriesNo"/>
                     <result column="analysis_point" property="analysisPoint"/>
                     <result column="kpi" property="kpi"/>
-                    <result column="kpi_desc" property="kpiDesc"/>
+                    <result column="kpi_description" property="kpiDescription"/>
                     <result column="excellent" property="excellent"/>
                     <result column="good" property="good"/>
                     <result column="standard" property="standard"/>
@@ -35,7 +35,7 @@
                 create_time,
                 updater,
                 update_time,
-            specific_id, series_no, analysis_point, kpi, kpi_desc, excellent, good, standard, weak
+            regulationId, series_no, analysis_point, kpi, kpi_description, excellent, good, standard, weak
         </sql>
 
 </mapper>

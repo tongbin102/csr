@@ -1,7 +1,7 @@
 package com.project.csr.model.vo;
 
 
-import com.project.csr.model.po.SpecificScoreChannelPo;
+import com.project.csr.model.po.RegulationScoreChannelPo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,17 +15,17 @@ import java.io.Serializable;
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-09
+ * @since 2020-11-11
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class SpecificScoreChannelVo extends SpecificScoreChannelPo implements Serializable {
+public class RegulationScoreChannelVo extends RegulationScoreChannelPo implements Serializable {
 
     private Long elementId;
 
     private String elementName;
 
-    private String specificName;
+    private String regulationDescription;
 
 }

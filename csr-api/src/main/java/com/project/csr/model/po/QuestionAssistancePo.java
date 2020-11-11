@@ -26,7 +26,7 @@ public class QuestionAssistancePo extends BasePo {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "细则id")
-    private Long specificId;
+    private Long regulationId;
 
     @ApiModelProperty(value = "题目序号")
     private String seriesNo;
@@ -38,7 +38,7 @@ public class QuestionAssistancePo extends BasePo {
     private String kpi;
 
     @ApiModelProperty(value = "KPI说明")
-    private String kpiDesc;
+    private String kpiDescription;
 
     @ApiModelProperty(value = "优秀")
     private String excellent;

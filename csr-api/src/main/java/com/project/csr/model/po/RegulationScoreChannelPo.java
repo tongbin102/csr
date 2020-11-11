@@ -15,13 +15,13 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-09
+ * @since 2020-11-11
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("specific_score_channel")
-@ApiModel(value="SpecificScoreChannelPo对象", description="细则-分渠道得分关系表")
-public class SpecificScoreChannelPo extends BasePo {
+@TableName("regulation_score_channel")
+@ApiModel(value="RegulationScoreChannelPo对象", description="细则-分渠道得分关系表")
+public class RegulationScoreChannelPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class SpecificScoreChannelPo extends BasePo {
     private Long storeId;
 
     @ApiModelProperty(value = "细则id")
-    private Long specificId;
+    private Long regulationId;
 
     @ApiModelProperty(value = "渠道id")
     private Long channelId;

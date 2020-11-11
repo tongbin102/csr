@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.QuestionMonitorMapper;
 import com.project.csr.model.po.QuestionMonitorPo;
-import com.project.csr.model.po.QuestionSurveyPo;
 import com.project.csr.model.vo.QuestionMonitorVo;
 import com.project.csr.service.QuestionMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- * 过程监控-题目明细表 服务实现类
+ * 过程监控评分规则表 服务实现类
  * </p>
  *
  * @author bin.tong
@@ -49,9 +48,9 @@ public class QuestionMonitorServiceImpl extends ServiceImpl<QuestionMonitorMappe
     }
 
     @Override
-    public List<QuestionMonitorPo> findListBySpecificId(Long specificId) {
+    public List<QuestionMonitorPo> findListByRegulationId(Long regulationId) {
         LambdaQueryWrapper<QuestionMonitorPo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(QuestionMonitorPo::getSpecificId, specificId);
+        wrapper.eq(QuestionMonitorPo::getRegulationId, regulationId);
         return questionMonitorMapper.selectList(wrapper);
     }
 }

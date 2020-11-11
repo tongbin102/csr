@@ -1,0 +1,48 @@
+package com.project.csr.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.project.csr.dao.RegulationMapper;
+import com.project.csr.model.po.RegulationPo;
+import com.project.csr.model.vo.RegulationVo;
+import com.project.csr.service.RegulationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * 细则表 服务实现类
+ * </p>
+ *
+ * @author bin.tong
+ * @version v1.0
+ * @since 2020-11-11
+ */
+@Service
+public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, RegulationPo> implements RegulationService {
+
+    @Autowired
+    private RegulationMapper regulationMapper;
+
+    @Override
+    public IPage<RegulationPo> findListByPage(RegulationVo regulationVo) {
+        IPage<RegulationPo> page = new Page<>(regulationVo.getPageNo(), regulationVo.getPageSize());
+        LambdaQueryWrapper<RegulationPo> wrapper = Wrappers.lambdaQuery();
+        // 查询条件
+        IPage<RegulationPo> selectPage = regulationMapper.selectPage(page, wrapper);
+        return selectPage;
+    }
+
+    @Override
+    public boolean prohibitById(String id) {
+        RegulationPo po = new RegulationPo();
+        po.setValidInd(false);
+        LambdaQueryWrapper<RegulationPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(RegulationPo::getId, id);
+        return regulationMapper.update(po, wrapper) >= 1;
+    }
+}
+

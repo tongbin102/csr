@@ -26,7 +26,7 @@ public class QuestionMonitorPo extends BasePo {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "细则id")
-    private Long specificId;
+    private Long regulationId;
 
     @ApiModelProperty(value = "题目序号")
     private String seriesNo;
@@ -35,7 +35,7 @@ public class QuestionMonitorPo extends BasePo {
     private String suggestion;
 
     @ApiModelProperty(value = "相关说明")
-    private String desc;
+    private String description;
 
     @ApiModelProperty(value = "优秀")
     private String excellent;
@@ -48,6 +48,5 @@ public class QuestionMonitorPo extends BasePo {
 
     @ApiModelProperty(value = "薄弱")
     private String weak;
-
 
 }

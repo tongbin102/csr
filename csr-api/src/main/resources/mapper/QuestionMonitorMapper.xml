@@ -16,10 +16,10 @@
                 <result column="create_time" property="createTime"/>
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
-                    <result column="specific_id" property="specificId"/>
+                    <result column="regulation_id" property="regulationId"/>
                     <result column="series_no" property="seriesNo"/>
                     <result column="suggestion" property="suggestion"/>
-                    <result column="desc" property="desc"/>
+                    <result column="description" property="description"/>
                     <result column="excellent" property="excellent"/>
                     <result column="good" property="good"/>
                     <result column="standard" property="standard"/>
@@ -34,7 +34,7 @@
                 create_time,
                 updater,
                 update_time,
-            specific_id, series_no, suggestion, desc, excellent, good, standard, weak
+            regulation_id, series_no, suggestion, description, excellent, good, standard, weak
         </sql>
 
 </mapper>

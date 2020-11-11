@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- * 服务助手-题目明细表 服务类
+ * 服务助手评分规则表 服务类
  * </p>
  *
  * @author bin.tong
@@ -40,5 +40,11 @@ public interface QuestionAssistanceService extends IService<QuestionAssistancePo
      */
     boolean prohibitById(String id);
 
-    List<QuestionAssistancePo> findListBySpecificId(Long specificId);
+    /**
+     * 通过因子要素细则id获取列表
+     *
+     * @param regulationId
+     * @return
+     */
+    List<QuestionAssistancePo> findListByRegulationId(Long regulationId);
 }

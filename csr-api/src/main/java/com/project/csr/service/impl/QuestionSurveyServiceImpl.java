@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- * 客户调研-题目明细表 服务实现类
+ * 客户调研评分规则表 服务实现类
  * </p>
  *
  * @author bin.tong
@@ -48,9 +48,9 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
     }
 
     @Override
-    public List<QuestionSurveyPo> findListBySpecificId(Long specificId) {
+    public List<QuestionSurveyPo> findListByRegulationId(Long regulationId) {
         LambdaQueryWrapper<QuestionSurveyPo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(QuestionSurveyPo::getSpecificId, specificId);
+        wrapper.eq(QuestionSurveyPo::getRegulationId, regulationId);
         return questionSurveyMapper.selectList(wrapper);
     }
 }

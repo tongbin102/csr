@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- * 过程监控-题目明细表 服务类
+ * 过程监控评分规则表 服务类
  * </p>
  *
  * @author bin.tong
@@ -40,5 +40,11 @@ public interface QuestionMonitorService extends IService<QuestionMonitorPo> {
      */
     boolean prohibitById(String id);
 
-    List<QuestionMonitorPo> findListBySpecificId(Long specificId);
+    /**
+     * 通过因子要素细则id获取列表
+     *
+     * @param regulationId
+     * @return
+     */
+    List<QuestionMonitorPo> findListByRegulationId(Long regulationId);
 }

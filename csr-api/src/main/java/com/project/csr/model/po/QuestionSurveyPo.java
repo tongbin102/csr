@@ -26,13 +26,13 @@ public class QuestionSurveyPo extends BasePo {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "细则id")
-    private Long specificId;
+    private Long regulationId;
 
     @ApiModelProperty(value = "题目序号")
     private String seriesNo;
 
     @ApiModelProperty(value = "题目描述")
-    private String desc;
+    private String description;
 
     @ApiModelProperty(value = "答案1")
     private String answer1;

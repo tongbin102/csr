@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.QuestionAssistanceMapper;
 import com.project.csr.model.po.QuestionAssistancePo;
-import com.project.csr.model.po.QuestionSurveyPo;
 import com.project.csr.model.vo.QuestionAssistanceVo;
 import com.project.csr.service.QuestionAssistanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- * 服务助手-题目明细表 服务实现类
+ * 服务助手评分规则表 服务实现类
  * </p>
  *
  * @author bin.tong
@@ -49,9 +48,9 @@ public class QuestionAssistanceServiceImpl extends ServiceImpl<QuestionAssistanc
     }
 
     @Override
-    public List<QuestionAssistancePo> findListBySpecificId(Long specificId) {
+    public List<QuestionAssistancePo> findListByRegulationId(Long regulationId) {
         LambdaQueryWrapper<QuestionAssistancePo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(QuestionAssistancePo::getSpecificId, specificId);
+        wrapper.eq(QuestionAssistancePo::getRegulationId, regulationId);
         return questionAssistanceMapper.selectList(wrapper);
     }
 }

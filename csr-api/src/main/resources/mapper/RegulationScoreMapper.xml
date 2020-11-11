@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.csr.dao.SpecificScoreMapper">
+<mapper namespace="com.project.csr.dao.RegulationScoreMapper">
 
         <!-- 开启二级缓存 -->
         <!-- 注意：默认为 flushCache="true" useCache="true" -->
         <!-- 1.自定义查询方法时，必须 flushCache="false" useCache="false"， -->
         <!-- 2.更新，添加，删除时，必须 flushCache="true" useCache="true" 或者不添加 -->
         <!-- 3.请务修改 cache-ref 中的配置 -->
-        <cache-ref namespace="com.project.csr.dao.SpecificScoreMapper"/>
+        <cache-ref namespace="com.project.csr.dao.RegulationScoreMapper"/>
         <!-- 通用查询映射结果 -->
-        <resultMap id="BaseResultMap" type="com.project.csr.model.po.SpecificScorePo">
+        <resultMap id="BaseResultMap" type="com.project.csr.model.po.RegulationScorePo">
                 <result column="id" property="id"/>
                 <result column="valid_ind" property="validInd"/>
                 <result column="creator" property="creator"/>
@@ -18,7 +18,7 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="period" property="period"/>
                     <result column="store_id" property="storeId"/>
-                    <result column="specific_id" property="specificId"/>
+                    <result column="regulation_id" property="regulationId"/>
                     <result column="evaluate_score" property="evaluateScore"/>
                     <result column="bonus_score" property="bonusScore"/>
         </resultMap>
@@ -31,16 +31,17 @@
                 create_time,
                 updater,
                 update_time,
-            period, store_id, specific_id, evaluate_score, bonus_score
+            period, store_id, regulation_id, evaluate_score, bonus_score
         </sql>
-    <select id="findVoList" resultType="com.project.csr.model.vo.SpecificScoreVo">
+
+    <select id="findVoList" resultType="com.project.csr.model.vo.RegulationScoreVo">
         SELECT score.id,
                score.period,
                score.store_id,
                e.id AS element_id,
                e.`name` AS element_name,
-               score.specific_id,
-               s.`name` AS specific_name,
+               score.regulation_id,
+               r.`description` AS regulation_description,
                score.evaluate_score,
                score.bonus_score,
                score.valid_ind,
@@ -49,10 +50,10 @@
                score.updater,
                score.update_time
         FROM element e
-                 LEFT JOIN `specific` s
-                           ON s.element_id = e.id
-                 LEFT JOIN specific_score score
-                           ON score.specific_id = s.id
+        LEFT JOIN regulation r
+        ON r.element_id = e.id
+        LEFT JOIN regulation_score score
+        ON score.regulation_id = r.id
         WHERE score.period = #{period}
           AND e.factor_id = #{factor_id}
           AND score.store_id = #{store_id}

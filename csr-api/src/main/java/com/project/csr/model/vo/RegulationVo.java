@@ -1,7 +1,7 @@
 package com.project.csr.model.vo;
 
 
-import com.project.csr.model.po.SpecificPo;
+import com.project.csr.model.po.RegulationPo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -10,16 +10,16 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 细则 信息
+ * 细则表 信息
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-09
+ * @since 2020-11-11
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class SpecificVo extends SpecificPo implements Serializable {
+public class RegulationVo extends RegulationPo implements Serializable {
 
 }
