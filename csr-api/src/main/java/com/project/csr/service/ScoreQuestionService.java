@@ -8,12 +8,12 @@ import com.project.csr.model.vo.ScoreQuestionVo;
 
 /**
  * <p>
- * 分项成绩统计表 服务类
+ * 门店题目-得分表 服务类
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-11
  */
 public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
 
@@ -23,7 +23,7 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      * @param scoreQuestionVo 查询条件
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.ScoreQuestionPo>
      * @author bin.tong
-     * @since 2020-11-05
+     * @since 2020-11-11
      */
     IPage<ScoreQuestionPo> findListByPage(ScoreQuestionVo scoreQuestionVo);
 
@@ -33,7 +33,7 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      * @param id 主键id
      * @return boolean
      * @author bin.tong
-     * @since 2020-11-05
+     * @since 2020-11-11
      */
     boolean prohibitById(String id);
 }

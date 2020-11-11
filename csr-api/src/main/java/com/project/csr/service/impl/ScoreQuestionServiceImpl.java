@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 分项成绩统计表 服务实现类
+ * 门店题目-得分表 服务实现类
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-11
  */
 @Service
 public class ScoreQuestionServiceImpl extends ServiceImpl<ScoreQuestionMapper, ScoreQuestionPo> implements ScoreQuestionService {

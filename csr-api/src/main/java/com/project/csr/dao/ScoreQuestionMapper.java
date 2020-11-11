@@ -8,11 +8,11 @@ import com.project.csr.cache.MybatisRedisCache;
 
 /**
  * <p>
- * 分项成绩统计表 Mapper 接口
+ * 门店题目-得分表 Mapper 接口
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-11
  */
 @CacheNamespace(implementation = MybatisRedisCache.class)
 public interface ScoreQuestionMapper extends BaseMapper<ScoreQuestionPo> {

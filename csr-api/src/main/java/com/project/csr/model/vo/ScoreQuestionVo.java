@@ -10,12 +10,12 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 分项成绩统计表 信息
+ * 门店题目-得分表 信息
  * </p>
  *
  * @author bin.tong
  * @version v1.0
- * @since 2020-11-05
+ * @since 2020-11-11
  */
 @Data
 @Accessors(chain = true)

@@ -11,16 +11,16 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 分项成绩统计表
+ * 门店题目-得分表
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-11
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("score_question")
-@ApiModel(value="ScoreQuestionPo对象", description="分项成绩统计表")
+@ApiModel(value="ScoreQuestionPo对象", description="门店题目-得分表")
 public class ScoreQuestionPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
@@ -28,17 +28,14 @@ public class ScoreQuestionPo extends BasePo {
     @ApiModelProperty(value = "期数")
     private String period;
 
-    @ApiModelProperty(value = "范围id")
-    private Long scopeId;
+    @ApiModelProperty(value = "store_id")
+    private Long storeId;
 
-    @ApiModelProperty(value = "名称")
-    private String name;
+    @ApiModelProperty(value = "题目id")
+    private Long questionId;
 
-    @ApiModelProperty(value = "问题code")
-    private String question;
-
-    @ApiModelProperty(value = "分因子分数")
-    private String score;
+    @ApiModelProperty(value = "等级")
+    private String grade;
 
 
 }

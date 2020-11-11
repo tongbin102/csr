@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 分项成绩统计表 前端控制器
+ * 门店题目-得分表 前端控制器
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
+ * @since 2020-11-11
  * @version v1.0
  */
 @Slf4j
-@Api(tags = {"ScoreQuestionApi"},value = "分项成绩统计表")
+@Api(tags = {"ScoreQuestionApi"},value = "门店题目-得分表")
 @RestController
 @RequestMapping("/scoreQuestionApi")
 public class ScoreQuestionApi {
@@ -30,20 +30,20 @@ public class ScoreQuestionApi {
     @Autowired
     private ScoreQuestionService scoreQuestionService;
 
-    @ApiOperation(value = "查询分页分项成绩统计表数据")
+    @ApiOperation(value = "查询分页门店题目-得分表数据")
     @PostMapping(value = "/findListByPage")
     public IPage<ScoreQuestionPo> findListByPage(@RequestBody ScoreQuestionVo scoreQuestionVo){
         return scoreQuestionService.findListByPage(scoreQuestionVo);
     }
 
-    @ApiOperation(value = "根据id查询分项成绩统计表数据")
+    @ApiOperation(value = "根据id查询门店题目-得分表数据")
     @GetMapping(value = "/findById/{id}")
     public ScoreQuestionVo findById(@PathVariable("id") String id){
         ScoreQuestionPo po = scoreQuestionService.getById(id);
         return ConvertUtils.convert(po, ScoreQuestionVo.class);
     }
 
-    @ApiOperation(value = "新增分项成绩统计表数据")
+    @ApiOperation(value = "新增门店题目-得分表数据")
     @PostMapping(value = "/add")
     public ScoreQuestionVo add(@RequestBody ScoreQuestionVo scoreQuestionVo){
         ScoreQuestionPo po = ConvertUtils.convert(scoreQuestionVo, ScoreQuestionPo.class);
@@ -51,13 +51,13 @@ public class ScoreQuestionApi {
         return ConvertUtils.convert(po, ScoreQuestionVo.class);
     }
 
-    @ApiOperation(value = "删除分项成绩统计表数据")
+    @ApiOperation(value = "删除门店题目-得分表数据")
     @DeleteMapping(value = "/delById/{id}")
     public boolean delById(@PathVariable("id") String id){
         return scoreQuestionService.removeById(id);
     }
 
-    @ApiOperation(value = "更新分项成绩统计表数据")
+    @ApiOperation(value = "更新门店题目-得分表数据")
     @PutMapping(value = "/update")
     public ScoreQuestionVo update(@RequestBody ScoreQuestionVo scoreQuestionVo){
         ScoreQuestionPo po = ConvertUtils.convert(scoreQuestionVo, ScoreQuestionPo.class);
@@ -65,7 +65,7 @@ public class ScoreQuestionApi {
         return ConvertUtils.convert(po, ScoreQuestionVo.class);
     }
 
-    @ApiOperation("根据ID禁用分项成绩统计表数据")
+    @ApiOperation("根据ID禁用门店题目-得分表数据")
     @PutMapping("/prohibitById/{id}")
     public boolean prohibitById(@PathVariable String id) {
         return scoreQuestionService.prohibitById(id);

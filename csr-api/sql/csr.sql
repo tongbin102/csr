@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-11-11 13:37:38
+Date: 2020-11-11 18:10:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,7 +38,7 @@ CREATE TABLE `channel` (
 -- ----------------------------
 INSERT INTO `channel` VALUES ('1', 'survey', '客户调研', 'S', '1', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
 INSERT INTO `channel` VALUES ('2', 'monitor', '过程监控', 'P', '1', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
-INSERT INTO `channel` VALUES ('3', 'assistant', '服务助手', 'F', '1', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
+INSERT INTO `channel` VALUES ('3', 'assistance', '服务助手', 'F', '1', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
 INSERT INTO `channel` VALUES ('4', null, '投诉扣分', 'C', '2', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
 INSERT INTO `channel` VALUES ('5', null, '道路救援扣分', 'R', '2', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
 INSERT INTO `channel` VALUES ('6', null, '数据准确扣分', 'D', '2', '', '1', '2020-10-30 12:31:03', '1', '2020-10-30 12:31:03');
@@ -244,7 +244,7 @@ INSERT INTO `question_survey` VALUES ('4', '7', 'S5-1', '在您预约进店前�
 INSERT INTO `question_survey` VALUES ('5', '9', 'S6-1', '当您预约入店刚到到前台时，您是否注意到店内有标注您的预约信息的预约欢迎看板：<br/>A）没有印象<br/>B）是的<br/>C）没有', '', '', '', '', '', '2', '>', '80%', '60%', '40%', '', '', null, null, null, null);
 INSERT INTO `question_survey` VALUES ('6', '12', 'S8-1', '您在经销店有专属的服务顾问么？您每次都是她/他为您接待服务么？<br/>A）否<br/>B）是', '', '', '', '', '', '2', '>', '80%', '60%', '40%', '', '', null, null, null, null);
 INSERT INTO `question_survey` VALUES ('7', '12', 'S8-2', '在您购买新车的首次提车的时候，除了销售顾问，有没有专门的服务顾问参加交车并后期为您持续提供专属服务？<br/>A）是<br/>B）否', '', '', '', '', '', '1', '>', '80%', '60%', '40%', '', '', null, null, null, null);
-INSERT INTO `question_survey` VALUES ('8', '15', 'S10-1', '作为预约客户，经销店有没有提供给你特别的好处：<br/>A）有，时间更高效，优先维修，预约明显感觉到服务和维修都很快<br/>B）有，在工时或配件上有折扣<br/>C）有，其他形式的优惠<br/>D）没有印象，不知道有这样的优惠<br/>', '10', '7', '5', '0', '', '综合分', '>', '8.5', '7', '6', '', '', null, null, null, null);
+INSERT INTO `question_survey` VALUES ('8', '1', 'S10-1', '作为预约客户，经销店有没有提供给你特别的好处：<br/>A）有，时间更高效，优先维修，预约明显感觉到服务和维修都很快<br/>B）有，在工时或配件上有折扣<br/>C）有，其他形式的优惠<br/>D）没有印象，不知道有这样的优惠<br/>', '10', '7', '5', '0', '', '综合分', '>', '8.5', '7', '6', '', '', null, null, null, null);
 INSERT INTO `question_survey` VALUES ('9', '16', 'S11-1', '在您在店等待期间，你是如何了解到你的车辆的维修进度的？<br/>A）我自己去车间查看<br/>B）服务顾问会每隔半个小时或一个小时给我通报更新一下<br/>C）我通过菱菱邦APP、经销店的液晶屏的进度看板去看进度的，比较准确<br/>D）没有什么很有效的方法让我了解我车辆的维修进度', '1', '0', '0', '1', '', '综合分', '<', '10%', '20%', '30%', '', '', null, null, null, null);
 INSERT INTO `question_survey` VALUES ('10', '18', 'S15-1', '在您到店维修时，接待您的服务顾问能否做到：<br/>A）热情微笑，主动迎前或站立问候接待您，而不是您先找他们才开始服务<br/>B）叫出您的姓名，根据您具体情况而给您更好的建议<br/>C）正常接待，没有太多好坏<br/>D）整体接待态度不好，体验不好', '0', '0', '1', '1', '', '综合分', '<', '10%', '20%', '30%', '', '', null, null, null, null);
 INSERT INTO `question_survey` VALUES ('11', '19', 'S17-1', '您进到售后前台，是否有人第一时间（30秒内）主动来接待您？而不是您与他们打招呼后才接待您<br/>A）是<br/>B）否<br/>', '', '', '', '', '', '1', '>', '80%', '60%', '40%', '', '', null, null, null, null);
@@ -421,7 +421,7 @@ CREATE TABLE `regulation_score_channel` (
 -- ----------------------------
 -- Records of regulation_score_channel
 -- ----------------------------
-INSERT INTO `regulation_score_channel` VALUES ('1', '202011', '1158', '1', '3', '2', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
+INSERT INTO `regulation_score_channel` VALUES ('1', '202011', '1158', '1', '1', '1', '', '优秀', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
 INSERT INTO `regulation_score_channel` VALUES ('2', '202011', '1158', '1', '2', '1', '', '薄弱', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
 INSERT INTO `regulation_score_channel` VALUES ('3', '202011', '1158', '2', '2', '1', '', '达标', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
 INSERT INTO `regulation_score_channel` VALUES ('4', '202011', '1158', '3', '1', '1', '', '优良', '', '1', '2020-11-09 19:54:10', '1', '2020-11-09 19:54:10');
@@ -747,6 +747,30 @@ INSERT INTO `score_channel` VALUES ('77', '202010', null, '10', '', '1', '800', 
 INSERT INTO `score_channel` VALUES ('78', '202010', null, '10', '', '2', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
 INSERT INTO `score_channel` VALUES ('79', '202010', null, '10', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
 INSERT INTO `score_channel` VALUES ('80', '202010', null, '10', '', '4', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('81', '202011', null, '11', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('82', '202011', null, '11', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('83', '202011', null, '11', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('84', '202011', null, '11', '', '4', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('85', '202010', null, '11', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('86', '202010', null, '11', '', '2', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('87', '202010', null, '11', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('88', '202010', null, '11', '', '4', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('89', '202011', null, '12', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('90', '202011', null, '12', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('91', '202011', null, '12', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('92', '202011', null, '12', '', '4', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('93', '202010', null, '12', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('94', '202010', null, '12', '', '2', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('95', '202010', null, '12', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('96', '202010', null, '12', '', '4', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('97', '202011', null, '1158', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('98', '202011', null, '1158', '', '2', '1000', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('99', '202011', null, '1158', '', '3', '600', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('100', '202011', null, '1158', '', '4', '900', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('101', '202010', null, '1158', '', '1', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('102', '202010', null, '1158', '', '2', '-200', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('103', '202010', null, '1158', '', '3', '800', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
+INSERT INTO `score_channel` VALUES ('104', '202010', null, '1158', '', '4', '700', null, null, '', '1', '2020-11-06 15:39:08', '1', '2020-11-06 15:39:08');
 
 -- ----------------------------
 -- Table structure for score_factor
@@ -937,21 +961,23 @@ DROP TABLE IF EXISTS `score_question`;
 CREATE TABLE `score_question` (
   `id` bigint(20) NOT NULL COMMENT '主键id',
   `period` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-  `scope_id` bigint(20) DEFAULT NULL COMMENT '范围id',
-  `name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
-  `question` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '问题code',
-  `score` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分因子分数',
+  `store_id` bigint(20) DEFAULT NULL COMMENT 'store_id',
+  `question_id` bigint(20) DEFAULT NULL COMMENT '题目id',
+  `grade` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '等级',
   `valid_ind` bit(1) DEFAULT NULL COMMENT '有效标识',
   `creator` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `updater` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
   `update_time` datetime DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='分项成绩统计表';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='门店题目-得分表';
 
 -- ----------------------------
 -- Records of score_question
 -- ----------------------------
+INSERT INTO `score_question` VALUES ('1', '202011', '1158', '1', '优秀', '', '1', '2020-11-11 18:09:54', '1', '2020-11-11 18:09:54');
+INSERT INTO `score_question` VALUES ('2', '202011', '1158', '2', '达标', '', '1', '2020-11-11 18:09:54', '1', '2020-11-11 18:09:54');
+INSERT INTO `score_question` VALUES ('3', '202011', '1158', '15', '薄弱', '', '1', '2020-11-11 18:09:54', '1', '2020-11-11 18:09:54');
 
 -- ----------------------------
 -- Table structure for store
