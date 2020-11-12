@@ -12,6 +12,8 @@ import com.project.csr.service.ScoreQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 门店题目-得分表 服务实现类
@@ -43,6 +45,18 @@ public class ScoreQuestionServiceImpl extends ServiceImpl<ScoreQuestionMapper, S
         LambdaQueryWrapper<ScoreQuestionPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScoreQuestionPo::getId, id);
         return scoreQuestionMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public ScoreQuestionPo findByStoreAndQuestionId(Long storeId, Long questionId) {
+        LambdaQueryWrapper<ScoreQuestionPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScoreQuestionPo::getStoreId, storeId)
+                .eq(ScoreQuestionPo::getQuestionId, questionId);
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionMapper.selectList(wrapper);
+        if(scoreQuestionPoList.size() > 0){
+            return scoreQuestionPoList.get(0);
+        }
+        return null;
     }
 }
 

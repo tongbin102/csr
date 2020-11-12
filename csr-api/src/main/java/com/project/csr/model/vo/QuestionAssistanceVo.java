@@ -22,4 +22,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class QuestionAssistanceVo extends QuestionAssistancePo implements Serializable {
 
+    private String scoreType;
+
 }

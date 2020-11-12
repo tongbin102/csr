@@ -1,5 +1,8 @@
 package com.project.csr.utils;
 
+import com.project.csr.common.model.BasePo;
+import org.springframework.util.StringUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,6 +11,7 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -198,5 +202,19 @@ public class ToolsUtils {
         int position = fileName.lastIndexOf(".");
         String extension = fileName.substring(position);
         return formatDate + random + extension;
+    }
+
+    /**
+     * 将list中对象的id拼接起来
+     *
+     * @param list
+     * @param delimiter
+     * @return
+     */
+    public static String getIdsFromList(List<? extends BasePo> list, String delimiter) {
+        if (StringUtils.isEmpty(delimiter)) {
+            delimiter = ",";
+        }
+        return list.stream().map(BasePo::getId).collect(Collectors.joining(delimiter));
     }
 }

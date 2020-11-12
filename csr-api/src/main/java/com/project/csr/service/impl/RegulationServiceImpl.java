@@ -12,6 +12,8 @@ import com.project.csr.service.RegulationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 细则表 服务实现类
@@ -43,6 +45,13 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
         LambdaQueryWrapper<RegulationPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(RegulationPo::getId, id);
         return regulationMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public List<RegulationPo> findListFromIds(String ids, String delimiter) {
+        LambdaQueryWrapper<RegulationPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(RegulationPo::getId, ids.split(delimiter));
+        return regulationMapper.selectList(wrapper);
     }
 }
 

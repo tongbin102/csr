@@ -6,6 +6,8 @@ import com.project.csr.model.po.RegulationPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.RegulationVo;
 
+import java.util.List;
+
 /**
  * <p>
  * 因子要素细则表 服务类
@@ -36,4 +38,11 @@ public interface RegulationService extends IService<RegulationPo> {
      * @since 2020-11-11
      */
     boolean prohibitById(String id);
+
+    /**
+     * 通过ids查询列表
+     * @param ids
+     * @return
+     */
+    List<RegulationPo> findListFromIds(String ids, String delimiter);
 }

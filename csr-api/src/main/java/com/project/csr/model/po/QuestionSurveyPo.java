@@ -67,5 +67,4 @@ public class QuestionSurveyPo extends BasePo {
     @ApiModelProperty(value = "薄弱")
     private String weak;
 
-
 }

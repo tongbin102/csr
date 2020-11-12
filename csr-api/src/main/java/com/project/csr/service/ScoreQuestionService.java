@@ -36,4 +36,7 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      * @since 2020-11-11
      */
     boolean prohibitById(String id);
+
+    ScoreQuestionPo findByStoreAndQuestionId(Long storeId, Long questionId);
+
 }

@@ -7,12 +7,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.QuestionSurveyMapper;
 import com.project.csr.model.po.QuestionSurveyPo;
+import com.project.csr.model.po.RegulationPo;
 import com.project.csr.model.vo.QuestionSurveyVo;
 import com.project.csr.service.QuestionSurveyService;
+import com.project.csr.service.RegulationService;
+import com.project.csr.utils.ConvertUtils;
+import com.project.csr.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -28,6 +33,9 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
 
     @Autowired
     private QuestionSurveyMapper questionSurveyMapper;
+
+    @Autowired
+    private RegulationService regulationService;
 
     @Override
     public IPage<QuestionSurveyPo> findListByPage(QuestionSurveyVo questionSurveyVo) {
@@ -48,10 +56,23 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
     }
 
     @Override
-    public List<QuestionSurveyPo> findListByRegulationId(Long regulationId) {
+    public List<QuestionSurveyVo> findListByRegulationId(Long regulationId) {
         LambdaQueryWrapper<QuestionSurveyPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionSurveyPo::getRegulationId, regulationId);
-        return questionSurveyMapper.selectList(wrapper);
+        List<QuestionSurveyVo> questionSurveyVoList = ConvertUtils.convert(questionSurveyMapper.selectList(wrapper), QuestionSurveyVo.class);
+        String delimiter = ",";
+        String ids = ToolsUtils.getIdsFromList(questionSurveyVoList, delimiter);
+        List<RegulationPo> regulationPoList = regulationService.findListFromIds(ids, delimiter);
+
+        questionSurveyVoList.stream().forEach(questionSurveyVo -> {
+
+            List<RegulationPo> list = regulationPoList.stream().filter(r -> r.getId().equals(questionSurveyVo.getRegulationId().toString())).collect(Collectors.toList());
+            if(list.size() > 0){
+                questionSurveyVo.setScoreType(list.get(0).getScoreType());
+            }
+        });
+
+        return questionSurveyVoList;
     }
 }
 

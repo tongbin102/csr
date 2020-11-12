@@ -76,7 +76,7 @@ public class QuestionSurveyApi {
     @RequestMapping("/findList")
     public List<QuestionSurveyVo> findList(@RequestParam(value = "regulation_id", required = false) Long regulationId) {
         if (null != regulationId) {
-            return ConvertUtils.convert(questionSurveyService.findListByRegulationId(regulationId), QuestionSurveyVo.class);
+            return questionSurveyService.findListByRegulationId(regulationId);
         }
         return ConvertUtils.convert(questionSurveyService.list(), QuestionSurveyVo.class);
     }

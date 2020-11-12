@@ -11,6 +11,7 @@ import com.project.csr.model.po.StorePo;
 import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.ScoreService;
 import com.project.csr.service.StoreService;
+import com.project.csr.utils.ToolsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -61,7 +61,8 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
     public List<ScoreVo> findScoreInfo(Integer parentId, String currentPeriod, String lastPeriod) {
         List<StorePo> childStoreList = storeService.findByParentId(parentId);
         if (null != childStoreList && childStoreList.size() > 0) {
-            String childStoreIds = childStoreList.stream().map(StorePo::getId).collect(Collectors.joining(","));
+            String childStoreIds = ToolsUtils.getIdsFromList(childStoreList, ",");
+            // String childStoreIds = childStoreList.stream().map(StorePo::getId).collect(Collectors.joining(","));
             List<ScoreVo> scoreVoList =  this.findVoList(childStoreIds, currentPeriod, lastPeriod);
             log.info("aaa",scoreVoList);
             return scoreVoList;
