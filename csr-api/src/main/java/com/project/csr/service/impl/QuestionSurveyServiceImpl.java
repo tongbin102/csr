@@ -8,9 +8,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.QuestionSurveyMapper;
 import com.project.csr.model.po.QuestionSurveyPo;
 import com.project.csr.model.po.RegulationPo;
+import com.project.csr.model.po.ScoreQuestionPo;
 import com.project.csr.model.vo.QuestionSurveyVo;
 import com.project.csr.service.QuestionSurveyService;
 import com.project.csr.service.RegulationService;
+import com.project.csr.service.ScoreQuestionService;
 import com.project.csr.utils.ConvertUtils;
 import com.project.csr.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
     @Autowired
     private RegulationService regulationService;
 
+    @Autowired
+    private ScoreQuestionService scoreQuestionService;
+
     @Override
     public IPage<QuestionSurveyPo> findListByPage(QuestionSurveyVo questionSurveyVo) {
         IPage<QuestionSurveyPo> page = new Page<>(questionSurveyVo.getPageNo(), questionSurveyVo.getPageSize());
@@ -56,19 +61,24 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
     }
 
     @Override
-    public List<QuestionSurveyVo> findListByRegulationId(Long regulationId) {
+    public List<QuestionSurveyVo> findListByRegulationId(String period, Long storeId, Long regulationId) {
         LambdaQueryWrapper<QuestionSurveyPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionSurveyPo::getRegulationId, regulationId);
         List<QuestionSurveyVo> questionSurveyVoList = ConvertUtils.convert(questionSurveyMapper.selectList(wrapper), QuestionSurveyVo.class);
         String delimiter = ",";
-        String ids = ToolsUtils.getIdsFromList(questionSurveyVoList, delimiter);
-        List<RegulationPo> regulationPoList = regulationService.findListFromIds(ids, delimiter);
+        String questionIds = ToolsUtils.getIdsFromList(questionSurveyVoList, delimiter);
+        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, delimiter);
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, questionIds);
 
         questionSurveyVoList.stream().forEach(questionSurveyVo -> {
-
-            List<RegulationPo> list = regulationPoList.stream().filter(r -> r.getId().equals(questionSurveyVo.getRegulationId().toString())).collect(Collectors.toList());
-            if(list.size() > 0){
-                questionSurveyVo.setScoreType(list.get(0).getScoreType());
+            // 获取类别
+            List<RegulationPo> list1 = regulationPoList.stream().filter(r -> r.getId().equals(questionSurveyVo.getRegulationId().toString())).collect(Collectors.toList());
+            if (list1.size() > 0) {
+                questionSurveyVo.setScoreType(list1.get(0).getScoreType());
+            }
+            List<ScoreQuestionPo> list2 = scoreQuestionPoList.stream().filter(q -> q.getQuestionId().toString().equals(questionSurveyVo.getId())).collect(Collectors.toList());
+            if (list2.size() > 0) {
+                questionSurveyVo.setGrade(list2.get(0).getGrade());
             }
         });
 

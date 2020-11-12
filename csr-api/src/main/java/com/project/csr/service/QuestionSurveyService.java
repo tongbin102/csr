@@ -45,5 +45,5 @@ public interface QuestionSurveyService extends IService<QuestionSurveyPo> {
      * @param regulationId
      * @return
      */
-    List<QuestionSurveyVo> findListByRegulationId(Long regulationId);
+    List<QuestionSurveyVo> findListByRegulationId(String period, Long storeId, Long regulationId);
 }

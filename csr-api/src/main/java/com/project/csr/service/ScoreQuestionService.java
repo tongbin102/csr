@@ -6,6 +6,8 @@ import com.project.csr.model.po.ScoreQuestionPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.ScoreQuestionVo;
 
+import java.util.List;
+
 /**
  * <p>
  * 门店题目-得分表 服务类
@@ -37,6 +39,6 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      */
     boolean prohibitById(String id);
 
-    ScoreQuestionPo findByStoreAndQuestionId(Long storeId, Long questionId);
+    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, String questionIds);
 
 }

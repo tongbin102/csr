@@ -24,4 +24,6 @@ public class QuestionSurveyVo extends QuestionSurveyPo implements Serializable {
 
     private String scoreType;
 
+    private String grade;
+
 }

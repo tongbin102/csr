@@ -70,10 +70,4 @@ public class ScoreQuestionApi {
         return scoreQuestionService.prohibitById(id);
     }
 
-    @ApiOperation("通过经销店id和题目id获取数据")
-    @GetMapping("/findByStoreAndQuestionId")
-    public ScoreQuestionVo findByStoreAndQuestionId(@RequestParam("store_id") Long storeId,
-                                            @RequestParam("question_id") Long questionId) {
-        return ConvertUtils.convert(scoreQuestionService.findByStoreAndQuestionId(storeId, questionId), ScoreQuestionVo.class);
-    }
 }
