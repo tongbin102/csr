@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.project.csr.constants.DictionaryType;
 import com.project.csr.dao.QuestionSurveyMapper;
 import com.project.csr.model.po.QuestionSurveyPo;
 import com.project.csr.model.po.RegulationPo;
@@ -65,10 +66,9 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
         LambdaQueryWrapper<QuestionSurveyPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionSurveyPo::getRegulationId, regulationId);
         List<QuestionSurveyVo> questionSurveyVoList = ConvertUtils.convert(questionSurveyMapper.selectList(wrapper), QuestionSurveyVo.class);
-        String delimiter = ",";
-        String questionIds = ToolsUtils.getIdsFromList(questionSurveyVoList, delimiter);
-        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, delimiter);
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, questionIds);
+        String questionIds = ToolsUtils.getIdsFromList(questionSurveyVoList, ",");
+        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, DictionaryType.CHANNEL_SURVEY_ID, questionIds);
 
         questionSurveyVoList.stream().forEach(questionSurveyVo -> {
             // 获取类别

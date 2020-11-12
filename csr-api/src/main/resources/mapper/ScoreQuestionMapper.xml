@@ -18,6 +18,7 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="period" property="period"/>
                     <result column="store_id" property="storeId"/>
+                    <result column="channel_id" property="channelId"/>
                     <result column="question_id" property="questionId"/>
                     <result column="grade" property="grade"/>
         </resultMap>

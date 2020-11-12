@@ -74,9 +74,11 @@ public class QuestionAssistanceApi {
 
     @ApiOperation("获取服务助手评分规则表数据")
     @RequestMapping("/findList")
-    public List<QuestionAssistanceVo> findList(@RequestParam(value = "regulation_id", required = false) Long regulationId) {
+    public List<QuestionAssistanceVo> findList(@RequestParam("period") String period,
+                                               @RequestParam("store_id") Long storeId,
+                                               @RequestParam(value = "regulation_id", required = false) Long regulationId) {
         if (null != regulationId) {
-            return ConvertUtils.convert(questionAssistanceService.findListByRegulationId(regulationId), QuestionAssistanceVo.class);
+            return questionAssistanceService.findListByRegulationId(period, storeId, regulationId);
         }
         return ConvertUtils.convert(questionAssistanceService.list(), QuestionAssistanceVo.class);
     }

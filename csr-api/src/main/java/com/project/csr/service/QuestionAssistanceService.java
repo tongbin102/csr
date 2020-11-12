@@ -2,9 +2,8 @@
 package com.project.csr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.project.csr.model.po.QuestionAssistancePo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.project.csr.model.po.QuestionSurveyPo;
+import com.project.csr.model.po.QuestionAssistancePo;
 import com.project.csr.model.vo.QuestionAssistanceVo;
 
 import java.util.List;
@@ -46,5 +45,5 @@ public interface QuestionAssistanceService extends IService<QuestionAssistancePo
      * @param regulationId
      * @return
      */
-    List<QuestionAssistancePo> findListByRegulationId(Long regulationId);
+    List<QuestionAssistanceVo> findListByRegulationId(String period, Long storeId, Long regulationId);
 }

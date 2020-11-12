@@ -2,8 +2,8 @@
 package com.project.csr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.project.csr.model.po.ScoreQuestionPo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.project.csr.model.po.ScoreQuestionPo;
 import com.project.csr.model.vo.ScoreQuestionVo;
 
 import java.util.List;
@@ -39,6 +39,6 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      */
     boolean prohibitById(String id);
 
-    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, String questionIds);
+    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, Long channelId, String questionIds);
 
 }

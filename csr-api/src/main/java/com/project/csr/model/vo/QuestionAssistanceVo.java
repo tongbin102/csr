@@ -24,4 +24,6 @@ public class QuestionAssistanceVo extends QuestionAssistancePo implements Serial
 
     private String scoreType;
 
+    private String grade;
+
 }

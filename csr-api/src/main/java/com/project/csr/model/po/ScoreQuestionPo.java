@@ -31,6 +31,9 @@ public class ScoreQuestionPo extends BasePo {
     @ApiModelProperty(value = "store_id")
     private Long storeId;
 
+    @ApiModelProperty(value = "渠道id")
+    private Long channelId;
+
     @ApiModelProperty(value = "题目id")
     private Long questionId;
 

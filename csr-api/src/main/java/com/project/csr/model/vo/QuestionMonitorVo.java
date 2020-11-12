@@ -24,4 +24,6 @@ public class QuestionMonitorVo extends QuestionMonitorPo implements Serializable
 
     private String scoreType;
 
+    private String grade;
+
 }
