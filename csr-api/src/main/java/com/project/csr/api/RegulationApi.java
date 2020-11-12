@@ -70,4 +70,10 @@ public class RegulationApi {
     public boolean prohibitById(@PathVariable String id) {
         return regulationService.prohibitById(id);
     }
+
+    @ApiOperation("通过id获取Vo")
+    @GetMapping("/findVoById/{id}")
+    public RegulationVo findVoById(@PathVariable Long id) {
+        return ConvertUtils.convert(regulationService.findVoById(id), RegulationVo.class);
+    }
 }

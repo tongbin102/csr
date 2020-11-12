@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.RegulationMapper;
 import com.project.csr.model.po.RegulationPo;
 import com.project.csr.model.vo.RegulationVo;
+import com.project.csr.service.ElementService;
 import com.project.csr.service.RegulationService;
+import com.project.csr.utils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,9 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
 
     @Autowired
     private RegulationMapper regulationMapper;
+
+    @Autowired
+    private ElementService elementService;
 
     @Override
     public IPage<RegulationPo> findListByPage(RegulationVo regulationVo) {
@@ -52,6 +57,13 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
         LambdaQueryWrapper<RegulationPo> wrapper = Wrappers.lambdaQuery();
         wrapper.in(RegulationPo::getId, ids.split(delimiter));
         return regulationMapper.selectList(wrapper);
+    }
+
+    @Override
+    public RegulationVo findVoById(Long id) {
+        RegulationVo regulationVo = ConvertUtils.convert(this.getById(id), RegulationVo.class);
+        regulationVo.setElementPo(elementService.getById(regulationVo.getElementId()));
+        return regulationVo;
     }
 }
 

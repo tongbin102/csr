@@ -36,4 +36,5 @@ public interface ElementService extends IService<ElementPo> {
      * @since 2020-11-05
      */
     boolean prohibitById(String id);
+
 }

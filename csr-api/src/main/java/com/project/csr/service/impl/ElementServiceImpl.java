@@ -44,5 +44,6 @@ public class ElementServiceImpl extends ServiceImpl<ElementMapper, ElementPo> im
         wrapper.eq(ElementPo::getId, id);
         return elementMapper.update(po, wrapper) >= 1;
     }
+
 }
 

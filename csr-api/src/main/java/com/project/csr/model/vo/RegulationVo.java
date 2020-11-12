@@ -1,6 +1,7 @@
 package com.project.csr.model.vo;
 
 
+import com.project.csr.model.po.ElementPo;
 import com.project.csr.model.po.RegulationPo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,5 +22,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class RegulationVo extends RegulationPo implements Serializable {
+
+    private ElementPo elementPo;
 
 }
