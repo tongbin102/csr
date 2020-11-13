@@ -2,16 +2,15 @@ package com.project.csr.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.constants.DictionaryType;
 import com.project.csr.dao.ScoreMapper;
-import com.project.csr.model.po.ScorePo;
-import com.project.csr.model.po.StorePo;
+import com.project.csr.model.po.*;
 import com.project.csr.model.vo.ScoreVo;
-import com.project.csr.service.ScoreService;
-import com.project.csr.service.StoreService;
+import com.project.csr.service.*;
 import com.project.csr.utils.ToolsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,17 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
     private ScoreMapper scoreMapper;
 
     @Autowired
+    private RegionService regionService;
+
+    @Autowired
+    private ProvinceService provinceService;
+
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
     private StoreService storeService;
+
 
     @Override
     public IPage<ScorePo> findListByPage(ScoreVo scoreVo) {
@@ -60,13 +69,37 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
 
     @Override
     public List<ScoreVo> findScoreInfo(Long scopeId, Long parentId, String currentPeriod, String lastPeriod) {
-        List<StorePo> childStoreList = storeService.findByParentId(parentId);
-        if (null != childStoreList && childStoreList.size() > 0) {
-            String childStoreIds = ToolsUtils.getIdsFromList(childStoreList, ",");
-            // String childStoreIds = childStoreList.stream().map(StorePo::getId).collect(Collectors.joining(","));
-            List<ScoreVo> scoreVoList = this.findVoList(scopeId, childStoreIds, currentPeriod, lastPeriod);
-            log.info("aaa", scoreVoList);
-            return scoreVoList;
+        String childIds = null;
+        Long childScopeId = null;
+
+        if (scopeId.equals(DictionaryType.SCOPE_ID_NATIONAL)) {
+            LambdaQueryWrapper<RegionPo> wrapper = Wrappers.lambdaQuery();
+            wrapper.eq(RegionPo::getNationalId, parentId);
+            List<RegionPo> childList = regionService.list(wrapper);
+            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childScopeId = DictionaryType.SCOPE_ID_REGION;
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_REGION)) {
+            LambdaQueryWrapper<ProvincePo> wrapper = Wrappers.lambdaQuery();
+            wrapper.eq(ProvincePo::getRegionId, parentId);
+            List<ProvincePo> childList = provinceService.list(wrapper);
+            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childScopeId = DictionaryType.SCOPE_ID_PROVINCE;
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_PROVINCE)) {
+            LambdaQueryWrapper<CityPo> wrapper = Wrappers.lambdaQuery();
+            wrapper.eq(CityPo::getProvinceId, parentId);
+            List<CityPo> childList = cityService.list(wrapper);
+            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childScopeId = DictionaryType.SCOPE_ID_CITY;
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_CITY)) {
+            LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
+            wrapper.eq(StorePo::getCityId, parentId);
+            List<StorePo> childList = storeService.list(wrapper);
+            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childScopeId = DictionaryType.SCOPE_ID_STORE;
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
+        }
+        if (StringUtils.isNotBlank(childIds) && null != childScopeId) {
+            return this.findVoList(childScopeId, childIds, currentPeriod, lastPeriod);
         }
         return null;
     }
@@ -78,11 +111,15 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
         params.put("last_period", lastPeriod);
         params.put("store_ids", storeIds.split(","));
         if (scopeId.equals(DictionaryType.SCOPE_ID_NATIONAL)) {
-            // return scoreMapper.findRegionVoList(params);
+            return scoreMapper.findNationalVoList(params);
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_REGION)) {
             return scoreMapper.findRegionVoList(params);
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_PROVINCE)) {
             return scoreMapper.findProvinceVoList(params);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_CITY)) {
+            return scoreMapper.findCityVoList(params);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
+            return scoreMapper.findStoreVoList(params);
         }
         return null;
     }

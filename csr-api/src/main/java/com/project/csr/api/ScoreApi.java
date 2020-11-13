@@ -101,7 +101,6 @@ public class ScoreApi {
 	                                    @RequestParam("current_period") String currentPeriod,
 	                                    @RequestParam("last_period") String lastPeriod) {
 		Map<String, Object> resultMap = new HashMap<>();
-//		ScorePo totalScoreVo = scoreService.getById(parentId);
 		List<ScoreVo> totalScoreVoList = scoreService.findVoList(scopeId, Long.toString(parentId), currentPeriod, lastPeriod);
 		resultMap.put("totalScoreList", totalScoreVoList);
 		List<ScoreVo> childScoreVoList = scoreService.findScoreInfo(scopeId, parentId, currentPeriod, lastPeriod);

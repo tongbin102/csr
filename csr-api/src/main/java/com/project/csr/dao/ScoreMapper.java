@@ -22,8 +22,14 @@ public interface ScoreMapper extends BaseMapper<ScorePo> {
 
     List<ScoreVo> findVoList(Map<String, Object> params);
 
+    List<ScoreVo> findNationalVoList(Map<String, Object> params);
+
     List<ScoreVo> findRegionVoList(Map<String, Object> params);
 
     List<ScoreVo> findProvinceVoList(Map<String, Object> params);
+
+    List<ScoreVo> findCityVoList(Map<String, Object> params);
+
+    List<ScoreVo> findStoreVoList(Map<String, Object> params);
 
 }

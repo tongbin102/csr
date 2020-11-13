@@ -70,6 +70,37 @@
         </if>
     </select>
 
+    <select id="findNationalVoList" resultType="com.project.csr.model.vo.ScoreVo">
+        SELECT current.id,
+        current.period,
+        current.scope_id,
+        current.store_id,
+        current.name,
+        "全国" AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        current.rank_country - last.rank_country AS rank_country_diff,
+        current.rank_scope - last.rank_scope AS rank_scope_diff
+        FROM score current
+        LEFT JOIN score last ON last.store_id = current.store_id
+        and last.scope_id = current.scope_id
+        AND last.period = #{last_period}
+        LEFT JOIN region s ON s.id = current.store_id
+        WHERE current.scope_id = 2
+        AND current.period = #{current_period}
+        AND current.store_id IN
+        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
+            #{store_id}
+        </foreach>
+    </select>
+
     <select id="findRegionVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
             current.period,
@@ -88,20 +119,17 @@
             current.score - IFNULL(last.score, 0) AS score_diff,
             current.rank_country - last.rank_country AS rank_country_diff,
             current.rank_scope - last.rank_scope AS rank_scope_diff
-        FROM region s
-        LEFT JOIN score current
-        ON current.store_id = s.id AND current.period = #{current_period}
-        AND current.scope_id = 2
-        LEFT JOIN score last
-        ON last.store_id = s.id AND last.period = #{last_period}
-        AND last.scope_id = current.scope_id
-        WHERE 1 = 1
-        <if test="store_ids != null">
-            AND s.id IN
-            <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-                #{store_id}
-            </foreach>
-        </if>
+        FROM score current
+        LEFT JOIN score last ON last.store_id = current.store_id
+        and last.scope_id = current.scope_id
+        AND last.period = #{last_period}
+        LEFT JOIN region s ON s.id = current.store_id
+        WHERE current.scope_id = 2
+        AND current.period = #{current_period}
+        AND current.store_id IN
+        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
+            #{store_id}
+        </foreach>
     </select>
 
     <select id="findProvinceVoList" resultType="com.project.csr.model.vo.ScoreVo">
@@ -122,19 +150,80 @@
             current.score - IFNULL(last.score, 0) AS score_diff,
             current.rank_country - last.rank_country AS rank_country_diff,
             current.rank_scope - last.rank_scope AS rank_scope_diff
-        FROM province s
-        LEFT JOIN score current
-        ON current.store_id = s.id AND current.period = #{current_period}
-        AND current.scope_id = 3
-        LEFT JOIN score last
-        ON last.store_id = s.id AND last.period = #{last_period}
-        AND last.scope_id = current.scope_id
-        WHERE 1 = 1
-        <if test="store_ids != null">
-            AND s.id IN
-            <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-                #{store_id}
-            </foreach>
-        </if>
+        FROM score current
+        LEFT JOIN score last ON last.store_id = current.store_id
+        and last.scope_id = current.scope_id
+        AND last.period = #{last_period}
+        LEFT JOIN province s ON s.id = current.store_id
+        WHERE current.scope_id = 3
+        AND current.period = #{current_period}
+        AND current.store_id IN
+        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
+            #{store_id}
+        </foreach>
     </select>
+
+    <select id="findCityVoList" resultType="com.project.csr.model.vo.ScoreVo">
+        SELECT current.id,
+            current.period,
+            current.scope_id,
+            current.store_id,
+            current.name,
+            s.name AS store_name,
+            current.score,
+            current.rank_country,
+            current.rank_scope,
+            current.valid_ind,
+            current.creator,
+            current.create_time,
+            current.updater,
+            current.update_time,
+            current.score - IFNULL(last.score, 0) AS score_diff,
+            current.rank_country - last.rank_country AS rank_country_diff,
+            current.rank_scope - last.rank_scope AS rank_scope_diff
+        FROM score current
+        LEFT JOIN score last ON last.store_id = current.store_id
+        and last.scope_id = current.scope_id
+        AND last.period = #{last_period}
+        LEFT JOIN city s ON s.id = current.store_id
+        WHERE current.scope_id = 3
+        AND current.period = #{current_period}
+        AND current.store_id IN
+        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
+            #{store_id}
+        </foreach>
+    </select>
+
+
+    <select id="findStoreVoList" resultType="com.project.csr.model.vo.ScoreVo">
+        SELECT current.id,
+        current.period,
+        current.scope_id,
+        current.store_id,
+        current.name,
+        s.name AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        current.rank_country - last.rank_country AS rank_country_diff,
+        current.rank_scope - last.rank_scope AS rank_scope_diff
+        FROM score current
+        LEFT JOIN score last ON last.store_id = current.store_id
+        and last.scope_id = current.scope_id
+        AND last.period = #{last_period}
+        LEFT JOIN store s ON s.id = current.store_id
+        WHERE current.scope_id = 5
+        AND current.period = #{current_period}
+        AND current.store_id IN
+        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
+            #{store_id}
+        </foreach>
+    </select>
+
 </mapper>

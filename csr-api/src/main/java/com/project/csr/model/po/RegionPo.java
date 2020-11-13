@@ -31,5 +31,7 @@ public class RegionPo extends BasePo {
     @ApiModelProperty(value = "大区名称")
     private String name;
 
+    @ApiModelProperty(value = "所属国家Id")
+    private String nationalId;
 
 }
