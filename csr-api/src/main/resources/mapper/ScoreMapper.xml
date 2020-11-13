@@ -38,22 +38,22 @@
 
     <select id="findVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-               current.period,
-               current.scope_id,
-               current.store_id,
-               current.name,
-               s.name AS store_name,
-               current.score,
-               current.rank_country,
-               current.rank_scope,
-               current.valid_ind,
-               current.creator,
-               current.create_time,
-               current.updater,
-               current.update_time,
-               current.score - last.score               AS score_diff,
-               current.rank_country - last.rank_country AS rank_country_diff,
-               current.rank_scope - last.rank_scope AS rank_scope_diff
+            current.period,
+            current.scope_id,
+            current.store_id,
+            current.name,
+            s.name AS store_name,
+            current.score,
+            current.rank_country,
+            current.rank_scope,
+            current.valid_ind,
+            current.creator,
+            current.create_time,
+            current.updater,
+            current.update_time,
+            current.score - IFNULL(last.score, 0) AS score_diff,
+            current.rank_country - last.rank_country AS rank_country_diff,
+            current.rank_scope - last.rank_scope AS rank_scope_diff
         FROM store s
         LEFT JOIN score current
         ON current.store_id = s.id AND current.period = #{current_period}

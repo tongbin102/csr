@@ -39,23 +39,23 @@
 
     <select id="findVoList" resultType="com.project.csr.model.vo.ScoreFactorVo">
         SELECT current.id,
-        current.period,
-        current.scope_id,
-        current.store_id,
-        current.name,
-        current.factor_id,
-        f.name AS factor_name,
-        current.score,
-        current.rank_country,
-        current.rank_scope,
-        current.valid_ind,
-        current.creator,
-        current.create_time,
-        current.updater,
-        current.update_time,
-        current.score - last.score               AS score_diff,
-        current.rank_country - last.rank_country AS rank_country_diff,
-        current.rank_scope - last.rank_scope AS rank_scope_diff
+            current.period,
+            current.scope_id,
+            current.store_id,
+            current.name,
+            current.factor_id,
+            f.name AS factor_name,
+            current.score,
+            current.rank_country,
+            current.rank_scope,
+            current.valid_ind,
+            current.creator,
+            current.create_time,
+            current.updater,
+            current.update_time,
+            current.score - IFNULL(last.score,0) AS score_diff,
+            current.rank_country - last.rank_country AS rank_country_diff,
+            current.rank_scope - last.rank_scope AS rank_scope_diff
         FROM factor f
         LEFT JOIN score_factor current
         ON current.factor_id = f.id
@@ -65,7 +65,7 @@
         ON last.factor_id = f.id AND last.period = #{last_period} AND last.store_id = current.store_id
         WHERE 1 = 1
         <if test="factor_id != null">
-        AND f.id = #{factor_id}
+            AND f.id = #{factor_id}
         </if>
     </select>
 
