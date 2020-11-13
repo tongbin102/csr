@@ -20,22 +20,24 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("store")
-@ApiModel(value="StorePo对象", description="")
+@ApiModel(value="StorePo对象", description="门店表")
 public class StorePo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "单位code")
+    @ApiModelProperty(value = "门店代码")
     private String code;
 
-    @ApiModelProperty(value = "经销店名")
+    @ApiModelProperty(value = "门店名称")
     private String name;
 
-    @ApiModelProperty(value = "范围id")
-    private Long scopeId;
+    @ApiModelProperty(value = "规模")
+    private String scale;
 
-    @ApiModelProperty(value = "上级id")
+    @ApiModelProperty(value = "所属城市id")
+    private Long cityId;
+
+    @ApiModelProperty(value = "所属一级门店id")
     private Long parentId;
-
 
 }

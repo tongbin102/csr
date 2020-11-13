@@ -18,7 +18,8 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
-                    <result column="scope_id" property="scopeId"/>
+                    <result column="scale" property="scale"/>
+                    <result column="city_id" property="cityId"/>
                     <result column="parent_id" property="parentId"/>
         </resultMap>
 
@@ -30,7 +31,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, name, scope_id, parent_id
+            code, name, scale, city_id, parent_id
         </sql>
 
 </mapper>
