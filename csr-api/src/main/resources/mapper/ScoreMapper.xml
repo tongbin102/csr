@@ -185,7 +185,7 @@
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
         LEFT JOIN city s ON s.id = current.store_id
-        WHERE current.scope_id = 3
+        WHERE current.scope_id = 4
         AND current.period = #{current_period}
         AND current.store_id IN
         <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
