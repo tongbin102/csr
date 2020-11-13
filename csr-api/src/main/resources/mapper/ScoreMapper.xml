@@ -92,7 +92,6 @@
         LEFT JOIN score last ON last.store_id = current.store_id
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
-        LEFT JOIN region s ON s.id = current.store_id
         WHERE current.scope_id = 2
         AND current.period = #{current_period}
         AND current.store_id IN
