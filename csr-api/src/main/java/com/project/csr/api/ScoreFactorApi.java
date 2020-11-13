@@ -89,10 +89,11 @@ public class ScoreFactorApi {
 
 	@ApiOperation("获取分因子得分情况")
 	@GetMapping(value = "/findInfo")
-	public List<Map<String, Object>> findInfo(@RequestParam("store_id") Integer storeId,
+	public List<Map<String, Object>> findInfo(@RequestParam("scope_id") Long scopeId,
+                                              @RequestParam("store_id") Long storeId,
 	                                          @RequestParam("current_period") String currentPeriod,
 	                                          @RequestParam("last_period") String lastPeriod) {
-		return scoreFactorService.findMapList(storeId, currentPeriod, lastPeriod);
+		return scoreFactorService.findMapList(scopeId, storeId, currentPeriod, lastPeriod);
 	}
 
 	@ApiOperation("获取分因子得分情况（经销店）")

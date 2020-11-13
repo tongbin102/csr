@@ -48,7 +48,7 @@ public interface ScoreFactorService extends IService<ScoreFactorPo> {
 	 * @param lastPeriod
 	 * @return
 	 */
-	List<Map<String, Object>> findMapList(Integer storeId, String currentPeriod, String lastPeriod);
+	List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod);
 
 	List<ScoreFactorVo> findVoList(Map<String, Object> params);
 }

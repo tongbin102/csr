@@ -55,11 +55,12 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
     }
 
     @Override
-    public List<Map<String, Object>> findVoList(Integer storeId, String currentPeriod, String lastPeriod) {
+    public List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod) {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
         LambdaQueryWrapper<ScoreChannelPo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(ScoreChannelPo::getStoreId, storeId)
+        wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
+                .eq(ScoreChannelPo::getStoreId, storeId)
                 .in(ScoreChannelPo::getPeriod, currentPeriod);
         List<ScoreChannelPo> currentList = scoreChannelMapper.selectList(wrapper);
         Map<String, Object> currentMap = convertListToMap(currentList);
@@ -68,7 +69,8 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
 
         wrapper.clear();
 
-        wrapper.eq(ScoreChannelPo::getStoreId, storeId)
+        wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
+                .eq(ScoreChannelPo::getStoreId, storeId)
                 .eq(ScoreChannelPo::getPeriod, lastPeriod);
         List<ScoreChannelPo> lastList = scoreChannelMapper.selectList(wrapper);
         Map<String, Object> lastMap = convertListToMap(lastList);

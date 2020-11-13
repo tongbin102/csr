@@ -51,11 +51,12 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
     }
 
     @Override
-    public List<Map<String, Object>> findMapList(Integer storeId, String currentPeriod, String lastPeriod) {
+    public List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod) {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
         LambdaQueryWrapper<ScoreFactorPo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(ScoreFactorPo::getStoreId, storeId)
+        wrapper.eq(ScoreFactorPo::getScopeId, scopeId)
+                .eq(ScoreFactorPo::getStoreId, storeId)
                 .eq(ScoreFactorPo::getPeriod, currentPeriod);
         List<ScoreFactorPo> currentList = scoreFactorMapper.selectList(wrapper);
         Map<String, Object> currentMap = convertListToMap(currentList);
@@ -64,7 +65,8 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
 
         wrapper.clear();
 
-        wrapper.eq(ScoreFactorPo::getStoreId, storeId)
+        wrapper.eq(ScoreFactorPo::getScopeId, scopeId)
+                .eq(ScoreFactorPo::getStoreId, storeId)
                 .eq(ScoreFactorPo::getPeriod, lastPeriod);
         List<ScoreFactorPo> lastList = scoreFactorMapper.selectList(wrapper);
         Map<String, Object> lastMap = convertListToMap(lastList);
