@@ -44,5 +44,5 @@ public interface StoreService extends IService<StorePo> {
      * @param parentId
      * @return
      */
-    List<StorePo> findByParentId(Integer parentId);
+    List<StorePo> findByParentId(Long parentId);
 }

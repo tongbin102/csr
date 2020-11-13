@@ -97,12 +97,13 @@ public class ScoreFactorApi {
 
 	@ApiOperation("获取分因子得分情况（经销店）")
 	@GetMapping(value = "/findInfoForStore")
-	public Map<String, Object> findInfoForStore(@RequestParam("store_id") Integer storeId,
+	public Map<String, Object> findInfoForStore(@RequestParam("scope_id") Long scopeId,
+												@RequestParam("store_id") Long storeId,
 	                                            @RequestParam("current_period") String currentPeriod,
 	                                            @RequestParam("last_period") String lastPeriod) {
 
 		Map<String, Object> resultMap = new HashMap<>();
-		List<ScoreVo> totalScoreVoList = scoreService.findVoList(Integer.toString(storeId), currentPeriod, lastPeriod);
+		List<ScoreVo> totalScoreVoList = scoreService.findVoList(scopeId, Long.toString(storeId), currentPeriod, lastPeriod);
 		resultMap.put("totalScoreList", totalScoreVoList);
 
 		Map<String, Object> params = new HashMap<>();

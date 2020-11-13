@@ -68,7 +68,7 @@ public class QuestionMonitorServiceImpl extends ServiceImpl<QuestionMonitorMappe
         List<QuestionMonitorVo> questionMonitorVoList = ConvertUtils.convert(questionMonitorMapper.selectList(wrapper), QuestionMonitorVo.class);
         String questionIds = ToolsUtils.getIdsFromList(questionMonitorVoList, ",");
         List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, DictionaryType.CHANNEL_MONITOR_ID, questionIds);
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, DictionaryType.CHANNEL_ID_MONITOR, questionIds);
 
         questionMonitorVoList.stream().forEach(questionMonitorVo -> {
             // 获取类别

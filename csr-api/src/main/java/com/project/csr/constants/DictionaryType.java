@@ -6,11 +6,20 @@ package com.project.csr.constants;
  **/
 public class DictionaryType {
 
-    public static final Long CHANNEL_SURVEY_ID = 1L;
+    public static final Long CHANNEL_ID_SURVEY = 1L;
 
-    public static final Long CHANNEL_MONITOR_ID = 2L;
+    public static final Long CHANNEL_ID_MONITOR = 2L;
 
-    public static final Long CHANNEL_ASSISTANCE_ID = 3L;
+    public static final Long CHANNEL_ID_ASSISTANCE = 3L;
 
+    public static final Long SCOPE_ID_NATIONAL = 1L;
+
+    public static final Long SCOPE_ID_REGION = 2L;
+
+    public static final Long SCOPE_ID_PROVINCE = 3L;
+
+    public static final Long SCOPE_ID_CITY = 4L;
+
+    public static final Long SCOPE_ID_STORE = 5L;
 
 }

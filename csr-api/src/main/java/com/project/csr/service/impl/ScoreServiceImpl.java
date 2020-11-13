@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.project.csr.constants.DictionaryType;
 import com.project.csr.dao.ScoreMapper;
 import com.project.csr.model.po.ScorePo;
 import com.project.csr.model.po.StorePo;
@@ -58,25 +59,32 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
     }
 
     @Override
-    public List<ScoreVo> findScoreInfo(Integer parentId, String currentPeriod, String lastPeriod) {
+    public List<ScoreVo> findScoreInfo(Long scopeId, Long parentId, String currentPeriod, String lastPeriod) {
         List<StorePo> childStoreList = storeService.findByParentId(parentId);
         if (null != childStoreList && childStoreList.size() > 0) {
             String childStoreIds = ToolsUtils.getIdsFromList(childStoreList, ",");
             // String childStoreIds = childStoreList.stream().map(StorePo::getId).collect(Collectors.joining(","));
-            List<ScoreVo> scoreVoList =  this.findVoList(childStoreIds, currentPeriod, lastPeriod);
-            log.info("aaa",scoreVoList);
+            List<ScoreVo> scoreVoList = this.findVoList(scopeId, childStoreIds, currentPeriod, lastPeriod);
+            log.info("aaa", scoreVoList);
             return scoreVoList;
         }
         return null;
     }
 
     @Override
-    public List<ScoreVo> findVoList(String storeIds, String currentPeriod, String lastPeriod) {
+    public List<ScoreVo> findVoList(Long scopeId, String storeIds, String currentPeriod, String lastPeriod) {
         Map<String, Object> params = new HashMap<>();
         params.put("current_period", currentPeriod);
         params.put("last_period", lastPeriod);
         params.put("store_ids", storeIds.split(","));
-        return scoreMapper.findVoList(params);
+        if (scopeId.equals(DictionaryType.SCOPE_ID_NATIONAL)) {
+            // return scoreMapper.findRegionVoList(params);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_REGION)) {
+            return scoreMapper.findRegionVoList(params);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_PROVINCE)) {
+            return scoreMapper.findProvinceVoList(params);
+        }
+        return null;
     }
 
 

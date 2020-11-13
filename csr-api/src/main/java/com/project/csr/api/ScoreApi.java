@@ -96,14 +96,15 @@ public class ScoreApi {
 
 	@ApiOperation("获取得分情况")
 	@GetMapping(value = "/findInfo")
-	public Map<String, Object> findInfo(@RequestParam("parent_id") Integer parentId,
+	public Map<String, Object> findInfo(@RequestParam("scope_id") Long scopeId,
+										@RequestParam("parent_id") Long parentId,
 	                                    @RequestParam("current_period") String currentPeriod,
 	                                    @RequestParam("last_period") String lastPeriod) {
 		Map<String, Object> resultMap = new HashMap<>();
 //		ScorePo totalScoreVo = scoreService.getById(parentId);
-		List<ScoreVo> totalScoreVoList = scoreService.findVoList(Integer.toString(parentId), currentPeriod, lastPeriod);
+		List<ScoreVo> totalScoreVoList = scoreService.findVoList(scopeId, Long.toString(parentId), currentPeriod, lastPeriod);
 		resultMap.put("totalScoreList", totalScoreVoList);
-		List<ScoreVo> childScoreVoList = scoreService.findScoreInfo(parentId, currentPeriod, lastPeriod);
+		List<ScoreVo> childScoreVoList = scoreService.findScoreInfo(scopeId, parentId, currentPeriod, lastPeriod);
 		resultMap.put("childScoreList", childScoreVoList);
 		return resultMap;
 	}

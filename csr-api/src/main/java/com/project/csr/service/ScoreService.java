@@ -50,7 +50,7 @@ public interface ScoreService extends IService<ScorePo> {
 	 * @param parentId
 	 * @return
 	 */
-	List<ScoreVo> findScoreInfo(Integer parentId, String currentPeriod, String lastPeriod);
+	List<ScoreVo> findScoreInfo(Long scopeId, Long parentId, String currentPeriod, String lastPeriod);
 
-	List<ScoreVo> findVoList(String storeIds, String currentPeriod, String lastPeriod);
+	List<ScoreVo> findVoList(Long scopeId, String storeIds, String currentPeriod, String lastPeriod);
 }
