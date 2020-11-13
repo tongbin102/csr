@@ -76,7 +76,7 @@
         current.scope_id,
         current.store_id,
         current.name,
-        "全国" AS store_name,
+        '全国' AS store_name,
         current.score,
         current.rank_country,
         current.rank_scope,
