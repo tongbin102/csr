@@ -19,8 +19,9 @@
                     <result column="period" property="period"/>
                     <result column="store_id" property="storeId"/>
                     <result column="regulation_id" property="regulationId"/>
-                    <result column="evaluate_score" property="evaluateScore"/>
-                    <result column="bonus_score" property="bonusScore"/>
+                    <result column="score_type" property="scoreType"/>
+                    <result column="score" property="score"/>
+                    <result column="grade" property="grade"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -31,7 +32,7 @@
                 create_time,
                 updater,
                 update_time,
-            period, store_id, regulation_id, evaluate_score, bonus_score
+            period, store_id, regulation_id, score_type, score, grade
         </sql>
 
     <select id="findVoList" resultType="com.project.csr.model.vo.RegulationScoreVo">
@@ -42,8 +43,9 @@
                e.`name` AS element_name,
                score.regulation_id,
                r.`description` AS regulation_description,
-               score.evaluate_score,
-               score.bonus_score,
+               score.score_type,
+               score.score,
+               score.grade,
                score.valid_ind,
                score.creator,
                score.create_time,

@@ -37,10 +37,10 @@ public class RegulationScoreChannelPo extends BasePo {
     @ApiModelProperty(value = "渠道id")
     private Long channelId;
 
-    @ApiModelProperty(value = "成绩类型：1.考核项目 2. 加分项")
+    @ApiModelProperty(value = "成绩类型：1.考核项 2. 加分项 3. 扣分项")
     private Integer scoreType;
 
-    @ApiModelProperty(value = "分数")
+    @ApiModelProperty(value = "得分")
     private String score;
 
     @ApiModelProperty(value = "等级")
