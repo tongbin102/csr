@@ -67,6 +67,7 @@
         <if test="factor_id != null">
             AND f.id = #{factor_id}
         </if>
+        ORDER BY f.id
     </select>
 
 </mapper>
