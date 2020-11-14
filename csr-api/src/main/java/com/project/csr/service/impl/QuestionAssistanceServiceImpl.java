@@ -68,7 +68,7 @@ public class QuestionAssistanceServiceImpl extends ServiceImpl<QuestionAssistanc
         List<QuestionAssistanceVo> questionAssistanceVoList = ConvertUtils.convert(questionAssistanceMapper.selectList(wrapper), QuestionAssistanceVo.class);
         String questionIds = ToolsUtils.getIdsFromList(questionAssistanceVoList, ",");
         List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, DictionaryType.CHANNEL_ID_ASSISTANCE, questionIds);
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, questionIds);
 
         questionAssistanceVoList.stream().forEach(questionAssistanceVo -> {
             // 获取类别

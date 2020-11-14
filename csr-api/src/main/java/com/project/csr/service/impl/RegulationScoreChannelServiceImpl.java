@@ -62,7 +62,7 @@ public class RegulationScoreChannelServiceImpl extends ServiceImpl<RegulationSco
         LambdaQueryWrapper<RegulationScoreChannelPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(RegulationScoreChannelPo::getStoreId, storeId)
                 .eq(RegulationScoreChannelPo::getPeriod, period);
-        if(null!= factorId){
+        if (null != factorId) {
             String regulationIds = ToolsUtils.getIdsFromList(regulationService.findVoListByFactorId(factorId), ",");
             wrapper.in(RegulationScoreChannelPo::getRegulationId, regulationIds.split(","));
         }

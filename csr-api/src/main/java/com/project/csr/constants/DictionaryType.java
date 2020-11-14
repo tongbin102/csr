@@ -23,6 +23,12 @@ public class DictionaryType {
      */
     public static final Long CHANNEL_ID_ASSISTANCE = 3L;
 
+    public static final Integer CHANNEL_TYPE_EVALUATE = 1;
+
+    public static final Integer CHANNEL_TYPE_DEDUCT = 2;
+
+
+
     /************************** Scope 范围 ********************************/
 
     /**

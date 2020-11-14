@@ -68,7 +68,7 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
         List<QuestionSurveyVo> questionSurveyVoList = ConvertUtils.convert(questionSurveyMapper.selectList(wrapper), QuestionSurveyVo.class);
         String questionIds = ToolsUtils.getIdsFromList(questionSurveyVoList, ",");
         List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, DictionaryType.CHANNEL_ID_SURVEY, questionIds);
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, questionIds);
 
         questionSurveyVoList.stream().forEach(questionSurveyVo -> {
             // 获取类别
