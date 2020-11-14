@@ -20,6 +20,8 @@ public class DictionaryType {
 
     public static final Long SCOPE_ID_CITY = 4L;
 
-    public static final Long SCOPE_ID_STORE = 5L;
+    public static final Long SCOPE_ID_SUPERIOR = 5L;
+
+    public static final Long SCOPE_ID_STORE = 6L;
 
 }

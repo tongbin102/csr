@@ -95,8 +95,14 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
             wrapper.eq(StorePo::getCityId, parentId);
             List<StorePo> childList = storeService.list(wrapper);
             childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childScopeId = DictionaryType.SCOPE_ID_SUPERIOR;
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_SUPERIOR)) {
+            LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
+            wrapper.eq(StorePo::getCityId, parentId);
+            List<StorePo> childList = storeService.list(wrapper);
+            childIds = ToolsUtils.getIdsFromList(childList, ",");
             childScopeId = DictionaryType.SCOPE_ID_STORE;
-        } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
+        }else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
         }
         if (StringUtils.isNotBlank(childIds) && null != childScopeId) {
             return this.findVoList(childScopeId, childIds, currentPeriod, lastPeriod);
@@ -118,6 +124,8 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
             return scoreMapper.findProvinceVoList(params);
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_CITY)) {
             return scoreMapper.findCityVoList(params);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_SUPERIOR)) {
+            return scoreMapper.findStoreVoList(params);
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
             return scoreMapper.findStoreVoList(params);
         }

@@ -193,7 +193,6 @@
         </foreach>
     </select>
 
-
     <select id="findStoreVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
         current.period,
