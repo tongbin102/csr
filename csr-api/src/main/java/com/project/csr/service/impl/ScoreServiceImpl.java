@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
 
     @Override
     public List<ScoreVo> findScoreInfo(Long scopeId, Long parentId, String currentPeriod, String lastPeriod) {
+        List<ScoreVo> resultList = new ArrayList();
         String childIds = null;
         Long childScopeId = null;
 
@@ -98,16 +100,16 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
             childScopeId = DictionaryType.SCOPE_ID_SUPERIOR;
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_SUPERIOR)) {
             LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
-            wrapper.eq(StorePo::getCityId, parentId);
+            wrapper.eq(StorePo::getParentId, parentId);
             List<StorePo> childList = storeService.list(wrapper);
             childIds = ToolsUtils.getIdsFromList(childList, ",");
             childScopeId = DictionaryType.SCOPE_ID_STORE;
-        }else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
         }
         if (StringUtils.isNotBlank(childIds) && null != childScopeId) {
-            return this.findVoList(childScopeId, childIds, currentPeriod, lastPeriod);
+            resultList = this.findVoList(childScopeId, childIds, currentPeriod, lastPeriod);
         }
-        return null;
+        return resultList;
     }
 
     @Override
