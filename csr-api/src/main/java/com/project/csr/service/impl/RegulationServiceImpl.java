@@ -21,7 +21,6 @@ import com.project.csr.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +121,7 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
                             regulationScoreChannelVoMap.put("bonusChannelScore" + r.getChannelId(), r.getGrade());
                         }
                         if (r.getScoreType().equals(DictionaryType.SCORE_TYPE_ID_DEDUCT)) {
-                            regulationScoreChannelVoMap.put("deductChannelScore" + r.getChannelId(), r.getGrade());
+                            regulationScoreChannelVoMap.put("deductChannelScore" + r.getChannelId(), r.getScore());
                         }
                     });
 
