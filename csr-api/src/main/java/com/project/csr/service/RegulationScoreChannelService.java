@@ -47,6 +47,7 @@ public interface RegulationScoreChannelService extends IService<RegulationScoreC
      * @param regulationIds
      * @return
      */
-    List<RegulationScoreChannelVo> findVoList(Long storeId, String period, String regulationIds);
+    List<RegulationScoreChannelVo> findVoList(Long storeId, String period, Long factorId, Integer channelType);
+
 
 }

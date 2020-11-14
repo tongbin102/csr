@@ -1,13 +1,13 @@
 package com.project.csr.model.vo;
 
 
-import com.project.csr.model.po.ElementPo;
 import com.project.csr.model.po.RegulationPo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**

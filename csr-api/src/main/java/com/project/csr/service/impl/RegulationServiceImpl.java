@@ -21,6 +21,7 @@ import com.project.csr.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
         String regulationIds = ToolsUtils.getIdsFromList(regulationVoList, ",");
 
         List<RegulationScoreVo> regulationScoreVoList = regulationScoreService.findVoList(storeId, period, regulationIds);
-        List<RegulationScoreChannelVo> regulationScoreChannelVoList = regulationScoreChannelService.findVoList(storeId, period, regulationIds);
+        List<RegulationScoreChannelVo> regulationScoreChannelVoList = regulationScoreChannelService.findVoList(storeId, period, factorId, null);
 
         regulationVoList.stream().forEach(item -> {
             Map<String, Object> regulationScoreVoMap = new HashMap<>();
@@ -119,6 +120,9 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
                         }
                         if (r.getScoreType().equals(DictionaryType.SCORE_TYPE_ID_BONUS)) {
                             regulationScoreChannelVoMap.put("bonusChannelScore" + r.getChannelId(), r.getGrade());
+                        }
+                        if (r.getScoreType().equals(DictionaryType.SCORE_TYPE_ID_DEDUCT)) {
+                            regulationScoreChannelVoMap.put("deductChannelScore" + r.getChannelId(), r.getGrade());
                         }
                     });
 

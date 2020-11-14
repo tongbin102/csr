@@ -72,4 +72,6 @@ public class RegulationScoreApi {
         return regulationScoreService.prohibitById(id);
     }
 
+
+
 }

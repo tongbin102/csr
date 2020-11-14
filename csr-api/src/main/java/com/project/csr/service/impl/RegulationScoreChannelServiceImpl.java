@@ -8,16 +8,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.RegulationScoreChannelMapper;
 import com.project.csr.model.po.RegulationScoreChannelPo;
 import com.project.csr.model.vo.RegulationScoreChannelVo;
-import com.project.csr.model.vo.RegulationScoreVo;
+import com.project.csr.service.ChannelService;
 import com.project.csr.service.RegulationScoreChannelService;
+import com.project.csr.service.RegulationService;
 import com.project.csr.utils.ConvertUtils;
+import com.project.csr.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -33,6 +32,12 @@ public class RegulationScoreChannelServiceImpl extends ServiceImpl<RegulationSco
 
     @Autowired
     private RegulationScoreChannelMapper regulationScoreChannelMapper;
+
+    @Autowired
+    private ChannelService channelService;
+
+    @Autowired
+    private RegulationService regulationService;
 
     @Override
     public IPage<RegulationScoreChannelPo> findListByPage(RegulationScoreChannelVo regulationScoreChannelVo) {
@@ -53,11 +58,18 @@ public class RegulationScoreChannelServiceImpl extends ServiceImpl<RegulationSco
     }
 
     @Override
-    public List<RegulationScoreChannelVo> findVoList(Long storeId, String period, String regulationIds) {
+    public List<RegulationScoreChannelVo> findVoList(Long storeId, String period, Long factorId, Integer channelType) {
         LambdaQueryWrapper<RegulationScoreChannelPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(RegulationScoreChannelPo::getStoreId, storeId)
-                .eq(RegulationScoreChannelPo::getPeriod, period)
-                .in(RegulationScoreChannelPo::getRegulationId, regulationIds.split(","));
+                .eq(RegulationScoreChannelPo::getPeriod, period);
+        if(null!= factorId){
+            String regulationIds = ToolsUtils.getIdsFromList(regulationService.findVoListByFactorId(factorId), ",");
+            wrapper.in(RegulationScoreChannelPo::getRegulationId, regulationIds.split(","));
+        }
+        if (null != channelType) {
+            String channelIds = ToolsUtils.getIdsFromList(channelService.findListByCtype(channelType), ",");
+            wrapper.in(RegulationScoreChannelPo::getChannelId, channelIds.split(","));
+        }
         return ConvertUtils.convert(regulationScoreChannelMapper.selectList(wrapper), RegulationScoreChannelVo.class);
     }
 
