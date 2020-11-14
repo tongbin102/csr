@@ -94,7 +94,8 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
             childScopeId = DictionaryType.SCOPE_ID_CITY;
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_CITY)) {
             LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
-            wrapper.eq(StorePo::getCityId, parentId);
+            wrapper.eq(StorePo::getCityId, parentId)
+                    .isNull(StorePo::getParentId);
             List<StorePo> childList = storeService.list(wrapper);
             childIds = ToolsUtils.getIdsFromList(childList, ",");
             childScopeId = DictionaryType.SCOPE_ID_SUPERIOR;
