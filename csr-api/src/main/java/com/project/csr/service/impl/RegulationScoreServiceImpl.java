@@ -10,12 +10,12 @@ import com.project.csr.model.po.RegulationScorePo;
 import com.project.csr.model.vo.RegulationScoreVo;
 import com.project.csr.service.RegulationScoreChannelService;
 import com.project.csr.service.RegulationScoreService;
+import com.project.csr.service.RegulationService;
+import com.project.csr.utils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -31,6 +31,9 @@ public class RegulationScoreServiceImpl extends ServiceImpl<RegulationScoreMappe
 
     @Autowired
     private RegulationScoreMapper regulationScoreMapper;
+
+    @Autowired
+    private RegulationService regulationService;
 
     @Autowired
     private RegulationScoreChannelService regulationScoreChannelService;
@@ -54,32 +57,13 @@ public class RegulationScoreServiceImpl extends ServiceImpl<RegulationScoreMappe
     }
 
     @Override
-    public List<RegulationScoreVo> findVoList(Long storeId, String period, Long factorId) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("store_id", storeId);
-        params.put("period", period);
-        params.put("factor_id", factorId);
-        return regulationScoreMapper.findVoList(params);
+    public List<RegulationScoreVo> findVoList(Long storeId, String period, String regulationIds) {
+        LambdaQueryWrapper<RegulationScorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(RegulationScorePo::getStoreId, storeId)
+                .eq(RegulationScorePo::getPeriod, period)
+                .in(RegulationScorePo::getRegulationId, regulationIds.split(","));
+        return ConvertUtils.convert(regulationScoreMapper.selectList(wrapper), RegulationScoreVo.class);
     }
 
-    @Override
-    public List<RegulationScoreVo> findInfo(Long storeId, String period, Long factorId) {
-        List<RegulationScoreVo> regulationScoreVoList = this.findVoList(storeId, period, factorId);
-        List<Map<String, Object>> mapList = regulationScoreChannelService.findMapList(storeId, period, factorId);
-        regulationScoreVoList.stream().forEach(item -> {
-            item.setRegulationScoreChannelMap(getRegulationScoreMap(item.getRegulationId(), mapList));
-        });
-        return regulationScoreVoList;
-    }
-
-    private Map<String, Object> getRegulationScoreMap(Long regulationId, List<Map<String, Object>> mapList) {
-        for (int i = 0; i < mapList.size(); i++) {
-            Map<String, Object> map = mapList.get(i);
-            if (map.get("regulation_id").equals(regulationId)) {
-                return map;
-            }
-        }
-        return null;
-    }
 }
 

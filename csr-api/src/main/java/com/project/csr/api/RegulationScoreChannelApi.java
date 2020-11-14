@@ -73,11 +73,11 @@ public class RegulationScoreChannelApi {
         return regulationScoreChannelService.prohibitById(id);
     }
 
-    @ApiOperation("获取因子要素细则分渠道评分规则信息")
-    @GetMapping(value = "/findInfo")
-    public List<Map<String, Object>> findInfo(@RequestParam("store_id") Long storeId,
-                                              @RequestParam("period") String period,
-                                              @RequestParam("factor_id") Long factorId) {
-        return regulationScoreChannelService.findMapList(storeId, period, factorId);
-    }
+    // @ApiOperation("获取因子要素细则分渠道评分规则信息")
+    // @GetMapping(value = "/findInfo")
+    // public List<Map<String, Object>> findInfo(@RequestParam("store_id") Long storeId,
+    //                                           @RequestParam("period") String period,
+    //                                           @RequestParam("factor_id") Long factorId) {
+    //     return regulationScoreChannelService.findMapList(storeId, period, factorId);
+    // }
 }

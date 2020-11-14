@@ -1,5 +1,6 @@
 package com.project.csr.api;
 
+import com.project.csr.model.vo.RegulationScoreVo;
 import com.project.csr.model.vo.RegulationVo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -75,5 +78,13 @@ public class RegulationApi {
     @GetMapping("/findVoById/{id}")
     public RegulationVo findVoById(@PathVariable Long id) {
         return ConvertUtils.convert(regulationService.findVoById(id), RegulationVo.class);
+    }
+
+    @ApiOperation("获取因子要素细则评分规则情况")
+    @GetMapping(value = "/findInfo")
+    public List<RegulationVo> findInfo(@RequestParam("store_id") Long storeId,
+                                            @RequestParam("period") String period,
+                                            @RequestParam("factor_id") Long factorId) {
+        return regulationService.findInfo(storeId, period, factorId);
     }
 }

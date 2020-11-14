@@ -72,11 +72,4 @@ public class RegulationScoreApi {
         return regulationScoreService.prohibitById(id);
     }
 
-    @ApiOperation("获取因子要素细则评分规则情况")
-    @GetMapping(value = "/findInfo")
-    public List<RegulationScoreVo> findInfo(@RequestParam("store_id") Long storeId,
-                                            @RequestParam("period") String period,
-                                            @RequestParam("factor_id") Long factorId) {
-        return regulationScoreService.findInfo(storeId, period, factorId);
-    }
 }

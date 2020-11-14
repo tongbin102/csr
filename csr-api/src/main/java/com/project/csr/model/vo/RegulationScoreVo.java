@@ -29,6 +29,4 @@ public class RegulationScoreVo extends RegulationScorePo implements Serializable
 
     private String regulationDescription;
 
-    private Map<String, Object> regulationScoreChannelMap;
-
 }

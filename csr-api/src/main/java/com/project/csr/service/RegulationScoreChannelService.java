@@ -7,7 +7,6 @@ import com.project.csr.model.po.RegulationScoreChannelPo;
 import com.project.csr.model.vo.RegulationScoreChannelVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -41,10 +40,13 @@ public interface RegulationScoreChannelService extends IService<RegulationScoreC
     boolean prohibitById(String id);
 
     /**
+     * 通过regulationsIds查询列表
+     *
      * @param storeId
      * @param period
-     * @param factorId
+     * @param regulationIds
      * @return
      */
-    List<Map<String, Object>> findMapList(Long storeId, String period, Long factorId);
+    List<RegulationScoreChannelVo> findVoList(Long storeId, String period, String regulationIds);
+
 }

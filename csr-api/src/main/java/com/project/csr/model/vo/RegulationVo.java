@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * <p>
@@ -24,5 +25,13 @@ import java.io.Serializable;
 public class RegulationVo extends RegulationPo implements Serializable {
 
     private ElementPo elementPo;
+
+    private String elementName;
+
+    private String regulationDescription;
+
+    private Map<String, Object> regulationScoreMap;
+
+    private Map<String, Object> regulationScoreChannelMap;
 
 }

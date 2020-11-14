@@ -32,4 +32,16 @@
             element_id, description, score_type
         </sql>
 
+        <select id="findVoList" resultType="com.project.csr.model.vo.RegulationVo">
+                SELECT r.id,
+                       r.valid_ind,
+                       r.creator,
+                       r.create_time,
+                       r.updater,
+                       r.update_time
+                FROM regulation r
+                INNER JOIN element e ON e.id = r.element_id
+                WHERE e.factor_id = #{factor_id}
+        </select>
+
 </mapper>

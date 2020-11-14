@@ -41,6 +41,7 @@ public interface RegulationService extends IService<RegulationPo> {
 
     /**
      * 通过ids查询列表
+     *
      * @param ids
      * @return
      */
@@ -48,8 +49,19 @@ public interface RegulationService extends IService<RegulationPo> {
 
     /**
      * 通过id获取Vo
+     *
      * @param id
      * @return
      */
     RegulationVo findVoById(Long id);
+
+    /**
+     * 通过因子id获取VoList
+     *
+     * @param factorId
+     * @return
+     */
+    List<RegulationVo> findVoListByFactorId(Long factorId);
+
+    List<RegulationVo> findInfo(Long storeId, String period, Long factorId);
 }

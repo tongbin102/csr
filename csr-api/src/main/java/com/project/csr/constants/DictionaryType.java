@@ -58,19 +58,23 @@ public class DictionaryType {
     /************************** ScoreType 得分类型 ********************************/
 
     /**
-     * SCOPE_TYPE_EVALUATE_ID   考核分
+     * SCORE_TYPE_EVALUATE_ID   考核分
      */
-    public static final Integer SCOPE_TYPE_EVALUATE_ID = 1;
+    public static final Integer SCORE_TYPE_ID_EVALUATE = 1;
+
+    public static final String SCORE_TYPE_EVALUATE = "evaluate";
 
     /**
-     * SCOPE_TYPE_ID_BONUS   加分
+     * SCORE_TYPE_ID_BONUS   加分
      */
-    public static final Integer SCOPE_TYPE_ID_BONUS = 2;
+    public static final Integer SCORE_TYPE_ID_BONUS = 2;
+    public static final String SCORE_TYPE_BONUS = "bonus";
 
     /**
-     * SCOPE_TYPE_ID_DEDUCT   扣分
+     * SCORE_TYPE_ID_DEDUCT   扣分
      */
-    public static final Integer SCOPE_TYPE_ID_DEDUCT = 3;
+    public static final Integer SCORE_TYPE_ID_DEDUCT = 3;
+    public static final String SCORE_TYPE_DEDUCT = "deduct";
 
 
 }

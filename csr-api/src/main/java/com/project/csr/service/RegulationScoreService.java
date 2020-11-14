@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.RegulationScoreVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -40,18 +41,13 @@ public interface RegulationScoreService extends IService<RegulationScorePo> {
     boolean prohibitById(String id);
 
     /**
+     * 通过regulationIds获取列表
+     *
      * @param storeId
      * @param period
      * @param factorId
      * @return
      */
-    List<RegulationScoreVo> findVoList(Long storeId, String period, Long factorId);
+    List<RegulationScoreVo> findVoList(Long storeId, String period, String regulationIds);
 
-    /**
-     * @param storeId
-     * @param period
-     * @param factorId
-     * @return
-     */
-    List<RegulationScoreVo> findInfo(Long storeId, String period, Long factorId);
 }
