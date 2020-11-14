@@ -30,6 +30,8 @@ public interface ScoreMapper extends BaseMapper<ScorePo> {
 
     List<ScoreVo> findCityVoList(Map<String, Object> params);
 
+    List<ScoreVo> findSuperiorVoList(Map<String, Object> params);
+
     List<ScoreVo> findStoreVoList(Map<String, Object> params);
 
 }

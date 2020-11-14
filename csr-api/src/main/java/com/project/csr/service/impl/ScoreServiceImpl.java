@@ -128,7 +128,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_CITY)) {
             return scoreMapper.findCityVoList(params);
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_SUPERIOR)) {
-            return scoreMapper.findStoreVoList(params);
+            return scoreMapper.findSuperiorVoList(params);
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
             return scoreMapper.findStoreVoList(params);
         }
