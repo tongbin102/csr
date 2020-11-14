@@ -38,7 +38,11 @@
                        r.creator,
                        r.create_time,
                        r.updater,
-                       r.update_time
+                       r.update_time,
+                       r.element_id,
+                       e.name AS element_name,
+                       r.description,
+                       r.score_type
                 FROM regulation r
                 INNER JOIN element e ON e.id = r.element_id
                 WHERE e.factor_id = #{factor_id}

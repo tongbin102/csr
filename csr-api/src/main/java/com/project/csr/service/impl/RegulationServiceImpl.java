@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.constants.DictionaryType;
 import com.project.csr.dao.RegulationMapper;
+import com.project.csr.model.po.ElementPo;
 import com.project.csr.model.po.RegulationPo;
 import com.project.csr.model.vo.RegulationScoreChannelVo;
 import com.project.csr.model.vo.RegulationScoreVo;
@@ -23,7 +24,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -77,7 +77,8 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
     @Override
     public RegulationVo findVoById(Long id) {
         RegulationVo regulationVo = ConvertUtils.convert(this.getById(id), RegulationVo.class);
-        regulationVo.setElementPo(elementService.getById(regulationVo.getElementId()));
+        ElementPo elementPo = elementService.getById(regulationVo.getElementId());
+        regulationVo.setElementName(elementPo.getName());
         return regulationVo;
     }
 
