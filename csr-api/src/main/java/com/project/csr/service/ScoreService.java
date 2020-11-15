@@ -53,4 +53,6 @@ public interface ScoreService extends IService<ScorePo> {
 	List<ScoreVo> findScoreInfo(Long scopeId, Long parentId, String currentPeriod, String lastPeriod);
 
 	List<ScoreVo> findVoList(Long scopeId, String storeIds, String currentPeriod, String lastPeriod);
+
+	List<ScoreVo> findVoListByPeriods(Long scopeId, Long storeId, String beginPeriod, String endPeriod);
 }

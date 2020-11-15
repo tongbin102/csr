@@ -135,4 +135,13 @@ public class ScoreFactorApi {
 		return resultMap;
 	}
 
+	@ApiOperation("根据期间范围获取分因子得分情况")
+	@GetMapping(value = "/findInfoByPeriods")
+	public List<Map<String, Object>> findInfoByPeriods(@RequestParam("scope_id") Long scopeId,
+													   @RequestParam("store_id") Long storeId,
+													   @RequestParam("begin_period") String beginPeriod,
+													   @RequestParam("end_period") String endPeriod) {
+		return scoreFactorService.findVoMapList(scopeId, storeId, beginPeriod, endPeriod);
+	}
+
 }

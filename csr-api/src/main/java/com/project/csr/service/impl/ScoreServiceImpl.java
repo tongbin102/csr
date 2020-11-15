@@ -11,6 +11,7 @@ import com.project.csr.dao.ScoreMapper;
 import com.project.csr.model.po.*;
 import com.project.csr.model.vo.ScoreVo;
 import com.project.csr.service.*;
+import com.project.csr.utils.ConvertUtils;
 import com.project.csr.utils.ToolsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +136,14 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
         return null;
     }
 
+    @Override
+    public List<ScoreVo> findVoListByPeriods(Long scopeId, Long storeId, String beginPeriod, String endPeriod) {
+        LambdaQueryWrapper<ScorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScorePo::getScopeId, scopeId)
+                .eq(ScorePo::getStoreId, storeId)
+                .between(ScorePo::getPeriod, beginPeriod, endPeriod);
+        return ConvertUtils.convert(scoreMapper.selectList(wrapper), ScoreVo.class);
+    }
 
 }
 

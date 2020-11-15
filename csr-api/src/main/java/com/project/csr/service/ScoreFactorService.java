@@ -51,4 +51,6 @@ public interface ScoreFactorService extends IService<ScoreFactorPo> {
 	List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod);
 
 	List<ScoreFactorVo> findVoList(Map<String, Object> params);
+
+	List<Map<String, Object>> findVoMapList(Long scopeId, Long storeId, String beginPeriod, String endPeriod);
 }
