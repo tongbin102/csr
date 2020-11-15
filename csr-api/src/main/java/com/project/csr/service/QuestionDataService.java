@@ -2,9 +2,11 @@
 package com.project.csr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.project.csr.model.po.QuestionDataPo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.project.csr.model.po.QuestionDataPo;
 import com.project.csr.model.vo.QuestionDataVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -36,4 +38,12 @@ public interface QuestionDataService extends IService<QuestionDataPo> {
      * @since 2020-11-15
      */
     boolean prohibitById(String id);
+
+    /**
+     * 通过因子要素细则id获取列表
+     *
+     * @param regulationId
+     * @return
+     */
+    List<QuestionDataVo> findListByRegulationId(String period, Long storeId, Long regulationId);
 }

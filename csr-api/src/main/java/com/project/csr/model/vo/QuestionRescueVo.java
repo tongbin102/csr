@@ -22,4 +22,10 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class QuestionRescueVo extends QuestionRescuePo implements Serializable {
 
+    private String scoreType;
+
+    private String score;
+
+    private String grade;
+
 }

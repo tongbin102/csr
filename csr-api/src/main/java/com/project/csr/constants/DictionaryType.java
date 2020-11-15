@@ -22,6 +22,18 @@ public class DictionaryType {
      * CHANNEL_ID_ASSISTANCE
      */
     public static final Long CHANNEL_ID_ASSISTANCE = 3L;
+    /**
+     * CHANNEL_ID_ASSISTANCE
+     */
+    public static final Long CHANNEL_ID_COMPLAIN = 4L;
+    /**
+     * CHANNEL_ID_ASSISTANCE
+     */
+    public static final Long CHANNEL_ID_RESCUE = 5L;
+    /**
+     * CHANNEL_ID_ASSISTANCE
+     */
+    public static final Long CHANNEL_ID_DATA = 6L;
 
     public static final Integer CHANNEL_TYPE_EVALUATE = 1;
 

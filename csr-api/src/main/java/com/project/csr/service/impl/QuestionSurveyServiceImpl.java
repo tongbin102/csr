@@ -78,6 +78,7 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
             }
             List<ScoreQuestionPo> list2 = scoreQuestionPoList.stream().filter(q -> q.getQuestionId().toString().equals(questionSurveyVo.getId())).collect(Collectors.toList());
             if (list2.size() > 0) {
+                questionSurveyVo.setScore(list2.get(0).getScore());
                 questionSurveyVo.setGrade(list2.get(0).getGrade());
             }
         });
