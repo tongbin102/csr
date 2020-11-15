@@ -39,6 +39,6 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      */
     boolean prohibitById(String id);
 
-    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, String questionIds);
+    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, Long channelId, String questionIds);
 
 }

@@ -48,10 +48,11 @@ public class ScoreQuestionServiceImpl extends ServiceImpl<ScoreQuestionMapper, S
     }
 
     @Override
-    public List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, String questionIds) {
+    public List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, Long channelId, String questionIds) {
         LambdaQueryWrapper<ScoreQuestionPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScoreQuestionPo::getPeriod, period)
                 .eq(ScoreQuestionPo::getStoreId, storeId)
+                .eq(ScoreQuestionPo::getChannelId, channelId)
                 .in(ScoreQuestionPo::getQuestionId, questionIds.split(","));
         return scoreQuestionMapper.selectList(wrapper);
     }
