@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
                 if (roles === 'admin') {
                   next({ path: '/admin/upload' });
                 } else if (roles === 'vendor') {
-                  next({ path: '/satisfaction/country' });
+                  next({ path: '/satisfaction/national' });
                 } else if (roles === 'region') {
                   next({ path: '/satisfaction/region' });
                 } else if (roles === 'province') {

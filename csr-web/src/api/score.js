@@ -1,24 +1,21 @@
 import request from '@/utils/request';
 
 const scoreApi = {
-  findInfo: '/scoreApi/findInfo'
-};
-
-const scoreChannelApi = {
-  findInfo: '/scoreChannelApi/findInfo'
-};
-
-const scoreFactorApi = {
-  findInfo: '/scoreFactorApi/findInfo',
-  findInfoForStore: '/scoreFactorApi/findInfoForStore',
-  findInfoForFactor: '/scoreFactorApi/findInfoForFactor'
+  findScoreInfo: '/scoreApi/findInfo',
+  findScoreChannelInfo: '/scoreChannelApi/findInfo',
+  findScoreChannelInfoByPeriods: '/scoreChannelApi/findInfoByPeriods',
+  findScoreFactorInfo: '/scoreFactorApi/findInfo',
+  findScoreFactorInfoByPeriods: '/scoreFactorApi/findInfoByPeriods',
+  findScoreFactorInfoForStore: '/scoreFactorApi/findInfoForStore',
+  findScoreFactorInfoForFactor: '/scoreFactorApi/findInfoForFactor',
+  findScoreQuestionByStoreAndQuestionId: '/scoreQuestionApi/findByStoreAndQuestionId'
 };
 
 export default scoreApi;
 
 export function getScoreInfo (parameter) {
   return request({
-    url: scoreApi.findInfo,
+    url: scoreApi.findScoreInfo,
     method: 'get',
     params: parameter
   });
@@ -26,7 +23,15 @@ export function getScoreInfo (parameter) {
 
 export function getScoreChannelInfo (parameter) {
   return request({
-    url: scoreChannelApi.findInfo,
+    url: scoreApi.findScoreChannelInfo,
+    method: 'get',
+    params: parameter
+  });
+}
+
+export function getScoreChannelInfoByPeriods (parameter) {
+  return request({
+    url: scoreApi.findScoreChannelInfoByPeriods,
     method: 'get',
     params: parameter
   });
@@ -34,7 +39,15 @@ export function getScoreChannelInfo (parameter) {
 
 export function getScoreFactorInfo (parameter) {
   return request({
-    url: scoreFactorApi.findInfo,
+    url: scoreApi.findScoreFactorInfo,
+    method: 'get',
+    params: parameter
+  });
+}
+
+export function getScoreFactorInfoByPeriods (parameter) {
+  return request({
+    url: scoreApi.findScoreFactorInfoByPeriods,
     method: 'get',
     params: parameter
   });
@@ -42,7 +55,7 @@ export function getScoreFactorInfo (parameter) {
 
 export function getScoreFactorInfoForStore (parameter) {
   return request({
-    url: scoreFactorApi.findInfoForStore,
+    url: scoreApi.findScoreFactorInfoForStore,
     method: 'get',
     params: parameter
   });
@@ -50,7 +63,15 @@ export function getScoreFactorInfoForStore (parameter) {
 
 export function getScoreFactorInfoForFactor (parameter) {
   return request({
-    url: scoreFactorApi.findInfoForFactor,
+    url: scoreApi.findScoreFactorInfoForFactor,
+    method: 'get',
+    params: parameter
+  });
+}
+
+export function getScoreQuestionByStoreAndQuestionId (parameter) {
+  return request({
+    url: scoreApi.findScoreQuestionByStoreAndQuestionId,
     method: 'get',
     params: parameter
   });

@@ -17,6 +17,7 @@
     "ant-design-vue": "^1.7.1",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "echarts": "^4.9.0",
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
     "md5": "^2.3.0",

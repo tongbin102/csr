@@ -13,12 +13,12 @@ export const asyncRouterMap = [
     name: 'Satisfaction',
     component: BaseLayout,
     meta: { title: '满意度情况' },
-    redirect: '/satisfaction/country',
+    redirect: '/satisfaction/national',
     children: [
       {
-        path: '/satisfaction/country',
-        name: 'SatisfactionCountry',
-        component: () => import('@/views/satisfaction/Country'),
+        path: '/satisfaction/national',
+        name: 'SatisfactionNational',
+        component: () => import('@/views/satisfaction/National'),
         meta: {
           title: '满意度情况',
           keepAlive: false,
@@ -77,12 +77,13 @@ export const asyncRouterMap = [
       }
     ]
   },
+  // Factor
   {
     path: '/factor',
     name: 'Factor',
     component: BaseLayout,
     meta: { title: '业务模块' },
-    redirect: '/factor/Details',
+    redirect: '/factor/details',
     children: [
       {
         path: '/factor/details',
@@ -90,6 +91,106 @@ export const asyncRouterMap = [
         component: () => import('@/views/factor/Details'),
         meta: {
           title: '业务模块明细',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      }
+    ]
+  },
+  // Regulation
+  {
+    path: '/regulation',
+    name: 'Regulation',
+    component: BaseLayout,
+    meta: { title: '评分规则' },
+    redirect: '/regulation/survey',
+    children: [
+      {
+        path: '/regulation/survey',
+        name: 'RegulationSurvey',
+        component: () => import('@/views/regulation/Survey'),
+        meta: {
+          title: '客户调研评分规则',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      },
+      {
+        path: '/regulation/monitor',
+        name: 'RegulationMonitor',
+        component: () => import('@/views/regulation/Monitor'),
+        meta: {
+          title: '过程监控评分规则',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      },
+      {
+        path: '/regulation/assistance',
+        name: 'RegulationAssistance',
+        component: () => import('@/views/regulation/Assistance'),
+        meta: {
+          title: '服务助手评分规则',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      },
+      {
+        path: '/regulation/complain',
+        name: 'RegulationComplain',
+        component: () => import('@/views/regulation/Complain'),
+        meta: {
+          title: '投诉扣分',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      },
+      {
+        path: '/regulation/rescue',
+        name: 'RegulationRescue',
+        component: () => import('@/views/regulation/Rescue'),
+        meta: {
+          title: '道路救援扣分规则',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      },
+      {
+        path: '/regulation/data',
+        name: 'RegulationData',
+        component: () => import('@/views/regulation/Data'),
+        meta: {
+          title: '数据准确性扣分规则',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      }
+    ]
+  },
+  // Analysis
+  {
+    path: '/analysis',
+    name: 'Analysis',
+    component: BaseLayout,
+    meta: { title: '趋势分析' },
+    redirect: '/analysis/channel',
+    children: [
+      {
+        path: '/analysis/channel',
+        name: 'AnalysisChannel',
+        component: () => import('@/views/analysis/Channel'),
+        meta: {
+          title: '分渠道得分趋势分析',
+          keepAlive: false,
+          permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
+        }
+      },
+      {
+        path: '/analysis/factor',
+        name: 'AnalysisFactor',
+        component: () => import('@/views/analysis/Factor'),
+        meta: {
+          title: '分因子得分趋势分析',
           keepAlive: false,
           permission: ['admin', 'vendor', 'province', 'area', 'city', 'superior', 'store']
         }

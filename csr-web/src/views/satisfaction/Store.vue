@@ -2,14 +2,16 @@
   <div>
     <a-row>
       <a-col :span="12">{{ title }}</a-col>
-      <a-col :span="8" :offset="4"><span style="float:right">评估期：{{ month }}</span></a-col>
+      <a-col :span="12"><span style="float:right">评估期：{{ month }}</span></a-col>
     </a-row>
 
     <div class="content">
       <a-table :columns="scoreColumns" :data-source="scoreData" :pagination="false" :loading="scoreLoading">
         <template slot="score" slot-scope="text, record, index">
           <span v-if="index === 0">本期总得分：{{ record.score }}</span>
-          <a-button type="link" v-else @click="handleClickStore(record.factorId)">{{ record.factorName }}得分：{{ record.score }} </a-button>
+          <a-button class="childLink" type="link" v-else @click="handleClickStore(record.factorId)">
+            <span>{{ record.factorName }}得分：{{ record.score }}</span>
+          </a-button>
         </template>
         <span slot="scoreTitle"></span>
 
@@ -60,7 +62,7 @@
 <script>
 import moment from 'moment';
 import { getScoreFactorInfoForStore, getScoreChannelInfo, getScoreFactorInfo } from '@/api/score';
-import { getAllChannel } from '@/api/channel';
+import { getChannelList1 } from '@/api/channel';
 import { getAllFactor } from '@/api/factor';
 import { getStoreById } from '@/api/store';
 
@@ -82,25 +84,29 @@ export default {
           dataIndex: 'score',
           key: 'score',
           slots: { title: 'scoreTitle' },
-          scopedSlots: { customRender: 'score' }
+          scopedSlots: { customRender: 'score' },
+          width: '40%'
         },
         {
           title: '全国排名',
           dataIndex: 'rankCountry',
           key: 'rankCountry',
-          scopedSlots: { customRender: 'rankCountry' }
+          scopedSlots: { customRender: 'rankCountry' },
+          width: '20%'
         },
         {
           title: '区域排名',
           dataIndex: 'rankScope',
           key: 'rankScope',
-          scopedSlots: { customRender: 'rankScope' }
+          scopedSlots: { customRender: 'rankScope' },
+          width: '20%'
         },
         {
           title: '环比上期',
           dataIndex: 'diff',
           key: 'diff',
-          scopedSlots: { customRender: 'diff' }
+          scopedSlots: { customRender: 'diff' },
+          width: '20%'
         }
       ],
       scoreData: [],
@@ -114,16 +120,19 @@ export default {
     this.initialData();
     this.fetchColumns();
     this.fetchScoreData({
+      scope_id: this.scopeId,
       store_id: this.id,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreChannelData({
+      scope_id: this.scopeId,
       store_id: this.id,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreFactorData({
+      scope_id: this.scopeId,
       store_id: this.id,
       current_period: this.period,
       last_period: this.lastPeriod
@@ -138,7 +147,7 @@ export default {
       });
     },
     fetchColumns (params = {}) {
-      getAllChannel(params).then(res => {
+      getChannelList1(params).then(res => {
         const scoreChannelColumns = [];
         scoreChannelColumns.push({
           dataIndex: 'period',
@@ -210,8 +219,13 @@ export default {
 <style lang="less" scoped>
 .content {
   border: 1px solid #999;
-  padding: 0 20px;
+  padding: 0;
 }
+
+.childLink span {
+  text-decoration: underline;
+}
+
 .ant-table .ant-table-title .ant-row {
   border-bottom: 1px solid #999;
 }
