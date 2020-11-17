@@ -54,8 +54,8 @@
             current.updater,
             current.update_time,
             current.score - IFNULL(last.score,0) AS score_diff,
-            current.rank_country - last.rank_country AS rank_country_diff,
-            current.rank_scope - last.rank_scope AS rank_scope_diff
+            IFNULL(last.rank_country, 1)  - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM factor f
         LEFT JOIN score_factor current
         ON current.factor_id = f.id

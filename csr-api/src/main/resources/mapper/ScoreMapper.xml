@@ -52,8 +52,8 @@
             current.updater,
             current.update_time,
             current.score - IFNULL(last.score, 0) AS score_diff,
-            current.rank_country - last.rank_country AS rank_country_diff,
-            current.rank_scope - last.rank_scope AS rank_scope_diff
+            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM store s
         LEFT JOIN score current
         ON current.store_id = s.id AND current.period = #{current_period}
@@ -72,22 +72,22 @@
 
     <select id="findNationalVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-        current.period,
-        current.scope_id,
-        current.store_id,
-        current.name,
-        '全国' AS store_name,
-        current.score,
-        current.rank_country,
-        current.rank_scope,
-        current.valid_ind,
-        current.creator,
-        current.create_time,
-        current.updater,
-        current.update_time,
-        current.score - IFNULL(last.score, 0) AS score_diff,
-        current.rank_country - last.rank_country AS rank_country_diff,
-        current.rank_scope - last.rank_scope AS rank_scope_diff
+            current.period,
+            current.scope_id,
+            current.store_id,
+            current.name,
+            '全国' AS store_name,
+            current.score,
+            current.rank_country,
+            current.rank_scope,
+            current.valid_ind,
+            current.creator,
+            current.create_time,
+            current.updater,
+            current.update_time,
+            current.score - IFNULL(last.score, 0) AS score_diff,
+            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_id = current.store_id
         and last.scope_id = current.scope_id
@@ -116,8 +116,8 @@
             current.updater,
             current.update_time,
             current.score - IFNULL(last.score, 0) AS score_diff,
-            current.rank_country - last.rank_country AS rank_country_diff,
-            current.rank_scope - last.rank_scope AS rank_scope_diff
+            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_id = current.store_id
         and last.scope_id = current.scope_id
@@ -147,8 +147,8 @@
             current.updater,
             current.update_time,
             current.score - IFNULL(last.score, 0) AS score_diff,
-            current.rank_country - last.rank_country AS rank_country_diff,
-            current.rank_scope - last.rank_scope AS rank_scope_diff
+            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_id = current.store_id
         and last.scope_id = current.scope_id
@@ -178,8 +178,8 @@
             current.updater,
             current.update_time,
             current.score - IFNULL(last.score, 0) AS score_diff,
-            current.rank_country - last.rank_country AS rank_country_diff,
-            current.rank_scope - last.rank_scope AS rank_scope_diff
+            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_id = current.store_id
         and last.scope_id = current.scope_id
@@ -195,22 +195,22 @@
 
     <select id="findSuperiorVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-        current.period,
-        current.scope_id,
-        current.store_id,
-        current.name,
-        s.name AS store_name,
-        current.score,
-        current.rank_country,
-        current.rank_scope,
-        current.valid_ind,
-        current.creator,
-        current.create_time,
-        current.updater,
-        current.update_time,
-        current.score - IFNULL(last.score, 0) AS score_diff,
-        current.rank_country - last.rank_country AS rank_country_diff,
-        current.rank_scope - last.rank_scope AS rank_scope_diff
+            current.period,
+            current.scope_id,
+            current.store_id,
+            current.name,
+            s.name AS store_name,
+            current.score,
+            current.rank_country,
+            current.rank_scope,
+            current.valid_ind,
+            current.creator,
+            current.create_time,
+            current.updater,
+            current.update_time,
+            current.score - IFNULL(last.score, 0) AS score_diff,
+            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_id = current.store_id
         and last.scope_id = current.scope_id
@@ -226,22 +226,22 @@
 
     <select id="findStoreVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-        current.period,
-        current.scope_id,
-        current.store_id,
-        current.name,
-        s.name AS store_name,
-        current.score,
-        current.rank_country,
-        current.rank_scope,
-        current.valid_ind,
-        current.creator,
-        current.create_time,
-        current.updater,
-        current.update_time,
-        current.score - IFNULL(last.score, 0) AS score_diff,
-        current.rank_country - last.rank_country AS rank_country_diff,
-        current.rank_scope - last.rank_scope AS rank_scope_diff
+            current.period,
+            current.scope_id,
+            current.store_id,
+            current.name,
+            s.name AS store_name,
+            current.score,
+            current.rank_country,
+            current.rank_scope,
+            current.valid_ind,
+            current.creator,
+            current.create_time,
+            current.updater,
+            current.update_time,
+            current.score - IFNULL(last.score, 0) AS score_diff,
+            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_id = current.store_id
         and last.scope_id = current.scope_id
