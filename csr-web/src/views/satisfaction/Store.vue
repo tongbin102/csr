@@ -6,57 +6,82 @@
     </a-row>
 
     <div class="content">
-      <a-table :columns="scoreColumns" :data-source="scoreData" :pagination="false" :loading="scoreLoading">
+      <a-table
+        :columns="scoreColumns"
+        :data-source="scoreData"
+        :pagination="false"
+        :loading="scoreLoading"
+        :customHeaderRow="setCustomHeaderRow"
+        :customRow="setCustomRow">
         <template slot="score" slot-scope="text, record, index">
-          <span v-if="index === 0">本期总得分：{{ record.score }}</span>
+          <span v-if="index === 0">{{ storeName }}总得分：{{ record.score }}</span>
           <a-button class="childLink" type="link" v-else @click="handleClickStore(record.factorId)">
-            <span>{{ record.factorName }}得分：{{ record.score }}</span>
+            <span style="text-decoration: underline;">{{ record.factorName }}得分：{{ record.score }}</span>
           </a-button>
         </template>
         <span slot="scoreTitle"></span>
 
         <template slot="rankCountry" slot-scope="text, record">
-          <span class="increase" v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
-          <span class="hold" v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
-          <span class="decrease" v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
+          <span v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
+          <span v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
+          <span v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
         </template>
         <template slot="rankScope" slot-scope="text, record">
-          <span class="increase" v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
-          <span class="hold" v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
-          <span class="decrease" v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
+          <span v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
+          <span v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
+          <span v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
         </template>
         <template slot="diff" slot-scope="text, record">
-          <span class="increase" v-if="record.scoreDiff > 0">{{ '提高+' + record.scoreDiff }}</span>
-          <span class="hold" v-if="record.scoreDiff === 0">持平</span>
-          <span class="decrease" v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff }}</span>
+          <span v-if="record.scoreDiff > 0">{{ '提高+' + record.scoreDiff }}</span>
+          <span v-if="record.scoreDiff === 0">持平</span>
+          <span v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff }}</span>
         </template>
       </a-table>
-      <a-table :columns="scoreChannelColumns" :data-source="scoreChannelData" :pagination="false" :loading="scoreChannelLoading">
-        <template slot="period" slot-scope="text, record">
-          <span>{{ record.name }}</span>
-        </template>
-        <span slot="periodTitle"></span>
-        <template slot="title">
-          <a-row>
-            <a-col :span="12">分渠道得分</a-col>
-            <a-col :span="4" :offset="8">趋势分析</a-col>
-          </a-row>
-        </template>
-      </a-table>
-      <a-table :columns="scoreFactorColumns" :data-source="scoreFactorData" :pagination="false" :loading="scoreFactorLoading">
-        <template slot="period" slot-scope="text, record">
-          <span>{{ record.name }}</span>
-        </template>
-        <span slot="customTitle"></span>
-        <template slot="title">
-          <a-row>
-            <a-col :span="12">分因子得分</a-col>
-            <a-col :span="4" :offset="8">趋势分析</a-col>
-          </a-row>
-        </template>
-      </a-table>
+      <div class="channelInfo">
+        <a-row>
+          <a-col :span="24">
+            <span style="font-weight: bold;">分渠道得分</span>
+            <a-button type="link" style="float: right; color: #47DADA; height:100%; line-height:100%;" @click="handleClickChannelAnalysis">
+              <span style="text-decoration: underline;">趋势分析</span>
+            </a-button>
+          </a-col>
+        </a-row>
+        <a-table
+          :columns="scoreChannelColumns"
+          :data-source="scoreChannelData"
+          :pagination="false"
+          :loading="scoreChannelLoading"
+          :customHeaderRow="setCustomHeaderRow"
+          :customRow="setCustomRow">
+          <template slot="period" slot-scope="text, record">
+            <span>{{ record.name }}</span>
+          </template>
+          <span slot="periodTitle"></span>
+        </a-table>
+      </div>
+      <div class="factorInfo">
+        <a-row>
+          <a-col :span="24">
+            <span style="font-weight: bold;">分因子得分</span>
+            <a-button type="link" style="float: right; color: #47DADA; height:100%; line-height:100%;" @click="handleClickFactorAnalysis">
+              <span style="text-decoration: underline;">趋势分析</span>
+            </a-button>
+          </a-col>
+        </a-row>
+        <a-table
+          :columns="scoreFactorColumns"
+          :data-source="scoreFactorData"
+          :pagination="false"
+          :loading="scoreFactorLoading"
+          :customHeaderRow="setCustomHeaderRow"
+          :customRow="setCustomRow">
+          <template slot="period" slot-scope="text, record">
+            <span>{{ record.name }}</span>
+          </template>
+          <span slot="customTitle"></span>
+        </a-table>
+      </div>
     </div>
-
   </div>
 </template>
 <script>
@@ -68,52 +93,123 @@ import { getStoreById } from '@/api/store';
 
 export default {
   data () {
-    return {
-      title: '',
-      scopeId: 6,
-      id: this.$route.query.id,
-      storeName: '',
-      month: moment().add('month', 0).format('yyyy年MM月'),
-      period: moment().add('month', 0).format('yyyyMM'),
-      lastPeriod: moment().subtract(1, 'month').format('yyyyMM'),
-      scoreLoading: false,
-      scoreChannelLoading: false,
-      scoreFactorLoading: false,
-      scoreColumns: [
+    const scoreColumns = [
         {
           dataIndex: 'score',
           key: 'score',
+          align: 'left',
           slots: { title: 'scoreTitle' },
           scopedSlots: { customRender: 'score' },
-          width: '40%'
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                width: '40%',
+                fontSize: '10px'
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         },
         {
           title: '全国排名',
           dataIndex: 'rankCountry',
           key: 'rankCountry',
+          align: 'center',
           scopedSlots: { customRender: 'rankCountry' },
-          width: '20%'
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                width: '20%',
+                fontSize: '8px',
+                color: record.rankCountryDiff > 0 ? '#31D582' : record.rankCountryDiff < 0 ? '#FF4B4B' : ''
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         },
         {
           title: '区域排名',
           dataIndex: 'rankScope',
           key: 'rankScope',
           scopedSlots: { customRender: 'rankScope' },
-          width: '20%'
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                width: '20%',
+                fontSize: '8px',
+                color: record.rankScopeDiff > 0 ? '#31D582' : record.rankScopeDiff < 0 ? '#FF4B4B' : ''
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         },
         {
           title: '环比上期',
           dataIndex: 'diff',
           key: 'diff',
           scopedSlots: { customRender: 'diff' },
-          width: '20%'
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                width: '20%',
+                fontSize: '8px',
+                color: record.scoreDiff > 0 ? '#31D582' : record.scoreDiff < 0 ? '#FF4B4B' : ''
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         }
-      ],
+      ];
+    return {
+      title: '',
+      scopeId: 6,
+      id: '',
+      storeName: '',
+      month: '',
+      period: '',
+      lastPeriod: '',
+      scoreLoading: false,
+      scoreChannelLoading: false,
+      scoreFactorLoading: false,
+      scoreColumns,
       scoreData: [],
       scoreChannelColumns: [],
       scoreChannelData: [],
       scoreFactorColumns: [],
-      scoreFactorData: []
+      scoreFactorData: [],
+      factorList: []
     };
   },
   mounted () {
@@ -140,6 +236,11 @@ export default {
   },
   methods: {
     initialData () {
+      this.id = this.$route.query.id;
+      this.month = moment().add('month', 0).format('yyyy年MM月');
+      this.period = moment().add('month', 0).format('yyyyMM');
+      this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');
+
       getStoreById(this.id).then(res => {
         const store = res.resData;
         this.title = '所属区域：' + store.name;
@@ -152,14 +253,50 @@ export default {
         scoreChannelColumns.push({
           dataIndex: 'period',
           key: 'period',
-          slots: { title: 'periodTitle' }
+          slots: { title: 'periodTitle' },
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                width: '10%',
+                fontSize: '10px'
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '8px'
+              }
+            };
+          }
         });
         const channelList = res.resData;
+        this.channelList = channelList;
         channelList.forEach((channel) => {
           scoreChannelColumns.push({
             title: channel.name,
             dataIndex: channel.id,
-            key: channel.id
+            key: channel.id,
+            align: 'center',
+            width: (90 / channelList.length) + '%',
+            customCell: function (record, index) {
+              return {
+                style: {
+                  padding: 0,
+                  fontSize: '10px'
+                }
+              };
+            },
+            customHeaderCell: function () {
+              return {
+                style: {
+                  padding: 0,
+                  fontSize: '6px'
+                }
+              };
+            }
           });
         });
         this.scoreChannelColumns = scoreChannelColumns;
@@ -169,14 +306,51 @@ export default {
         scoreFactorColumns.push({
           dataIndex: 'period',
           key: 'period',
-          slots: { title: 'periodTitle' }
+          slots: { title: 'periodTitle' },
+          align: 'center',
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                width: '10%',
+                fontSize: '10px'
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '6px'
+              }
+            };
+          }
         });
         const factorList = res.resData;
+        this.factorList = factorList;
         factorList.forEach((factor) => {
           scoreFactorColumns.push({
             title: factor.name,
             dataIndex: factor.id,
-            key: factor.id
+            key: factor.id,
+            align: 'center',
+            customCell: function (record, index) {
+              return {
+                style: {
+                  padding: 0,
+                  width: (90 / factorList.length) + '%',
+                  fontSize: '10px'
+                }
+              };
+            },
+            customHeaderCell: function () {
+              return {
+                style: {
+                  padding: 0,
+                  fontSize: '6px'
+                }
+              };
+            }
           });
         });
         this.scoreFactorColumns = scoreFactorColumns;
@@ -188,6 +362,26 @@ export default {
         this.scoreLoading = false;
         this.scoreData = [...res.resData.totalScoreList, ...res.resData.scoreFactorList];
       });
+    },
+    setCustomHeaderRow (a, b, c) {
+      return {
+        style: {
+          fontSize: '8px',
+          height: '40px',
+          lineHeight: '40px',
+          wordWrap: 'break-word',
+          wordBreak: 'normal'
+        }
+      };
+    },
+    setCustomRow (record) {
+      return {
+        style: {
+          height: '40px',
+          lineHeight: '40px'
+          // borderBottom: 'none'
+        }
+      };
     },
     fetchScoreChannelData (params = {}) {
       this.scoreChannelLoading = true;
@@ -211,6 +405,24 @@ export default {
           factor_id: factorId
         }
       });
+    },
+    handleClickChannelAnalysis () {
+      this.$router.push({
+        path: '/analysis/channel',
+        query: {
+          scope_id: this.scopeId,
+          store_id: this.id
+        }
+      });
+    },
+    handleClickFactorAnalysis () {
+      this.$router.push({
+        path: '/analysis/factor',
+        query: {
+          scope_id: this.scopeId,
+          store_id: this.id
+        }
+      });
     }
   }
 
@@ -222,28 +434,19 @@ export default {
   padding: 0;
 }
 
-.childLink span {
-  text-decoration: underline;
+.childLink {
+  padding: 6px;
+  font-size: 8px;
+  color: #47DADA;
 }
 
-.ant-table .ant-table-title .ant-row {
-  border-bottom: 1px solid #999;
+.channelInfo, .factorInfo {
+  padding-top: 20px;
 }
 
-.ant-table .ant-table-title .ant-row .ant-col {
-  font-size: 20px;
-  font-weight: bold;
+.channelInfo .channelTitle,  .factorInfo .factorTitle {
+  margin: 0 16px;
+  border-bottom: 1px solid;
 }
 
-span.increase {
-  color: #00ff00;
-}
-
-span.decrease {
-  color: #ff0000;
-}
-
-span.hold {
-  color: #000000;
-}
 </style>

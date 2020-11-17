@@ -1,90 +1,104 @@
 <template>
-  <a-tabs v-model="activeKey" type="card">
-    <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
+  <div class="card-container">
+    <a-tabs id="factorDetailsTab" v-model="activeKey" type="card" size="small">
+      <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
+        <a-table
+          :columns="scoreFactorColumns"
+          :data-source="scoreFactorData"
+          :pagination="false"
+          :loading="scoreFactorLoading"
+          :customHeaderRow="setCustomHeaderRow"
+          :customRow="setCustomRow">
+          <template slot="score" slot-scope="text, record, index">
+            <span v-if="index === 0">{{ record.factorName + '：' + record.score }}</span>
+            <a-button type="link" v-else @click="handleClickStore(record.factorId)">{{ record.factorName }}得分：{{ record.score }} </a-button>
+          </template>
+          <span slot="scoreTitle"></span>
 
-      <a-table :columns="scoreFactorColumns" :data-source="scoreFactorData" :pagination="false" :loading="scoreFactorLoading">
-        <template slot="score" slot-scope="text, record, index">
-          <span v-if="index === 0">{{ record.factorName + '：' + record.score }}</span>
-          <a-button type="link" v-else @click="handleClickStore(record.factorId)">{{ record.factorName }}得分：{{ record.score }} </a-button>
-        </template>
-        <span slot="scoreTitle"></span>
+          <template slot="rankCountry" slot-scope="text, record">
+            <span class="increase" v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
+            <span class="hold" v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
+            <span class="decrease" v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
+          </template>
+          <template slot="rankScope" slot-scope="text, record">
+            <span class="increase" v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
+            <span class="hold" v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
+            <span class="decrease" v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
+          </template>
+          <template slot="diff" slot-scope="text, record">
+            <span class="increase" v-if="record.scoreDiff > 0">{{ '提高+' + record.scoreDiff }}</span>
+            <span class="hold" v-if="record.scoreDiff === 0">持平</span>
+            <span class="decrease" v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff }}</span>
+          </template>
+        </a-table>
 
-        <template slot="rankCountry" slot-scope="text, record">
-          <span class="increase" v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
-          <span class="hold" v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
-          <span class="decrease" v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
-        </template>
-        <template slot="rankScope" slot-scope="text, record">
-          <span class="increase" v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
-          <span class="hold" v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
-          <span class="decrease" v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
-        </template>
-        <template slot="diff" slot-scope="text, record">
-          <span class="increase" v-if="record.scoreDiff > 0">{{ '提高+' + record.scoreDiff }}</span>
-          <span class="hold" v-if="record.scoreDiff === 0">持平</span>
-          <span class="decrease" v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff }}</span>
-        </template>
-      </a-table>
+        <a-divider></a-divider>
 
-      <a-divider></a-divider>
+        <a-table
+          table-layout="fixed"
+          :columns="regulationScoreColumns"
+          :data-source="regulationScoreData"
+          :pagination="false"
+          :loading="regulationScoreLoading"
+          :customHeaderRow="setCustomHeaderRow"
+          :customRow="setCustomRow">
+          <template slot="element" slot-scope="text, record">
+            <span>{{ record.elementName || '' }}</span>
+          </template>
+          <template slot="regulation" slot-scope="text, record">
+            <span v-html="record.description"></span>
+          </template>
+          <template slot="evaluateScore" slot-scope="text, record">
+            <span>{{ record.regulationScoreMap.evaluateScore || '' }}</span>
+          </template>
+          <template slot="bonusScore" slot-scope="text, record">
+            <span>{{ record.regulationScoreMap.bonusScore || '' }}</span>
+          </template>
+          <template v-for="channel in channelList" :slot="'evaluateChannelScore' + channel.id" slot-scope="text, record">
+            <a-button class="scoreChannelBtn" :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 1)" size="small">
+              <span
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '优秀'"
+                style="color: #09CDFF">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+              <span
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '优良'"
+                style="color: #2DD42D">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+              <span
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '达标'"
+                style="color: #FFD27A">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+              <span
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '薄弱'"
+                style="color: #FF3030">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+            </a-button>
+          </template>
+          <template v-for="channel in channelList" :slot="'bonusChannelScore' + channel.id" slot-scope="text,record">
+            <a-button class="scoreChannelBtn" :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 2)" size="small">
+              <span
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '优秀'"
+                style="color: #09CDFF">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+              <span
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '优良'"
+                style="color: #2DD42D">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+              <span
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '达标'"
+                style="color: #FFD27A">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+              <span
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '薄弱'"
+                style="color: #FF3030">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+            </a-button>
+          </template>
+        </a-table>
 
-      <a-table :columns="regulationScoreColumns" :data-source="regulationScoreData" :pagination="false" :loading="regulationScoreLoading">
-        <template slot="element" slot-scope="text, record">
-          <span>{{ record.elementName || '' }}</span>
-        </template>
-        <template slot="regulation" slot-scope="text, record">
-          <span v-html="record.description"></span>
-        </template>
-        <template slot="evaluateScore" slot-scope="text, record">
-          <span>{{ record.regulationScoreMap.evaluateScore || '' }}</span>
-        </template>
-        <template slot="bonusScore" slot-scope="text, record">
-          <span>{{ record.regulationScoreMap.bonusScore || '' }}</span>
-        </template>
-        <template v-for="channel in channelList" :slot="'evaluateChannelScore' + channel.id" slot-scope="text, record">
-          <a-button :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 1)" size="small">
-            <span
-              v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '优秀'"
-              style="color: #09CDFF">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
-            <span
-              v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '优良'"
-              style="color: #2DD42D">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
-            <span
-              v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '达标'"
-              style="color: #FFD27A">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
-            <span
-              v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '薄弱'"
-              style="color: #FF3030">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
-          </a-button>
-        </template>
-        <template v-for="channel in channelList" :slot="'bonusChannelScore' + channel.id" slot-scope="text,record">
-          <a-button :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 2)" size="small">
-            <span
-              v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '优秀'"
-              style="color: #09CDFF">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
-            <span
-              v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '优良'"
-              style="color: #2DD42D">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
-            <span
-              v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '达标'"
-              style="color: #FFD27A">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
-            <span
-              v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '薄弱'"
-              style="color: #FF3030">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
-          </a-button>
-        </template>
-      </a-table>
+        <a-divider></a-divider>
 
-      <a-divider></a-divider>
+        <a-table :columns="deductChannelScoreColumns" :data-source="deductChannelScoreData" :pagination="false" :showHeader="false">
+          <template slot="deductScore" slot-scope="text, record">
+            <a-button type="link" @click="handleClickDeductScore(record.channelCode, record.regulationId)">{{ record.deductScore }}</a-button>
+          </template>
+        </a-table>
 
-      <a-table :columns="deductChannelScoreColumns" :data-source="deductChannelScoreData" :pagination="false" :showHeader="false">
-        <template slot="deductScore" slot-scope="text, record">
-          <a-button type="link" @click="handleClickDeductScore(record.channelCode, record.regulationId)">{{ record.deductScore }}</a-button>
-        </template>
-      </a-table>
-
-    </a-tab-pane>
-  </a-tabs>
+      </a-tab-pane>
+    </a-tabs>
+  </div>
 </template>
 
 <script>
@@ -98,19 +112,19 @@ import { getRegulationScoreInfo } from '@/api/regulation';
 export default {
   data () {
     const deductChannelScoreColumns = [
-        {
-          // title: '扣分名称',
-          dataIndex: 'deductName',
-          key: 'deductName',
-          width: '40%'
-        },
-        {
-          // title: 'aaa',
-          dataIndex: 'deductScore',
-          key: 'deductScore',
-          scopedSlots: { customRender: 'deductScore' },
-          width: '60%'
-        }
+      {
+        // title: '扣分名称',
+        dataIndex: 'deductName',
+        key: 'deductName',
+        width: '40%'
+      },
+      {
+        // title: 'aaa',
+        dataIndex: 'deductScore',
+        key: 'deductScore',
+        scopedSlots: { customRender: 'deductScore' },
+        width: '60%'
+      }
     ];
     return {
       storeId: '',
@@ -185,19 +199,19 @@ export default {
     initialData () {
       this.storeId = this.$route.query.store_id;
       this.factorId = this.$route.query.factor_id;
-        getAllFactor().then(res => {
-          const factorList = res.resData;
-          const panes = [];
-          factorList.forEach(factor => {
-            panes.push({
-              title: factor.name,
-              content: factor.name,
-              key: factor.id
-            });
+      getAllFactor().then(res => {
+        const factorList = res.resData;
+        const panes = [];
+        factorList.forEach(factor => {
+          panes.push({
+            title: factor.name,
+            content: factor.name,
+            key: factor.id
           });
-          this.panes = panes;
-          this.activeKey = this.$route.query.factor_id;
         });
+        this.panes = panes;
+        this.activeKey = this.$route.query.factor_id;
+      });
     },
     fetchFactorColumns () {
       const scoreFactorColumns = [
@@ -206,28 +220,92 @@ export default {
           key: 'score',
           slots: { title: 'scoreTitle' },
           scopedSlots: { customRender: 'score' },
-          width: '40%'
+          width: '40%',
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '6px'
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         },
         {
           title: '全国排名',
           dataIndex: 'rankCountry',
           key: 'rankCountry',
           scopedSlots: { customRender: 'rankCountry' },
-          width: '20%'
+          width: '20%',
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '6px'
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         },
         {
           title: '区域排名',
           dataIndex: 'rankScope',
           key: 'rankScope',
           scopedSlots: { customRender: 'rankScope' },
-          width: '20%'
+          width: '20%',
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '6px'
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         },
         {
           title: '环比上期',
           dataIndex: 'diff',
           key: 'diff',
           scopedSlots: { customRender: 'diff' },
-          width: '20%'
+          width: '20%',
+          customCell: function (record, index) {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '6px'
+              }
+            };
+          },
+          customHeaderCell: function () {
+            return {
+              style: {
+                padding: 0,
+                fontSize: '10px'
+              }
+            };
+          }
         }
       ];
       this.scoreFactorColumns = scoreFactorColumns;
@@ -246,42 +324,96 @@ export default {
     },
     fetchRegulationScoreColumns () {
       getChannelList1().then(res => {
-        this.channelList = res.resData;
-        const channelList = this.channelList;
+        const channelList = [res.resData[0], res.resData[1], res.resData[2]];
+        this.channelList = channelList;
         const regulationScoreColumns = [
           {
             title: '要素',
             dataIndex: 'element',
             key: 'element',
+            align: 'left',
+            width: '25%',
             scopedSlots: { customRender: 'element' },
-            width: '25%'
+            customCell: function (record, index) {
+              return {
+                style: {
+                  padding: 0,
+                  fontSize: '6px'
+                }
+              };
+            }
           },
           {
             title: '细则',
             dataIndex: 'regulation',
             key: 'regulation',
+            align: 'left',
+            width: '15%',
             scopedSlots: { customRender: 'regulation' },
-            width: '15%'
+            customCell: function (record, index) {
+              return {
+                style: {
+                  padding: 0,
+                  fontSize: '6px'
+                }
+              };
+            }
           },
           {
             title: '综合得分',
             dataIndex: 'comprehensiveScore',
             key: 'comprehensiveScore',
-            // width: '15%',
+            align: 'center',
             children: [
               {
                 title: '考核项',
                 dataIndex: 'evaluateScore',
                 key: 'evaluateScore',
+                align: 'center',
+                width: '7.5%',
                 scopedSlots: { customRender: 'evaluateScore' },
-                width: '7.5%'
+                customCell: function (record, index) {
+                  return {
+                    style: {
+                      padding: 0,
+                      fontSize: '4px'
+                    }
+                  };
+                },
+                customHeaderCell: function () {
+                  return {
+                    style: {
+                      padding: '0 10px',
+                      fontSize: '6px',
+                      whiteSpace: 'pre-wrap'
+                    }
+                  };
+                }
               },
               {
                 title: '加分项',
                 dataIndex: 'bonusScore',
                 key: 'bonusScore',
+                align: 'center',
+                width: '7.5%',
                 scopedSlots: { customRender: 'bonusScore' },
-                width: '7.5%'
+                customCell: function (record, index) {
+                  return {
+                    style: {
+                      padding: 0,
+                      fontSize: '4px'
+                    }
+                  };
+                },
+                customHeaderCell: function () {
+                  return {
+                    style: {
+                      padding: '0 10px',
+                      fontSize: '6px',
+                      whiteSpace: 'pre-wrap'
+                    }
+                  };
+                }
               }
             ]
           },
@@ -305,20 +437,55 @@ export default {
             title: channel.name,
             dataIndex: 'evaluateChannelScore' + channel.id,
             key: 'evaluateChannelScore' + channel.id,
+            align: 'center',
+            width: '7.5%',
             scopedSlots: { customRender: 'evaluateChannelScore' + channel.id },
-            width: '7.5%'
+            customCell: function (record, index) {
+              return {
+                style: {
+                  padding: 0,
+                  fontSize: '4px'
+                }
+              };
+            },
+            customHeaderCell: function () {
+              return {
+                style: {
+                  padding: '0 10px',
+                  fontSize: '6px',
+                  whiteSpace: 'pre-wrap'
+                }
+              };
+            }
           });
         });
         regulationScoreColumns[3].children = evaluateChannelScoreChildren;
         const bonusChannelScoreChildren = [];
         channelList.forEach((channel) => {
-          // console.log(elementScoreColumns[2].children[1]);
           bonusChannelScoreChildren.push({
             title: channel.name,
             dataIndex: 'bonusChannelScore' + channel.id,
             key: 'bonusChannelScore' + channel.id,
+            align: 'center',
+            width: '7.5%',
             scopedSlots: { customRender: 'bonusChannelScore' + channel.id },
-            width: '7.5%'
+            customCell: function (record, index) {
+              return {
+                style: {
+                  padding: 0,
+                  fontSize: '4px'
+                }
+              };
+            },
+            customHeaderCell: function () {
+              return {
+                style: {
+                  padding: '0 10px',
+                  fontSize: '6px',
+                  whiteSpace: 'pre-wrap'
+                }
+              };
+            }
           });
         });
         regulationScoreColumns[4].children = bonusChannelScoreChildren;
@@ -330,7 +497,7 @@ export default {
       getRegulationScoreInfo(params).then(res => {
         this.regulationScoreLoading = false;
         this.regulationScoreData = res.resData;
-        // console.log(res.resData);
+        console.log(res.resData);
         // const regulationScoreData = res.resData;
         const deductChannelScoreData = [];
         this.regulationScoreData.forEach(score => {
@@ -351,6 +518,26 @@ export default {
         // console.log(this.deductChannelScoreData);
         // this.regulationScoreData = [...res.resData, ...deductChannelScoreList];
       });
+    },
+    setCustomHeaderRow () {
+      return {
+        style: {
+          fontSize: '6px',
+          height: '40px',
+          // lineHeight: '40px',
+          wordWrap: 'break-word',
+          wordBreak: 'normal'
+        }
+      };
+    },
+    setCustomRow (record) {
+      return {
+        style: {
+          height: '40px',
+          lineHeight: '40px'
+          // borderBottom: 'none'
+        }
+      };
     },
     handleClickGrade (channelCode, regulationId, scoreType) {
       this.$router.push({
@@ -378,5 +565,20 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.scoreChannelBtn {
+  padding: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 4px;
+}
+
+/* .scoreChannelBtn span {
+  padding: 0;
+}
+
+.card-container .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
+  color: red;
+} */
 </style>

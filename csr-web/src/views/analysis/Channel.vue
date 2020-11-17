@@ -14,10 +14,18 @@
       </a-table>
       <a-row>
         <a-col :span="12">
-          <bar :data="barData.barTotal" title="总分" />
+          <!-- <v-chart :options="chartOptions.total" :auto-resize="true"></v-chart> -->
+          <div class="Echarts">
+            <div id="totalChart" :style="{padding: '5px', width: '100%', height: '200px'}"></div>
+          </div>
+          <!-- <bar :data="barData.barTotal" title="总分" style="height:100px;" /> -->
+          <!-- <mini-bar :data="barData.barTotal" /> -->
         </a-col>
         <a-col :span="12" v-for="channel in channelList1" :key="channel.id">
-          <bar :data="barData['barChannel' + channel.id]" :title="channel.name" :extend="barExtend" />
+          <div class="Echarts">
+            <div :id="'channelChart'+ channel.id" :style="{padding: '5px', width: '100%', height: '200px'}"></div>
+          </div>
+          <!-- <bar :data="barData['barChannel' + channel.id]" :title="channel.name" :extend="barExtend" /> -->
         </a-col>
       </a-row>
 
@@ -27,20 +35,23 @@
 
 <script>
 import moment from 'moment';
-import Bar from '@/components/Charts/Bar';
+// import Bar from '@/components/Charts/Bar';
+// import MiniBar from '@/components/Charts/MiniBar';
 import { getScoreChannelInfoByPeriods } from '@/api/score';
 import { getChannelList1 } from '@/api/channel';
 
 export default {
   components: {
-    Bar
+    // Bar,
+    // MiniBar
   },
   data () {
+    const barColor = '#00CCFF';
     this.barExtend = {
-        series: {
-          label: { show: true, position: 'top' }
-        }
-      };
+      series: {
+        label: { show: true, position: 'top' }
+      }
+    };
     return {
       period: '',
       scopeId: '',
@@ -49,12 +60,19 @@ export default {
       scoreChannelLoading: false,
       scoreChannelColumns: [],
       scoreChannelData: [],
-      barData: {}
+      barData: {},
+      // totalOptions: {}
+      chartOptions: {},
+      barColor
 
     };
   },
   mounted () {
     this.initialData();
+    window.onresize = () => {
+      //  根据窗口大小调整曲线大小
+      this.totalChart.resize();
+    };
   },
   methods: {
     initialData () {
@@ -77,28 +95,67 @@ export default {
         this.scoreChannelLoading = false;
         this.scoreChannelData = [scoreChannelInfo[scoreChannelInfo.length - 1].scoreChannel];
 
-        const barTotal = [];
+        const totalOptions = {
+          title: { text: '总分' },
+          tooltip: {},
+          xAxis: {
+            data: []
+          },
+          yAxis: {},
+          series: [{
+            name: '得分',
+            type: 'bar',
+            itemStyle: {
+              color: this.barColor
+            },
+            label: {
+              fontSize: 6
+            },
+            data: []
+          }]
+        };
+        const xAxisData = [];
+        const seriesData = [];
         scoreChannelInfo.forEach(scoreChannel => {
-          barTotal.push({
-            x: scoreChannel.period,
-            y: scoreChannel.score || 0
-          });
+          xAxisData.push(moment(scoreChannel.period).format('M月'));
+          seriesData.push(parseInt(scoreChannel.score) || 0);
         });
-        this.barData.barTotal = barTotal;
+        totalOptions.xAxis.data = xAxisData;
+        totalOptions.series[0].data = seriesData;
+        this.chartOptions.total = totalOptions;
+        this.initTotalChart();
 
         this.channelList1.forEach(channel => {
-          const barChannel = [];
-          // console.log(scoreChannelInfo);
+          const channelOptions = {
+            title: { text: channel.name },
+            tooltip: {},
+            xAxis: {
+              data: []
+            },
+            yAxis: {},
+            series: [{
+              name: '得分',
+              type: 'bar',
+              itemStyle: {
+                color: this.barColor
+              },
+              label: {
+                fontSize: 6
+              },
+              data: []
+            }]
+          };
+          const xAxisData = [];
+          const seriesData = [];
 
-          scoreChannelInfo.forEach(info => {
-            const scoreChannel = info.scoreChannel;
-            barChannel.push({
-              x: info.period,
-              // eslint-disable-next-line no-prototype-builtins
-              y: scoreChannel.hasOwnProperty([channel.id]) ? scoreChannel[channel.id] : 0
-            });
+          scoreChannelInfo.forEach(scoreChannel => {
+            xAxisData.push(moment(scoreChannel.period).format('M月'));
+            seriesData.push(parseInt(scoreChannel.score) || 0);
           });
-          this.barData['barChannel' + channel.id] = barChannel;
+          channelOptions.xAxis.data = xAxisData;
+          channelOptions.series[0].data = seriesData;
+          this.chartOptions['channelOptions' + channel.id] = channelOptions;
+          this.initChannelChart(channel.id);
         });
         // console.log(this.barData);
       });
@@ -118,6 +175,15 @@ export default {
         });
         this.scoreChannelColumns = scoreChannelColumns;
       });
+    },
+    initTotalChart () {
+      console.log(this.chartOptions.total);
+      const totalChart = this.$echarts.init(document.getElementById('totalChart'));
+      totalChart.setOption(this.chartOptions.total);
+    },
+    initChannelChart (channelId) {
+      const channelChart = this.$echarts.init(document.getElementById('channelChart' + channelId));
+      channelChart.setOption(this.chartOptions['channelOptions' + channelId]);
     }
   }
 

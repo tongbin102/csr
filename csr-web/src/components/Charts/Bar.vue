@@ -1,7 +1,7 @@
 <template>
   <div :style="{ padding: '0 0 32px 32px' }">
     <h4 :style="{ marginBottom: '20px', textAlign: 'center' }">{{ title }}</h4>
-    <v-chart height="254" :data="data" :forceFit="true" :padding="['auto', 'auto', '40', '50']">
+    <v-chart :height="height" :data="data" :forceFit="true" :padding="['auto', 'auto', '40', '50']">
       <v-tooltip />
       <v-axis />
       <v-bar position="x*y" />
