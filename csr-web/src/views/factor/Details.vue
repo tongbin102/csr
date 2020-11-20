@@ -1,6 +1,12 @@
 <template>
   <div class="card-container">
-    <a-tabs id="factorDetailsTab" v-model="activeKey" type="card" size="small">
+    <a-tabs
+      id="factorDetailsTab"
+      v-model="activeKey"
+      type="card"
+      size="small"
+      :tabBarGutter="tabBarGutter"
+      :tabBarStyle="tabBarStyle">
       <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
         <a-table
           :columns="scoreFactorColumns"
@@ -88,9 +94,7 @@
           </template>
         </a-table>
 
-        <a-divider></a-divider>
-
-        <a-table :columns="deductChannelScoreColumns" :data-source="deductChannelScoreData" :pagination="false" :showHeader="false">
+        <a-table :columns="deductChannelScoreColumns" :data-source="deductChannelScoreData" :pagination="false" :showHeader="false" :locale="locale">
           <template slot="deductScore" slot-scope="text, record">
             <a-button type="link" @click="handleClickDeductScore(record.channelCode, record.regulationId)">{{ record.deductScore }}</a-button>
           </template>
@@ -106,7 +110,7 @@ import moment from 'moment';
 import merge from 'webpack-merge';
 import { getAllFactor } from '@/api/factor';
 import { getScoreFactorInfoForFactor } from '@/api/score';
-import { getChannelList1, getChannelList2 } from '@/api/channel';
+import { getAllChannelList } from '@/api/channel';
 import { getRegulationScoreInfo } from '@/api/regulation';
 
 export default {
@@ -145,15 +149,23 @@ export default {
       regulationScoreColumns: [],
       regulationScoreData: [],
       deductChannelScoreColumns,
-      deductChannelScoreData: []
+      deductChannelScoreData: [],
+      tabBarGutter: 0,
+      tabBarStyle: {
+        // textAlign: 'center',
+        // background: '#FF0000'
+      },
+      locale: {
+        emptyText: '无扣分'
+      }
     };
   },
-  async created () {
+  mounted () {
     this.initialData();
     this.tabActiveKey = this.$route.query.factor_id;
-    await this.fetchChannelList2({
-      ctype: 2
-    });
+    // await this.fetchChannelList2({
+    //   ctype: 2
+    // });
 
     this.fetchFactorColumns();
     this.fetchFactorData({
@@ -170,6 +182,7 @@ export default {
     });
 
     this.$watch('$route', (route) => {
+      console.log('change');
       const factorId = route.query.factor_id;
       this.tabActiveKey = factorId;
       this.factorId = factorId;
@@ -188,11 +201,15 @@ export default {
   },
   watch: {
     activeKey: function (val) {
+      console.log(555);
       // this.$route.query.factorId = val;
       this.$router.push({
         // path: '/factor/Details',
         query: merge(this.$route.query, { factor_id: val })
       });
+    },
+    $route () {
+      console.log('3333');
     }
   },
   methods: {
@@ -317,15 +334,17 @@ export default {
         this.scoreFactorData = res.resData.scoreFactorList;
       });
     },
-    fetchChannelList2 (params = {}) {
-      getChannelList2().then(res => {
-        this.channelList2 = res.resData;
-      });
-    },
+    // fetchChannelList2 (params = {}) {
+    //   getChannelList2().then(res => {
+    //     this.channelList2 = res.resData;
+    //   });
+    // },
     fetchRegulationScoreColumns () {
-      getChannelList1().then(res => {
+      getAllChannelList().then(res => {
         const channelList = [res.resData[0], res.resData[1], res.resData[2]];
         this.channelList = channelList;
+        const channelList2 = [res.resData[3], res.resData[4], res.resData[5]];
+        this.channelList2 = channelList2;
         const regulationScoreColumns = [
           {
             title: '要素',
@@ -445,6 +464,7 @@ export default {
                 style: {
                   padding: 0,
                   fontSize: '4px'
+                  // color: evaluateChannelScore === '优秀' ? '#09CDFF' : evaluateChannelScore === '优良' ? '#2DD42D' : evaluateChannelScore === '达标' ? '#FFD27A' : '#FF3030'
                 }
               };
             },
@@ -497,7 +517,7 @@ export default {
       getRegulationScoreInfo(params).then(res => {
         this.regulationScoreLoading = false;
         this.regulationScoreData = res.resData;
-        console.log(res.resData);
+        // console.log(res.resData);
         // const regulationScoreData = res.resData;
         const deductChannelScoreData = [];
         this.regulationScoreData.forEach(score => {
@@ -566,19 +586,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.scoreChannelBtn {
-  padding: 0;
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  font-size: 4px;
-}
-
-/* .scoreChannelBtn span {
-  padding: 0;
-}
-
-.card-container .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
-  color: red;
-} */
+@import './Factor.less';
 </style>
