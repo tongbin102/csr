@@ -75,6 +75,12 @@ public class ChannelApi {
     }
 
     @ApiOperation("获取所有渠道列表")
+    @GetMapping("/findAll")
+    public List<ChannelPo> findAll(){
+        return channelService.list();
+    }
+
+    @ApiOperation("获取所有渠道列表")
     @GetMapping("/findListByCtype")
     public List<ChannelPo> findListByCtype(@RequestParam("ctype")Integer ctype){
         return channelService.findListByCtype(ctype);
