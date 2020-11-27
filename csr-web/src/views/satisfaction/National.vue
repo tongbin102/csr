@@ -9,7 +9,7 @@
         <a-table id="scoreTable" :columns="scoreColumns" :data-source="scoreData" :pagination="false" :loading="scoreLoading">
           <template slot="score" slot-scope="text, record, index">
             <span v-if="index === 0" class="totalSpan">本期全网总得分：{{ record.score }}</span>
-            <a-button type="link" v-else @click="handleClickRegion(record.storeId)">
+            <a-button type="link" v-else @click="handleClickRegion(record.storeCode)">
               <span style="text-decoration: underline;">{{ record.storeName }}大区得分：{{ record.score }}</span>
             </a-button>
           </template>
@@ -116,7 +116,7 @@ export default {
     return {
       title: '',
       scopeId: 1,
-      store_code: '',
+      storeCode: '',
       month: '',
       period: '',
       lastPeriod: '',
@@ -138,26 +138,26 @@ export default {
     this.fetchColumns();
     this.fetchScoreData({
       scope_id: this.scopeId,
-      parent_code: this.store_code,
+      parent_code: this.storeCode,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreChannelData({
       scope_id: this.scopeId,
-      store_code: this.store_code,
+      store_code: this.storeCode,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreFactorData({
       scope_id: this.scopeId,
-      store_code: this.store_code,
+      store_code: this.storeCode,
       current_period: this.period,
       last_period: this.lastPeriod
     });
   },
   methods: {
     initialData () {
-      this.store_code = 'national';
+      this.storeCode = 'national';
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
       this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');
@@ -178,7 +178,7 @@ export default {
         channelList.forEach((channel) => {
           scoreChannelColumns.push({
             title: channel.name,
-            dataIndex: channel.id,
+            dataIndex: channel.name,
             key: channel.id,
             width: (90 / channelList.length) + '%',
             align: 'center'
@@ -201,7 +201,7 @@ export default {
           scoreFactorColumns.push({
             // title: factor.name,
             slots: { title: factor.id },
-            dataIndex: factor.id,
+            dataIndex: factor.name,
             key: factor.id,
             width: (90 / factorList.length) + '%',
             align: 'center'
@@ -231,10 +231,10 @@ export default {
         this.scoreFactorData = res.resData;
       });
     },
-    handleClickRegion (id) {
+    handleClickRegion (storeCode) {
       this.$router.push({
         path: '/satisfaction/region',
-        query: { id: id }
+        query: { store_code: storeCode }
       });
     },
     handleClickChannelAnalysis () {
@@ -242,7 +242,7 @@ export default {
         path: '/analysis/channel',
         query: {
           scope_id: this.scopeId,
-          store_id: this.id
+          store_code: this.storeCode
         }
       });
     },
@@ -251,7 +251,7 @@ export default {
         path: '/analysis/factor',
         query: {
           scope_id: this.scopeId,
-          store_id: this.id
+          store_code: this.storeCode
         }
       });
     }
