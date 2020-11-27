@@ -572,10 +572,10 @@ public class ExcelImportServiceImpl implements ExcelImportService {
             case "city":
                 scopeId = DictionaryType.SCOPE_ID_CITY;
                 break;
-            case "dealer":
+            case "parent dealer":
                 scopeId = DictionaryType.SCOPE_ID_SUPERIOR;
                 break;
-            case "parent dealer":
+            case "dealer":
                 scopeId = DictionaryType.SCOPE_ID_STORE;
                 break;
             default:
