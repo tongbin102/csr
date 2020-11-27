@@ -155,6 +155,8 @@ export default {
     };
   },
   mounted () {
+    this.id = this.$route.query.id;
+    this.isAllow();
     this.initialData();
     this.fetchColumns();
     this.fetchScoreData({
@@ -177,8 +179,12 @@ export default {
     });
   },
   methods: {
+    isAllow () {
+    },
     initialData () {
-      this.id = this.$route.query.id;
+      // if(this.$store.getters.roles){
+
+      // }
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
       this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');

@@ -25,13 +25,14 @@ router.beforeEach((to, from, next) => {
       NProgress.done();
     } else {
       // check login user.roles is null
+      console.log(store.getters.roles);
       if (store.getters.roles.length === 0) {
         // request login userInfo
         store
           .dispatch('GetInfo')
           .then(res => {
             const userInfo = res.resData;
-            console.log(res);
+            // console.log(res);
             if (res.resCode === 401) {
               // 失败时，获取用户信息失败时，调用登出，来清空历史保留信息
               store.dispatch('Logout').then(() => {
@@ -45,23 +46,52 @@ router.beforeEach((to, from, next) => {
                 router.addRoutes(store.getters.addRouters);
                 // 请求带有 redirect 重定向时，登录自动重定向到该地址
                 const redirect = decodeURIComponent(from.query.redirect || to.path);
-                if (to.path === '/') {
+                // if (to.path === '/') {
+                if (redirect === '/') {
                   const roles = store.getters.roles;
-                  console.log('roles: ', roles);
+                  // console.log('roles: ', roles);
+                  const userInfo = store.getters.userInfo;
+                  console.log(userInfo);
                   if (roles === 'admin') {
+                    // 管理员账户
                     next({ path: '/admin/upload' });
-                  } else if (roles === 'vendor') {
-                    next({ path: '/satisfaction/national' });
+                  } else if (roles === 'national') {
+                    // 厂家账户
+                    next({
+                      path: '/satisfaction/national'
+                    });
                   } else if (roles === 'region') {
-                    next({ path: '/satisfaction/region' });
-                  } else if (roles === 'province') {
-                    next({ path: '/satisfaction/province' });
-                  } else if (roles === 'city') {
-                    next({ path: '/satisfaction/city' });
+                    // 大区账户
+                    next({
+                      path: '/satisfaction/region',
+                      query: {
+                        store_code: userInfo.ref
+                      }
+                    });
+                  } else if (roles === 'area') {
+                    // 区域顾问
+                    next({
+                      path: '/satisfaction/province',
+                      query: {
+                        store_code: userInfo.ref
+                      }
+                    });
                   } else if (roles === 'superior') {
-                    next({ path: '/satisfaction/superior' });
+                    // 一级店账户
+                    next({
+                      path: '/satisfaction/superior',
+                      query: {
+                        store_code: userInfo.ref
+                      }
+                    });
                   } else if (roles === 'store') {
-                    next({ path: '/satisfaction/store' });
+                    // 二级店账户
+                    next({
+                      path: '/satisfaction/store',
+                      query: {
+                        store_code: userInfo.ref
+                      }
+                    });
                   }
                 } else if (to.path === redirect) {
                   // set the replace: true so the navigation will not leave a history record
@@ -84,7 +114,31 @@ router.beforeEach((to, from, next) => {
             });
           });
       } else {
-        next();
+        if (to.path === '/') {
+          const roles = store.getters.roles;
+          console.log('roles: ', roles);
+          if (roles === 'admin') {
+            next({ path: '/admin/upload' });
+          } else if (roles === 'national') {
+            next({ path: '/satisfaction/national' });
+          } else if (roles === 'region') {
+            next({ path: '/satisfaction/region' });
+          } else if (roles === 'province') {
+            next({ path: '/satisfaction/province' });
+          } else if (roles === 'city') {
+            next({ path: '/satisfaction/city' });
+          } else if (roles === 'superior') {
+            next({ path: '/satisfaction/superior' });
+          } else if (roles === 'store') {
+            next({ path: '/satisfaction/store' });
+          }
+        } else {
+          // 跳转到目的路由
+          // next({ path: redirect });
+          next();
+        }
+        // next();
+        // next();
       }
     }
   } else {

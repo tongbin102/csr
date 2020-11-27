@@ -10,9 +10,9 @@
       <div class="content">
         <router-view />
       </div>
-      <template slot="footer">
+      <!-- <template slot="footer">
         <global-footer />
-      </template>
+      </template> -->
     </a-page-header>
     <!-- <page-header-wrapper>
       <router-view />
@@ -22,14 +22,14 @@
 <script>
 import store from '@/store';
 import AvatarDropdown from '@/components/GlobalHeader/AvatarDropdown';
-import GlobalFooter from '@/components/GlobalFooter';
+// import GlobalFooter from '@/components/GlobalFooter';
 // import RightContent from '@/components/GlobalHeader/RightContent';
 
 export default {
   name: 'StatisfactionLayout',
   components: {
-    AvatarDropdown,
-    GlobalFooter
+    AvatarDropdown
+    // GlobalFooter
     // RightContent
   },
   data () {

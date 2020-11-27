@@ -16,7 +16,7 @@ const locale = {
   'menu.dashboard.workplace': 'Workplace',
 
   'layouts.usermenu.dialog.title': 'Message',
-  'layouts.usermenu.dialog.content': 'Do you really log-out.',
+  'layouts.usermenu.dialog.content': 'Do you really log-out?',
 
   'app.setting.pagestyle': 'Page style setting',
   'app.setting.pagestyle.light': 'Light style',

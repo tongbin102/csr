@@ -105,7 +105,8 @@ const vueConfig = {
     proxy: {
       '/csr-api': {
         target: 'http://127.0.0.1:8080',
-        changeOrigin: true
+        changeOrigin: true,
+        timeout: 900000
         // pathRewrite: {
         //   '^/csr-api': '/csr-api'
         // }

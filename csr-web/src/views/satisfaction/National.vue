@@ -116,7 +116,7 @@ export default {
     return {
       title: '',
       scopeId: 1,
-      id: '',
+      store_code: '',
       month: '',
       period: '',
       lastPeriod: '',
@@ -138,26 +138,26 @@ export default {
     this.fetchColumns();
     this.fetchScoreData({
       scope_id: this.scopeId,
-      parent_id: this.id,
+      parent_code: this.store_code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreChannelData({
       scope_id: this.scopeId,
-      store_id: this.id,
+      store_code: this.store_code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreFactorData({
       scope_id: this.scopeId,
-      store_id: this.id,
+      store_code: this.store_code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
   },
   methods: {
     initialData () {
-      this.id = 1;
+      this.store_code = 'national';
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
       this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');

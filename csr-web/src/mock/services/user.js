@@ -29,7 +29,7 @@ const userInfo = {
     phone: null,
     iconUrl: null,
     description: null,
-    roleName: 'vendor',
+    roleName: 'national',
     authorities: [
       {
         authority: 'ROLE_USER'

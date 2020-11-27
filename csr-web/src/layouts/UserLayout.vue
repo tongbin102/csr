@@ -2,20 +2,21 @@
   <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
       <div class="top">
-        <div class="header">
+        <div class="header" style="height: auto;">
           <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design</span>
+            <!-- <img src="~@/assets/logo.svg" class="logo" alt="logo"> -->
+            <!-- <span class="title">上汽通用五菱<br/>满意度<br/>评估体系</span> -->
+            <span class="title">上汽通用五菱<br/>满意度<br/>评估体系</span>
           </a>
         </div>
-        <div class="desc">
+        <!-- <div class="desc">
           Ant Design 是西湖区最具影响力的 Web 设计规范
-        </div>
+        </div> -->
       </div>
 
       <router-view />
 
-      <div class="footer">
+      <!-- <div class="footer"></div>
         <div class="links">
           <a href="_self">帮助</a>
           <a href="_self">隐私</a>
@@ -25,9 +26,9 @@
           Copyright &copy; 2018 vueComponent
         </div>
       </div>
+    </div> -->
     </div>
-  </div>
-</template>
+  </div></template>
 
 <script>
 import { deviceMixin } from '@/store/device-mixin';

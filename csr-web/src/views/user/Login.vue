@@ -1,12 +1,6 @@
 <template>
   <div class="main">
-    <a-form
-      id="formLogin"
-      class="user-layout-login"
-      ref="formLogin"
-      :form="form"
-      @submit="handleSubmit"
-    >
+    <a-form id="formLogin" class="user-layout-login" ref="formLogin" :form="form" @submit="handleSubmit">
       <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" message="账户或密码错误" />
       <a-form-item>
         <a-input
@@ -16,9 +10,8 @@
           v-decorator="[
             'username',
             {rules: [{ required: true, message: '请输入用户名' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
-          ]"
-        >
-          <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+          ]">
+          <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input>
       </a-form-item>
 
@@ -29,9 +22,8 @@
           v-decorator="[
             'password',
             {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
-          ]"
-        >
-          <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+          ]">
+          <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input-password>
       </a-form-item>
 
@@ -42,8 +34,7 @@
           htmlType="submit"
           class="login-button"
           :loading="state.loginBtn"
-          :disabled="state.loginBtn"
-        >确定</a-button>
+          :disabled="state.loginBtn">登录</a-button>
       </a-form-item>
     </a-form>
   </div>
@@ -123,6 +114,7 @@ export default {
         })
       })
       */
+
       this.$router.push({ path: '/' });
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
@@ -179,7 +171,6 @@ export default {
         color: #1890ff;
       }
     }
-
   }
 }
 </style>
