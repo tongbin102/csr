@@ -39,6 +39,13 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      */
     boolean prohibitById(String id);
 
-    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, Long channelId, String questionIds);
+    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, String storeCode, String channelCode, String questionSeriesNos);
+
+    /**
+     * 通过期数删除数据
+     *
+     * @return boolean
+     */
+    boolean deleteByPeriod(String period);
 
 }

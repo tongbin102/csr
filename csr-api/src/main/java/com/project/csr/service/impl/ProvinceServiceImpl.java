@@ -44,5 +44,11 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, ProvincePo>
         wrapper.eq(ProvincePo::getId, id);
         return provinceMapper.update(po, wrapper) >= 1;
     }
+
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<ProvincePo> wrapper = Wrappers.lambdaQuery();
+        return provinceMapper.delete(wrapper) >= 1;
+    }
 }
 

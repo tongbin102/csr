@@ -1,8 +1,6 @@
 package com.project.csr.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.project.csr.common.model.BasePo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("score")
-@ApiModel(value="ScorePo对象", description="成绩排名表")
+@ApiModel(value = "ScorePo对象", description = "成绩排名表")
 public class ScorePo extends BasePo {
 
     private static final long serialVersionUID = 1L;
@@ -31,8 +29,8 @@ public class ScorePo extends BasePo {
     @ApiModelProperty(value = "范围id")
     private Long scopeId;
 
-    @ApiModelProperty(value = "storeId")
-    private Long storeId;
+    @ApiModelProperty(value = "店code")
+    private String storeCode;
 
     @ApiModelProperty(value = "名称")
     private String name;

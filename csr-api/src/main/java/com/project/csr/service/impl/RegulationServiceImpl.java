@@ -90,17 +90,17 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
     }
 
     @Override
-    public List<RegulationVo> findInfo(Long storeId, String period, Long factorId) {
+    public List<RegulationVo> findInfo(String storeCode, String period, Long factorId) {
         List<RegulationVo> regulationVoList = this.findVoListByFactorId(factorId);
         String regulationIds = ToolsUtils.getIdsFromList(regulationVoList, ",");
 
-        List<RegulationScoreVo> regulationScoreVoList = regulationScoreService.findVoList(storeId, period, regulationIds);
-        List<RegulationScoreChannelVo> regulationScoreChannelVoList = regulationScoreChannelService.findVoList(storeId, period, factorId, null);
+        List<RegulationScoreVo> regulationScoreVoList = regulationScoreService.findVoList(storeCode, period, regulationIds);
+        List<RegulationScoreChannelVo> regulationScoreChannelVoList = regulationScoreChannelService.findVoList(storeCode, period, factorId, null);
 
         regulationVoList.stream().forEach(item -> {
             Map<String, Object> regulationScoreVoMap = new HashMap<>();
             regulationScoreVoList.stream()
-                    .filter(r -> r.getRegulationId().equals(Long.parseLong(item.getId())))
+                    .filter(r -> r.getRegulationDescription().equals(Long.parseLong(item.getId())))
                     .forEach(r -> {
                         if (r.getScoreType().equals(DictionaryType.SCORE_TYPE_ID_EVALUATE)) {
                             regulationScoreVoMap.put("evaluateScore", r.getScore());
@@ -112,16 +112,16 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
             item.setRegulationScoreMap(regulationScoreVoMap);
             Map<String, Object> regulationScoreChannelVoMap = new HashMap<>();
             regulationScoreChannelVoList.stream()
-                    .filter(r -> r.getRegulationId().equals(Long.parseLong(item.getId())))
+                    .filter(r -> r.getRegulationDescription().equals(Long.parseLong(item.getId())))
                     .forEach(r -> {
                         if (r.getScoreType().equals(DictionaryType.SCORE_TYPE_ID_EVALUATE)) {
-                            regulationScoreChannelVoMap.put("evaluateChannelScore" + r.getChannelId(), r.getGrade());
+                            regulationScoreChannelVoMap.put("evaluateChannelScore" + r.getChannelCode(), r.getGrade());
                         }
                         if (r.getScoreType().equals(DictionaryType.SCORE_TYPE_ID_BONUS)) {
-                            regulationScoreChannelVoMap.put("bonusChannelScore" + r.getChannelId(), r.getGrade());
+                            regulationScoreChannelVoMap.put("bonusChannelScore" + r.getChannelCode(), r.getGrade());
                         }
                         if (r.getScoreType().equals(DictionaryType.SCORE_TYPE_ID_DEDUCT)) {
-                            regulationScoreChannelVoMap.put("deductChannelScore" + r.getChannelId(), r.getScore());
+                            regulationScoreChannelVoMap.put("deductChannelScore" + r.getChannelCode(), r.getScore());
                         }
                     });
 
@@ -139,6 +139,12 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<RegulationPo> wrapper = Wrappers.lambdaQuery();
+        return regulationMapper.delete(wrapper) >= 1;
     }
 }
 

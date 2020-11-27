@@ -62,27 +62,33 @@ public class QuestionAssistanceServiceImpl extends ServiceImpl<QuestionAssistanc
     }
 
     @Override
-    public List<QuestionAssistanceVo> findListByRegulationId(String period, Long storeId, Long regulationId) {
+    public List<QuestionAssistanceVo> findListByRegulationId(String period, String storeCode, Long regulationId) {
         LambdaQueryWrapper<QuestionAssistancePo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(QuestionAssistancePo::getRegulationId, regulationId);
+        wrapper.eq(QuestionAssistancePo::getRegulationDescription, regulationId);
         List<QuestionAssistanceVo> questionAssistanceVoList = ConvertUtils.convert(questionAssistanceMapper.selectList(wrapper), QuestionAssistanceVo.class);
         String questionIds = ToolsUtils.getIdsFromList(questionAssistanceVoList, ",");
         List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeId, DictionaryType.CHANNEL_ID_ASSISTANCE, questionIds);
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeCode, DictionaryType.CHANNEL_CODE_ASSISTANCE, questionIds);
 
         questionAssistanceVoList.stream().forEach(questionAssistanceVo -> {
             // 获取类别
-            List<RegulationPo> list1 = regulationPoList.stream().filter(r -> r.getId().equals(questionAssistanceVo.getRegulationId().toString())).collect(Collectors.toList());
+            List<RegulationPo> list1 = regulationPoList.stream().filter(r -> r.getId().equals(questionAssistanceVo.getRegulationDescription().toString())).collect(Collectors.toList());
             if (list1.size() > 0) {
                 questionAssistanceVo.setScoreType(list1.get(0).getScoreType());
             }
-            List<ScoreQuestionPo> list2 = scoreQuestionPoList.stream().filter(q -> q.getQuestionId().toString().equals(questionAssistanceVo.getId())).collect(Collectors.toList());
+            List<ScoreQuestionPo> list2 = scoreQuestionPoList.stream().filter(q -> q.getQuestionSeriesNo().toString().equals(questionAssistanceVo.getSeriesNo())).collect(Collectors.toList());
             if (list2.size() > 0) {
                 questionAssistanceVo.setGrade(list2.get(0).getGrade());
             }
         });
 
         return questionAssistanceVoList;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<QuestionAssistancePo> wrapper = Wrappers.lambdaQuery();
+        return questionAssistanceMapper.delete(wrapper) >= 1;
     }
 }
 

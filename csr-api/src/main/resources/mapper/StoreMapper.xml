@@ -19,8 +19,8 @@
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
                     <result column="scale" property="scale"/>
-                    <result column="city_id" property="cityId"/>
-                    <result column="parent_id" property="parentId"/>
+                    <result column="city_code" property="cityCode"/>
+                    <result column="parent_code" property="parentCode"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -31,7 +31,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, name, scale, city_id, parent_id
+            code, name, scale, city_code, parent_code
         </sql>
 
 </mapper>

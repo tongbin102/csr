@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.ScoreFactorMapper;
-import com.project.csr.model.po.ScoreChannelPo;
 import com.project.csr.model.po.ScoreFactorPo;
 import com.project.csr.model.vo.ScoreFactorVo;
 import com.project.csr.model.vo.ScoreVo;
@@ -60,12 +59,12 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
     }
 
     @Override
-    public List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod) {
+    public List<Map<String, Object>> findMapList(Long scopeId, String storeCode, String currentPeriod, String lastPeriod) {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
         LambdaQueryWrapper<ScoreFactorPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScoreFactorPo::getScopeId, scopeId)
-                .eq(ScoreFactorPo::getStoreId, storeId)
+                .eq(ScoreFactorPo::getStoreCode, storeCode)
                 .eq(ScoreFactorPo::getPeriod, currentPeriod);
         List<ScoreFactorPo> currentList = scoreFactorMapper.selectList(wrapper);
         Map<String, Object> currentMap = convertListToMap(currentList);
@@ -75,7 +74,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
         wrapper.clear();
 
         wrapper.eq(ScoreFactorPo::getScopeId, scopeId)
-                .eq(ScoreFactorPo::getStoreId, storeId)
+                .eq(ScoreFactorPo::getStoreCode, storeCode)
                 .eq(ScoreFactorPo::getPeriod, lastPeriod);
         List<ScoreFactorPo> lastList = scoreFactorMapper.selectList(wrapper);
         Map<String, Object> lastMap = convertListToMap(lastList);
@@ -88,7 +87,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < scoreFactorPoList.size(); i++) {
             ScoreFactorPo scoreFactorPo = scoreFactorPoList.get(i);
-            map.put(scoreFactorPo.getFactorId().toString(), scoreFactorPo.getScore());
+            map.put(scoreFactorPo.getFactorCode(), scoreFactorPo.getScore());
         }
         return map;
     }
@@ -100,17 +99,17 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
 
 
     @Override
-    public List<Map<String, Object>> findVoMapList(Long scopeId, Long storeId, String beginPeriod, String endPeriod) {
+    public List<Map<String, Object>> findVoMapList(Long scopeId, String storeCode, String beginPeriod, String endPeriod) {
         List<Map<String, Object>> resultList = new ArrayList<>();
         try {
-            List<ScoreVo> scoreVoList = scoreService.findVoListByPeriods(scopeId, storeId, beginPeriod, endPeriod);
+            List<ScoreVo> scoreVoList = scoreService.findVoListByPeriods(scopeId, storeCode, beginPeriod, endPeriod);
 
             LambdaQueryWrapper<ScoreFactorPo> wrapper = Wrappers.lambdaQuery();
             wrapper.eq(ScoreFactorPo::getScopeId, scopeId)
-                    .eq(ScoreFactorPo::getStoreId, storeId)
+                    .eq(ScoreFactorPo::getStoreCode, storeCode)
                     .between(ScoreFactorPo::getPeriod, beginPeriod, endPeriod);
             List<ScoreFactorPo> scoreFactorPoList = scoreFactorMapper.selectList(wrapper);
-            Map<String, Map<Long, String>> scoreFactorPoMap = scoreFactorPoList.stream().collect(Collectors.groupingBy(ScoreFactorPo::getPeriod, Collectors.toMap(ScoreFactorPo::getFactorId, ScoreFactorPo::getScore)));
+            Map<String, Map<String, String>> scoreFactorPoMap = scoreFactorPoList.stream().collect(Collectors.groupingBy(ScoreFactorPo::getPeriod, Collectors.toMap(ScoreFactorPo::getFactorCode, ScoreFactorPo::getScore)));
 
             for (String strDate = beginPeriod; strDate.compareTo(endPeriod) <= 0; strDate = DateUtils.getMonth(strDate, 1, "yyyyMM")) {
                 Map<String, Object> map = new HashMap<>();
@@ -124,7 +123,7 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
                     map.put("score", "");
                 }
 
-                Map<Long, String> scoreFactorMap = scoreFactorPoMap.get(strDate);
+                Map<String, String> scoreFactorMap = scoreFactorPoMap.get(strDate);
                 if (null != scoreFactorMap) {
                     map.put("scoreFactor", scoreFactorMap);
                 } else {
@@ -138,6 +137,13 @@ public class ScoreFactorServiceImpl extends ServiceImpl<ScoreFactorMapper, Score
         }
 
         return resultList;
+    }
+
+    @Override
+    public boolean deleteByPeriod(String period) {
+        LambdaQueryWrapper<ScoreFactorPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScoreFactorPo::getPeriod, period);
+        return scoreFactorMapper.delete(wrapper) >= 1;
     }
 }
 

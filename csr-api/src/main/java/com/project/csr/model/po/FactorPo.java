@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 因子表
@@ -18,7 +20,7 @@ import lombok.EqualsAndHashCode;
  * @since 2020-11-05
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+// @EqualsAndHashCode(callSuper = true)
 @TableName("factor")
 @ApiModel(value="FactorPo对象", description="因子表")
 public class FactorPo extends BasePo {
@@ -31,5 +33,21 @@ public class FactorPo extends BasePo {
     @ApiModelProperty(value = "因子名称")
     private String name;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FactorPo that = (FactorPo) o;
+        return Objects.equals(code, that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
+    }
 
 }

@@ -75,10 +75,10 @@ public class QuestionSurveyApi {
     @ApiOperation("获取客户调研评分规则列表")
     @RequestMapping("/findList")
     public List<QuestionSurveyVo> findList(@RequestParam("period") String period,
-                                           @RequestParam("store_id") Long storeId,
+                                           @RequestParam("store_code") String storeCode,
                                            @RequestParam(value = "regulation_id", required = false) Long regulationId) {
         if (null != regulationId) {
-            return questionSurveyService.findListByRegulationId(period, storeId, regulationId);
+            return questionSurveyService.findListByRegulationId(period, storeCode, regulationId);
         }
         return ConvertUtils.convert(questionSurveyService.list(), QuestionSurveyVo.class);
     }

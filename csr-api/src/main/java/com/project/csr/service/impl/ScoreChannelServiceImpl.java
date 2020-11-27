@@ -61,12 +61,12 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
     }
 
     @Override
-    public List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod) {
+    public List<Map<String, Object>> findMapList(Long scopeId, String storeCode, String currentPeriod, String lastPeriod) {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
         LambdaQueryWrapper<ScoreChannelPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
-                .eq(ScoreChannelPo::getStoreId, storeId)
+                .eq(ScoreChannelPo::getStoreCode, storeCode)
                 .eq(ScoreChannelPo::getPeriod, currentPeriod);
         List<ScoreChannelPo> currentList = scoreChannelMapper.selectList(wrapper);
         Map<String, Object> currentMap = convertListToMap(currentList);
@@ -76,7 +76,7 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
         wrapper.clear();
 
         wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
-                .eq(ScoreChannelPo::getStoreId, storeId)
+                .eq(ScoreChannelPo::getStoreCode, storeCode)
                 .eq(ScoreChannelPo::getPeriod, lastPeriod);
         List<ScoreChannelPo> lastList = scoreChannelMapper.selectList(wrapper);
         Map<String, Object> lastMap = convertListToMap(lastList);
@@ -89,23 +89,23 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < scoreChannelPoList.size(); i++) {
             ScoreChannelPo scoreChannelPo = scoreChannelPoList.get(i);
-            map.put(scoreChannelPo.getChannelId().toString(), scoreChannelPo.getScore());
+            map.put(scoreChannelPo.getChannelCode(), scoreChannelPo.getScore());
         }
         return map;
     }
 
     @Override
-    public List<Map<String, Object>> findVoMapList(Long scopeId, Long storeId, String beginPeriod, String endPeriod) {
+    public List<Map<String, Object>> findVoMapList(Long scopeId, String storeCode, String beginPeriod, String endPeriod) {
         List<Map<String, Object>> resultList = new ArrayList<>();
         try {
-            List<ScoreVo> scoreVoList = scoreService.findVoListByPeriods(scopeId, storeId, beginPeriod, endPeriod);
+            List<ScoreVo> scoreVoList = scoreService.findVoListByPeriods(scopeId, storeCode, beginPeriod, endPeriod);
 
             LambdaQueryWrapper<ScoreChannelPo> wrapper = Wrappers.lambdaQuery();
             wrapper.eq(ScoreChannelPo::getScopeId, scopeId)
-                    .eq(ScoreChannelPo::getStoreId, storeId)
+                    .eq(ScoreChannelPo::getStoreCode, storeCode)
                     .between(ScoreChannelPo::getPeriod, beginPeriod, endPeriod);
             List<ScoreChannelPo> scoreChannelPoList = scoreChannelMapper.selectList(wrapper);
-            Map<String, Map<Long, String>> scoreChannelPoMap = scoreChannelPoList.stream().collect(Collectors.groupingBy(ScoreChannelPo::getPeriod, Collectors.toMap(ScoreChannelPo::getChannelId, ScoreChannelPo::getScore)));
+            Map<String, Map<String, String>> scoreChannelPoMap = scoreChannelPoList.stream().collect(Collectors.groupingBy(ScoreChannelPo::getPeriod, Collectors.toMap(ScoreChannelPo::getChannelCode, ScoreChannelPo::getScore)));
 
             for (String strDate = beginPeriod; strDate.compareTo(endPeriod) <= 0; strDate = DateUtils.getMonth(strDate, 1, "yyyyMM")) {
                 Map<String, Object> map = new HashMap<>();
@@ -119,7 +119,7 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
                     map.put("score", "");
                 }
 
-                Map<Long, String> scoreChannelMap = scoreChannelPoMap.get(strDate);
+                Map<String, String> scoreChannelMap = scoreChannelPoMap.get(strDate);
                 if (null != scoreChannelMap) {
                     map.put("scoreChannel", scoreChannelMap);
                 } else {
@@ -135,6 +135,12 @@ public class ScoreChannelServiceImpl extends ServiceImpl<ScoreChannelMapper, Sco
         return resultList;
     }
 
+    @Override
+    public boolean deleteByPeriod(String period) {
+        LambdaQueryWrapper<ScoreChannelPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScoreChannelPo::getPeriod, period);
+        return scoreChannelMapper.delete(wrapper) >= 1;
+    }
 
 }
 

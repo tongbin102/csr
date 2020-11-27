@@ -44,5 +44,11 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, RegionPo> imple
         wrapper.eq(RegionPo::getId, id);
         return regionMapper.update(po, wrapper) >= 1;
     }
+
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<RegionPo> wrapper = Wrappers.lambdaQuery();
+        return regionMapper.delete(wrapper) >= 1;
+    }
 }
 

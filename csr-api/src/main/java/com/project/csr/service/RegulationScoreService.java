@@ -45,9 +45,16 @@ public interface RegulationScoreService extends IService<RegulationScorePo> {
      *
      * @param storeId
      * @param period
-     * @param factorId
+     * @param regulationIds
      * @return
      */
-    List<RegulationScoreVo> findVoList(Long storeId, String period, String regulationIds);
+    List<RegulationScoreVo> findVoList(String storeCode, String period, String regulationIds);
+
+    /**
+     * 通过期数删除数据
+     *
+     * @return boolean
+     */
+    boolean deleteByPeriod(String period);
 
 }

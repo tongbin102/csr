@@ -18,7 +18,7 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="period" property="period"/>
                     <result column="scope_id" property="scopeId"/>
-                    <result column="store_id" property="storeId"/>
+                    <result column="store_code" property="storeCode"/>
                     <result column="name" property="name"/>
                     <result column="score" property="score"/>
                     <result column="rank_country" property="rankCountry"/>
@@ -33,14 +33,14 @@
                 create_time,
                 updater,
                 update_time,
-            period, scope_id, store_id, name, score, rank_country, rank_scope
+            period, scope_id, store_code, name, score, rank_country, rank_scope
         </sql>
 
     <select id="findVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
             s.name AS store_name,
             current.score,
@@ -56,16 +56,16 @@
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM store s
         LEFT JOIN score current
-        ON current.store_id = s.id AND current.period = #{current_period}
+        ON current.store_code = s.code AND current.period = #{current_period}
         <if test="scope_id != null">
             AND current.scope_id = #{scope_id}
         </if>
-        LEFT JOIN score last ON last.store_id = s.id AND last.period = #{last_period}
+        LEFT JOIN score last ON last.store_code = s.code AND last.period = #{last_period}
         WHERE 1 = 1
-        <if test="store_ids != null">
+        <if test="store_codes != null">
             AND s.id IN
-            <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-                #{store_id}
+            <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
+                #{store_code}
             </foreach>
         </if>
     </select>
@@ -74,7 +74,7 @@
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
             '全国' AS store_name,
             current.score,
@@ -89,14 +89,14 @@
             IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
-        LEFT JOIN score last ON last.store_id = current.store_id
+        LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
         WHERE current.scope_id = 1
         AND current.period = #{current_period}
-        AND current.store_id IN
-        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-            #{store_id}
+        AND current.store_code IN
+        <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
+            #{store_code}
         </foreach>
     </select>
 
@@ -104,7 +104,7 @@
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
             s.name AS store_name,
             current.score,
@@ -119,15 +119,15 @@
             IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
-        LEFT JOIN score last ON last.store_id = current.store_id
+        LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
-        LEFT JOIN region s ON s.id = current.store_id
+        LEFT JOIN region s ON s.code = current.store_code
         WHERE current.scope_id = 2
         AND current.period = #{current_period}
-        AND current.store_id IN
-        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-            #{store_id}
+        AND current.store_code IN
+        <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
+            #{store_code}
         </foreach>
     </select>
 
@@ -135,7 +135,7 @@
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
             s.name AS store_name,
             current.score,
@@ -150,15 +150,15 @@
             IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
-        LEFT JOIN score last ON last.store_id = current.store_id
+        LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
-        LEFT JOIN province s ON s.id = current.store_id
+        LEFT JOIN province s ON s.code = current.store_code
         WHERE current.scope_id = 3
         AND current.period = #{current_period}
-        AND current.store_id IN
-        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-            #{store_id}
+        AND current.store_code IN
+        <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
+            #{store_code}
         </foreach>
     </select>
 
@@ -166,7 +166,7 @@
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
             s.name AS store_name,
             current.score,
@@ -181,15 +181,15 @@
             IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
-        LEFT JOIN score last ON last.store_id = current.store_id
+        LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
-        LEFT JOIN city s ON s.id = current.store_id
+        LEFT JOIN city s ON s.code = current.store_code
         WHERE current.scope_id = 4
         AND current.period = #{current_period}
-        AND current.store_id IN
-        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-            #{store_id}
+        AND current.store_code IN
+        <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
+            #{store_code}
         </foreach>
     </select>
 
@@ -197,7 +197,7 @@
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
             s.name AS store_name,
             current.score,
@@ -212,15 +212,15 @@
             IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
-        LEFT JOIN score last ON last.store_id = current.store_id
+        LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
-        LEFT JOIN store s ON s.id = current.store_id
+        LEFT JOIN store s ON s.code = current.store_code
         WHERE current.scope_id = 5
         AND current.period = #{current_period}
-        AND current.store_id IN
-        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-            #{store_id}
+        AND current.store_code IN
+        <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
+            #{store_code}
         </foreach>
     </select>
 
@@ -228,7 +228,7 @@
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
             s.name AS store_name,
             current.score,
@@ -243,15 +243,15 @@
             IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
-        LEFT JOIN score last ON last.store_id = current.store_id
+        LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
         AND last.period = #{last_period}
-        LEFT JOIN store s ON s.id = current.store_id
+        LEFT JOIN store s ON s.code = current.store_code
         WHERE current.scope_id = 6
         AND current.period = #{current_period}
-        AND current.store_id IN
-        <foreach collection="store_ids" item="store_id" index="index" open="(" close=")" separator=",">
-            #{store_id}
+        AND current.store_code IN
+        <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
+            #{store_code}
         </foreach>
     </select>
 

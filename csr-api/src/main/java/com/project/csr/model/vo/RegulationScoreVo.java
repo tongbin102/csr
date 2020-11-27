@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * <p>
@@ -26,7 +25,5 @@ public class RegulationScoreVo extends RegulationScorePo implements Serializable
     private Long elementId;
 
     private String elementName;
-
-    private String regulationDescription;
 
 }

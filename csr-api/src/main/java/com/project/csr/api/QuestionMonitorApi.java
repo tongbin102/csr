@@ -75,10 +75,10 @@ public class QuestionMonitorApi {
     @ApiOperation("获取过程监控评分规则表数据")
     @RequestMapping("/findList")
     public List<QuestionMonitorVo> findList(@RequestParam("period") String period,
-                                            @RequestParam("store_id") Long storeId,
+                                            @RequestParam("store_code") String storeCode,
                                             @RequestParam(value = "regulation_id", required = false) Long regulationId) {
         if (null != regulationId) {
-            return questionMonitorService.findListByRegulationId(period, storeId, regulationId);
+            return questionMonitorService.findListByRegulationId(period, storeCode, regulationId);
         }
         return ConvertUtils.convert(questionMonitorService.list(), QuestionMonitorVo.class);
     }

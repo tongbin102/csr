@@ -82,9 +82,9 @@ public class RegulationApi {
 
     @ApiOperation("获取因子要素细则评分规则情况")
     @GetMapping(value = "/findInfo")
-    public List<RegulationVo> findInfo(@RequestParam("store_id") Long storeId,
+    public List<RegulationVo> findInfo(@RequestParam("store_code") String storeCode,
                                             @RequestParam("period") String period,
                                             @RequestParam("factor_id") Long factorId) {
-        return regulationService.findInfo(storeId, period, factorId);
+        return regulationService.findInfo(storeCode, period, factorId);
     }
 }

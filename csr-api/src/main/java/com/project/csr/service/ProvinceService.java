@@ -36,4 +36,11 @@ public interface ProvinceService extends IService<ProvincePo> {
      * @since 2020-11-13
      */
     boolean prohibitById(String id);
+
+    /**
+     * 删除所有数据
+     *
+     * @return boolean
+     */
+    boolean deleteAll();
 }

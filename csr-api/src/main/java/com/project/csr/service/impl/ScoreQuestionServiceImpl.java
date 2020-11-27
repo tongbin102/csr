@@ -48,13 +48,20 @@ public class ScoreQuestionServiceImpl extends ServiceImpl<ScoreQuestionMapper, S
     }
 
     @Override
-    public List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, Long storeId, Long channelId, String questionIds) {
+    public List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, String storeCode, String channelCode, String questionSeriesNos) {
         LambdaQueryWrapper<ScoreQuestionPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScoreQuestionPo::getPeriod, period)
-                .eq(ScoreQuestionPo::getStoreId, storeId)
-                .eq(ScoreQuestionPo::getChannelId, channelId)
-                .in(ScoreQuestionPo::getQuestionId, questionIds.split(","));
+                .eq(ScoreQuestionPo::getStoreCode, storeCode)
+                .eq(ScoreQuestionPo::getChannelCode, channelCode)
+                .in(ScoreQuestionPo::getQuestionSeriesNo, questionSeriesNos.split(","));
         return scoreQuestionMapper.selectList(wrapper);
+    }
+
+    @Override
+    public boolean deleteByPeriod(String period) {
+        LambdaQueryWrapper<ScoreQuestionPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScoreQuestionPo::getPeriod, period);
+        return scoreQuestionMapper.delete(wrapper) >= 1;
     }
 }
 

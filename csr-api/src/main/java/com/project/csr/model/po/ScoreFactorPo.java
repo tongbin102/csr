@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("score_factor")
-@ApiModel(value="ScoreFactorPo对象", description="分因子成绩统计表")
+@ApiModel(value = "ScoreFactorPo对象", description = "分因子成绩统计表")
 public class ScoreFactorPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
@@ -29,14 +29,14 @@ public class ScoreFactorPo extends BasePo {
     @ApiModelProperty(value = "范围id")
     private Long scopeId;
 
-    @ApiModelProperty(value = "storeId")
-    private Long storeId;
+    @ApiModelProperty(value = "店code")
+    private String storeCode;
 
     @ApiModelProperty(value = "名称")
     private String name;
 
-    @ApiModelProperty(value = "因子id")
-    private Long factorId;
+    @ApiModelProperty(value = "因子code")
+    private String factorCode;
 
     @ApiModelProperty(value = "分因子分数")
     private String score;

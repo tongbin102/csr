@@ -45,5 +45,12 @@ public interface QuestionDataService extends IService<QuestionDataPo> {
      * @param regulationId
      * @return
      */
-    List<QuestionDataVo> findListByRegulationId(String period, Long storeId, Long regulationId);
+    List<QuestionDataVo> findListByRegulationId(String period, String storeCode, Long regulationId);
+
+    /**
+     * 删除所有数据
+     *
+     * @return boolean
+     */
+    boolean deleteAll();
 }

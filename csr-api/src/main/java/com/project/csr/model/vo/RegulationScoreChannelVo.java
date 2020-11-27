@@ -26,6 +26,4 @@ public class RegulationScoreChannelVo extends RegulationScoreChannelPo implement
 
     private String elementName;
 
-    private String regulationDescription;
-
 }

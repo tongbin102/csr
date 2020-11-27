@@ -37,4 +37,11 @@ public interface ElementService extends IService<ElementPo> {
      */
     boolean prohibitById(String id);
 
+    /**
+     * 删除所有数据
+     *
+     * @return boolean
+     */
+    boolean deleteAll();
+
 }

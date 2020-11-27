@@ -38,10 +38,21 @@ public interface UserService extends IService<UserPo> {
     boolean prohibitById(String id);
 
     /**
+     * 禁用所有数据
+     * @return
+     */
+    boolean prohibitAllExceptAdmin();
+
+    /**
      * 通过用户名查询用户
      *
      * @param username
      * @return
      */
     UserVo findByUsername(String username);
+
+    /**
+     * 删除除Admin以外的用户
+     */
+    boolean deleteUsersExceptAdmin();
 }

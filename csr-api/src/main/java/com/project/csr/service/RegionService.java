@@ -36,4 +36,9 @@ public interface RegionService extends IService<RegionPo> {
      * @since 2020-11-13
      */
     boolean prohibitById(String id);
+
+    /**
+     * 删除所有数据
+     */
+    boolean deleteAll();
 }

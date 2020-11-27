@@ -52,17 +52,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements 
     }
 
     @Override
+    public boolean prohibitAllExceptAdmin() {
+        UserPo po = new UserPo();
+        po.setValidInd(false);
+        LambdaQueryWrapper<UserPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.ne(UserPo::getUsername, "admin");
+        return userMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
     public UserVo findByUsername(String username) {
         LambdaQueryWrapper<UserPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserPo::getUsername, username);
         UserPo userPo = userMapper.selectOne(wrapper);
         RolePo rolePo = null;
-        if(null != userPo.getRoleId()){
+        if (null != userPo.getRoleId()) {
             rolePo = roleService.getById(userPo.getRoleId());
         }
         UserVo userVo = ConvertUtils.convert(userPo, UserVo.class);
         userVo.setRoleName(rolePo.getName());
         return userVo;
+    }
+
+    @Override
+    public boolean deleteUsersExceptAdmin() {
+        LambdaQueryWrapper<UserPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.ne(UserPo::getUsername, "admin");
+        return userMapper.delete(wrapper) >= 1;
     }
 
 }

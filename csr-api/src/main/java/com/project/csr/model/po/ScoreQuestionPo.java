@@ -26,14 +26,14 @@ public class ScoreQuestionPo extends BasePo {
     @ApiModelProperty(value = "期数")
     private String period;
 
-    @ApiModelProperty(value = "store_id")
-    private Long storeId;
+    @ApiModelProperty(value = "店code")
+    private String storeCode;
 
-    @ApiModelProperty(value = "渠道id")
-    private Long channelId;
+    @ApiModelProperty(value = "渠道code")
+    private String channelCode;
 
-    @ApiModelProperty(value = "题目id")
-    private Long questionId;
+    @ApiModelProperty(value = "题目序号")
+    private String questionSeriesNo;
 
     @ApiModelProperty(value = "得分")
     private String score;

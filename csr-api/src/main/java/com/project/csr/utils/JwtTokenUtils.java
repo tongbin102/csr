@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -22,7 +23,7 @@ import java.util.function.Function;
  * @date: 2020/10/30 15:53
  **/
 @Component
-public class JwtTokenUtil implements Serializable {
+public class JwtTokenUtils implements Serializable {
 
     @Autowired
     private JwtProperties jwtProperties;
@@ -74,7 +75,6 @@ public class JwtTokenUtil implements Serializable {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);

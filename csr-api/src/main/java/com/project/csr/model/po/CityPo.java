@@ -1,13 +1,12 @@
 package com.project.csr.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.project.csr.common.model.BasePo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import java.util.Objects;
 
 /**
  * <p>
@@ -18,9 +17,9 @@ import lombok.EqualsAndHashCode;
  * @since 2020-11-13
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+// @EqualsAndHashCode(callSuper = true)
 @TableName("city")
-@ApiModel(value="CityPo对象", description="城市表")
+@ApiModel(value = "CityPo对象", description = "城市表")
 public class CityPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
@@ -31,8 +30,24 @@ public class CityPo extends BasePo {
     @ApiModelProperty(value = "城市名称")
     private String name;
 
-    @ApiModelProperty(value = "所属省份id")
-    private Long provinceId;
+    @ApiModelProperty(value = "所属省份code")
+    private String provinceCode;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CityPo that = (CityPo) o;
+        return Objects.equals(code, that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
+    }
 
 }

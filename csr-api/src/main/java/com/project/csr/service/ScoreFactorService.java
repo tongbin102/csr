@@ -20,37 +20,44 @@ import java.util.Map;
  */
 public interface ScoreFactorService extends IService<ScoreFactorPo> {
 
-	/**
-	 * 分页查询
-	 *
-	 * @param scoreFactorVo 查询条件
-	 * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.ScoreFactorPo>
-	 * @author bin.tong
-	 * @since 2020-11-05
-	 */
-	IPage<ScoreFactorPo> findListByPage(ScoreFactorVo scoreFactorVo);
+    /**
+     * 分页查询
+     *
+     * @param scoreFactorVo 查询条件
+     * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.ScoreFactorPo>
+     * @author bin.tong
+     * @since 2020-11-05
+     */
+    IPage<ScoreFactorPo> findListByPage(ScoreFactorVo scoreFactorVo);
 
-	/**
-	 * 根据ID禁用数据
-	 *
-	 * @param id 主键id
-	 * @return boolean
-	 * @author bin.tong
-	 * @since 2020-11-05
-	 */
-	boolean prohibitById(String id);
+    /**
+     * 根据ID禁用数据
+     *
+     * @param id 主键id
+     * @return boolean
+     * @author bin.tong
+     * @since 2020-11-05
+     */
+    boolean prohibitById(String id);
 
-	/**
-	 * 获取分因子得分信息
-	 *
-	 * @param storeId
-	 * @param currentPeriod
-	 * @param lastPeriod
-	 * @return
-	 */
-	List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod);
+    /**
+     * 获取分因子得分信息
+     *
+     * @param storeCode
+     * @param currentPeriod
+     * @param lastPeriod
+     * @return
+     */
+    List<Map<String, Object>> findMapList(Long scopeId, String storeCode, String currentPeriod, String lastPeriod);
 
-	List<ScoreFactorVo> findVoList(Map<String, Object> params);
+    List<ScoreFactorVo> findVoList(Map<String, Object> params);
 
-	List<Map<String, Object>> findVoMapList(Long scopeId, Long storeId, String beginPeriod, String endPeriod);
+    List<Map<String, Object>> findVoMapList(Long scopeId, String storeCode, String beginPeriod, String endPeriod);
+
+    /**
+     * 通过期数删除数据
+     *
+     * @return boolean
+     */
+    boolean deleteByPeriod(String period);
 }

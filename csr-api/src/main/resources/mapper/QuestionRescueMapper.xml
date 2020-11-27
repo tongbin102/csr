@@ -16,7 +16,7 @@
                 <result column="create_time" property="createTime"/>
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
-                    <result column="regulation_id" property="regulationId"/>
+                    <result column="regulation_description" property="regulationDescription"/>
                     <result column="series_no" property="seriesNo"/>
                     <result column="analysis_point" property="analysisPoint"/>
                     <result column="kpi" property="kpi"/>
@@ -32,7 +32,7 @@
                 create_time,
                 updater,
                 update_time,
-            regulation_id, series_no, analysis_point, kpi, kpi_description, deduct
+            regulation_description, series_no, analysis_point, kpi, kpi_description, deduct
         </sql>
 
 </mapper>

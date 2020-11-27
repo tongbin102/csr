@@ -1,26 +1,26 @@
 package com.project.csr.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.project.csr.common.model.BasePo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author bin.tong
  * @since 2020-11-06
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+// @EqualsAndHashCode(callSuper = true)
 @TableName("store")
-@ApiModel(value="StorePo对象", description="门店表")
+@ApiModel(value = "StorePo对象", description = "门店表")
 public class StorePo extends BasePo {
 
     private static final long serialVersionUID = 1L;
@@ -34,10 +34,26 @@ public class StorePo extends BasePo {
     @ApiModelProperty(value = "规模")
     private String scale;
 
-    @ApiModelProperty(value = "所属城市id")
-    private Long cityId;
+    @ApiModelProperty(value = "所属城市code")
+    private String cityCode;
 
-    @ApiModelProperty(value = "所属一级门店id")
-    private Long parentId;
+    @ApiModelProperty(value = "所属一级门店code")
+    private String parentCode;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        StorePo that = (StorePo) o;
+        return Objects.equals(code, that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
+    }
 }

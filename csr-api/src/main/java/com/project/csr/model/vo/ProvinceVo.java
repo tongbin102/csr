@@ -22,4 +22,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class ProvinceVo extends ProvincePo implements Serializable {
 
+    private String regionName;
+
 }

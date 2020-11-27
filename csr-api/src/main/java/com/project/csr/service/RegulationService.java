@@ -63,5 +63,12 @@ public interface RegulationService extends IService<RegulationPo> {
      */
     List<RegulationVo> findVoListByFactorId(Long factorId);
 
-    List<RegulationVo> findInfo(Long storeId, String period, Long factorId);
+    List<RegulationVo> findInfo(String storeCode, String period, Long factorId);
+
+    /**
+     * 删除所有数据
+     *
+     * @return boolean
+     */
+    boolean deleteAll();
 }

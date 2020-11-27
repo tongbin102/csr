@@ -36,4 +36,11 @@ public interface FactorService extends IService<FactorPo> {
      * @since 2020-11-05
      */
     boolean prohibitById(String id);
+
+    /**
+     * 删除所有数据
+     *
+     * @return boolean
+     */
+    boolean deleteAll();
 }

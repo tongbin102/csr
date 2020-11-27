@@ -75,12 +75,12 @@ public class RegulationScoreChannelApi {
 
     @ApiOperation(value = "获取因子要素细则分渠道评分规则表Vo数据")
     @GetMapping(value = "/findVoList")
-    public List<RegulationScoreChannelVo> findVoList(@RequestParam("store_id") Long storeId,
+    public List<RegulationScoreChannelVo> findVoList(@RequestParam("store_code") String storeCode,
                                                @RequestParam("period") String period,
                                                @RequestParam("factor_id") Long factorId,
                                                @RequestParam("channel_type") Integer channelType) {
 
-        return regulationScoreChannelService.findVoList(storeId, period, factorId, channelType);
+        return regulationScoreChannelService.findVoList(storeCode, period, factorId, channelType);
     }
 
 }

@@ -18,9 +18,9 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="period" property="period"/>
                     <result column="scope_id" property="scopeId"/>
-                    <result column="store_id" property="storeId"/>
+                    <result column="store_code" property="storeCode"/>
                     <result column="name" property="name"/>
-                    <result column="factor_id" property="factorId"/>
+                    <result column="factor_code" property="factorCode"/>
                     <result column="score" property="score"/>
             <result column="rank_country" property="rankCountry"/>
             <result column="rank_scope" property="rankScope"/>
@@ -34,7 +34,7 @@
                 create_time,
                 updater,
                 update_time,
-            period, scope_id, store_id, name, factor_id, score, rank_country, rank_scope
+            period, scope_id, store_code, name, factor_code, score, rank_country, rank_scope
         </sql>
 
     <select id="findVoList" resultType="com.project.csr.model.vo.ScoreFactorVo">

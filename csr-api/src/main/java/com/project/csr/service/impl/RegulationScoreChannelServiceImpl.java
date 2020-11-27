@@ -58,19 +58,26 @@ public class RegulationScoreChannelServiceImpl extends ServiceImpl<RegulationSco
     }
 
     @Override
-    public List<RegulationScoreChannelVo> findVoList(Long storeId, String period, Long factorId, Integer channelType) {
+    public List<RegulationScoreChannelVo> findVoList(String storeCode, String period, Long factorId, Integer channelType) {
         LambdaQueryWrapper<RegulationScoreChannelPo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(RegulationScoreChannelPo::getStoreId, storeId)
+        wrapper.eq(RegulationScoreChannelPo::getStoreCode, storeCode)
                 .eq(RegulationScoreChannelPo::getPeriod, period);
         if (null != factorId) {
             String regulationIds = ToolsUtils.getIdsFromList(regulationService.findVoListByFactorId(factorId), ",");
-            wrapper.in(RegulationScoreChannelPo::getRegulationId, regulationIds.split(","));
+            wrapper.in(RegulationScoreChannelPo::getRegulationDescription, regulationIds.split(","));
         }
         if (null != channelType) {
             String channelIds = ToolsUtils.getIdsFromList(channelService.findListByCtype(channelType), ",");
-            wrapper.in(RegulationScoreChannelPo::getChannelId, channelIds.split(","));
+            wrapper.in(RegulationScoreChannelPo::getChannelCode, channelIds.split(","));
         }
         return ConvertUtils.convert(regulationScoreChannelMapper.selectList(wrapper), RegulationScoreChannelVo.class);
+    }
+
+    @Override
+    public boolean deleteByPeriod(String period) {
+        LambdaQueryWrapper<RegulationScoreChannelPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(RegulationScoreChannelPo::getPeriod, period);
+        return regulationScoreChannelMapper.delete(wrapper) >= 1;
     }
 
 }

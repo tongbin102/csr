@@ -28,11 +28,11 @@ public class RegulationScorePo extends BasePo {
     @ApiModelProperty(value = "期数")
     private String period;
 
-    @ApiModelProperty(value = "storeId")
-    private Long storeId;
+    @ApiModelProperty(value = "店code")
+    private String storeCode;
 
-    @ApiModelProperty(value = "细则id")
-    private Long regulationId;
+    @ApiModelProperty(value = "细则描述")
+    private String regulationDescription;
 
     @ApiModelProperty(value = "成绩类型：1.考核项 2. 加分项 3. 扣分项")
     private Integer scoreType;

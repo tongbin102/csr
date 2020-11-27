@@ -80,19 +80,19 @@ public class ScoreChannelApi {
     @ApiOperation("获取分渠道得分情况")
     @GetMapping(value = "/findInfo")
     public List<Map<String, Object>> findInfo(@RequestParam("scope_id") Long scopeId,
-                                              @RequestParam("store_id") Long storeId,
+                                              @RequestParam("store_code") String storeCode,
                                               @RequestParam("current_period") String currentPeriod,
                                               @RequestParam("last_period") String lastPeriod) {
-        return scoreChannelService.findMapList(scopeId, storeId, currentPeriod, lastPeriod);
+        return scoreChannelService.findMapList(scopeId, storeCode, currentPeriod, lastPeriod);
     }
 
     @ApiOperation("根据期间范围获取分渠道得分情况")
     @GetMapping(value = "/findInfoByPeriods")
     public List<Map<String, Object>> findInfoByPeriods(@RequestParam("scope_id") Long scopeId,
-                                              @RequestParam("store_id") Long storeId,
+                                              @RequestParam("store_code") String storeCode,
                                               @RequestParam("begin_period") String beginPeriod,
                                               @RequestParam("end_period") String endPeriod) {
-        return scoreChannelService.findVoMapList(scopeId, storeId, beginPeriod, endPeriod);
+        return scoreChannelService.findVoMapList(scopeId, storeCode, beginPeriod, endPeriod);
     }
 
 }

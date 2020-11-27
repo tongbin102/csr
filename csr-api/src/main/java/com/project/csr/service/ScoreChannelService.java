@@ -49,7 +49,14 @@ public interface ScoreChannelService extends IService<ScoreChannelPo> {
      * @param currentPeriod
      * @return
      */
-    List<Map<String, Object>> findMapList(Long scopeId, Long storeId, String currentPeriod, String lastPeriod);
+    List<Map<String, Object>> findMapList(Long scopeId, String storeCode, String currentPeriod, String lastPeriod);
 
-    List<Map<String, Object>> findVoMapList(Long scopeId, Long storeId, String beginPeriod, String endPeriod);
+    List<Map<String, Object>> findVoMapList(Long scopeId, String storeCode, String beginPeriod, String endPeriod);
+
+    /**
+     * 通过期数删除数据
+     *
+     * @return boolean
+     */
+    boolean deleteByPeriod(String period);
 }

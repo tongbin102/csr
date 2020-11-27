@@ -44,5 +44,11 @@ public class FactorServiceImpl extends ServiceImpl<FactorMapper, FactorPo> imple
         wrapper.eq(FactorPo::getId, id);
         return factorMapper.update(po, wrapper) >= 1;
     }
+
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<FactorPo> wrapper = Wrappers.lambdaQuery();
+        return factorMapper.delete(wrapper) >= 1;
+    }
 }
 

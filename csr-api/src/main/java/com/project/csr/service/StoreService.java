@@ -41,8 +41,15 @@ public interface StoreService extends IService<StorePo> {
 
     /**
      * 根据父节点id获取store列表
-     * @param parentId
+     * @param parentCode
      * @return
      */
-    List<StorePo> findByParentId(Long parentId);
+    List<StorePo> findByParentCode(String parentCode);
+
+    /**
+     * 删除所有数据
+     *
+     * @return boolean
+     */
+    boolean deleteAll();
 }

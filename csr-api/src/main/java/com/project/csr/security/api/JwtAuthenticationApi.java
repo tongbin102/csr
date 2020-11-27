@@ -1,10 +1,9 @@
 package com.project.csr.security.api;
 
-import com.project.csr.common.response.BaseResponse;
 import com.project.csr.model.po.UserPo;
 import com.project.csr.properties.JwtProperties;
 import com.project.csr.security.model.JwtUserDetails;
-import com.project.csr.utils.JwtTokenUtil;
+import com.project.csr.utils.JwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,21 +35,21 @@ public class JwtAuthenticationApi {
     private JwtProperties jwtProperties;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtils jwtTokenUtils;
 
     @PostMapping("${jwt.security.path}")
     public String createAuthenticationToken(@RequestBody UserPo user) throws Exception{
         log.info("username: "+user.getUsername() + ", password: "+user.getPassword());
         authenticate(user.getUsername(),user.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        final String token = jwtTokenUtil.generateToken(userDetails);
+        final String token = jwtTokenUtils.generateToken(userDetails);
         return token;
     }
 
     @GetMapping("/token")
     public JwtUserDetails getAuthenticatedUser(HttpServletRequest request){
         String token= request.getHeader(jwtProperties.getTokenHeader()).substring(7);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
+        String username = jwtTokenUtils.getUsernameFromToken(token);
         JwtUserDetails userDetails =  (JwtUserDetails)userDetailsService.loadUserByUsername(username);
         return userDetails;
     }

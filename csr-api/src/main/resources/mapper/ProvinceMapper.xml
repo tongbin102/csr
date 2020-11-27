@@ -18,7 +18,7 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
-                    <result column="region_id" property="regionId"/>
+                    <result column="region_code" property="regionCode"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -29,7 +29,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, name, region_id
+            code, name, region_code
         </sql>
 
 </mapper>

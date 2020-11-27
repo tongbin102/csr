@@ -17,9 +17,9 @@
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
                     <result column="period" property="period"/>
-                    <result column="store_id" property="storeId"/>
-                    <result column="regulation_id" property="regulationId"/>
-                    <result column="channel_id" property="channelId"/>
+                    <result column="store_code" property="storeCode"/>
+                    <result column="regulation_description" property="regulationDescription"/>
+                    <result column="channel_code" property="channelCode"/>
                     <result column="score_type" property="scoreType"/>
                     <result column="score" property="score"/>
                     <result column="grade" property="grade"/>
@@ -33,7 +33,7 @@
                 create_time,
                 updater,
                 update_time,
-            period, store_id, regulation_id, channel_id, score_type, score, grade
+            period, store_code, regulation_description, channel_code, score_type, score, grade
         </sql>
 
     <select id="findVoList" resultType="com.project.csr.model.vo.RegulationScoreChannelVo">

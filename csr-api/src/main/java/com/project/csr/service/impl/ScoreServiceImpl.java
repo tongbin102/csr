@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.project.csr.common.model.BasePo;
 import com.project.csr.constants.DictionaryType;
 import com.project.csr.dao.ScoreMapper;
 import com.project.csr.model.po.*;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -70,56 +72,56 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
     }
 
     @Override
-    public List<ScoreVo> findScoreInfo(Long scopeId, Long parentId, String currentPeriod, String lastPeriod) {
+    public List<ScoreVo> findScoreInfo(Long scopeId, String parentCode, String currentPeriod, String lastPeriod) {
         List<ScoreVo> resultList = new ArrayList();
-        String childIds = null;
+        String childCodes = null;
         Long childScopeId = null;
 
         if (scopeId.equals(DictionaryType.SCOPE_ID_NATIONAL)) {
             LambdaQueryWrapper<RegionPo> wrapper = Wrappers.lambdaQuery();
-            wrapper.eq(RegionPo::getNationalId, parentId);
+            wrapper.eq(RegionPo::getNationalCode, parentCode);
             List<RegionPo> childList = regionService.list(wrapper);
-            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childCodes = childList.stream().map(RegionPo::getCode).collect(Collectors.joining(","));
             childScopeId = DictionaryType.SCOPE_ID_REGION;
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_REGION)) {
             LambdaQueryWrapper<ProvincePo> wrapper = Wrappers.lambdaQuery();
-            wrapper.eq(ProvincePo::getRegionId, parentId);
+            wrapper.eq(ProvincePo::getRegionCode, parentCode);
             List<ProvincePo> childList = provinceService.list(wrapper);
-            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childCodes = childList.stream().map(ProvincePo::getCode).collect(Collectors.joining(","));
             childScopeId = DictionaryType.SCOPE_ID_PROVINCE;
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_PROVINCE)) {
             LambdaQueryWrapper<CityPo> wrapper = Wrappers.lambdaQuery();
-            wrapper.eq(CityPo::getProvinceId, parentId);
+            wrapper.eq(CityPo::getProvinceCode, parentCode);
             List<CityPo> childList = cityService.list(wrapper);
-            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childCodes = childList.stream().map(CityPo::getCode).collect(Collectors.joining(","));
             childScopeId = DictionaryType.SCOPE_ID_CITY;
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_CITY)) {
             LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
-            wrapper.eq(StorePo::getCityId, parentId)
-                    .isNull(StorePo::getParentId);
+            wrapper.eq(StorePo::getCityCode, parentCode)
+                    .isNull(StorePo::getParentCode);
             List<StorePo> childList = storeService.list(wrapper);
-            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childCodes = childList.stream().map(StorePo::getCode).collect(Collectors.joining(","));
             childScopeId = DictionaryType.SCOPE_ID_SUPERIOR;
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_SUPERIOR)) {
             LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
-            wrapper.eq(StorePo::getParentId, parentId);
+            wrapper.eq(StorePo::getParentCode, parentCode);
             List<StorePo> childList = storeService.list(wrapper);
-            childIds = ToolsUtils.getIdsFromList(childList, ",");
+            childCodes = childList.stream().map(StorePo::getCode).collect(Collectors.joining(","));
             childScopeId = DictionaryType.SCOPE_ID_STORE;
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
         }
-        if (StringUtils.isNotBlank(childIds) && null != childScopeId) {
-            resultList = this.findVoList(childScopeId, childIds, currentPeriod, lastPeriod);
+        if (StringUtils.isNotBlank(childCodes) && null != childScopeId) {
+            resultList = this.findVoList(childScopeId, childCodes, currentPeriod, lastPeriod);
         }
         return resultList;
     }
 
     @Override
-    public List<ScoreVo> findVoList(Long scopeId, String storeIds, String currentPeriod, String lastPeriod) {
+    public List<ScoreVo> findVoList(Long scopeId, String storeCodes, String currentPeriod, String lastPeriod) {
         Map<String, Object> params = new HashMap<>();
         params.put("current_period", currentPeriod);
         params.put("last_period", lastPeriod);
-        params.put("store_ids", storeIds.split(","));
+        params.put("store_codes", storeCodes.split(","));
         if (scopeId.equals(DictionaryType.SCOPE_ID_NATIONAL)) {
             return scoreMapper.findNationalVoList(params);
         } else if (scopeId.equals(DictionaryType.SCOPE_ID_REGION)) {
@@ -137,12 +139,19 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
     }
 
     @Override
-    public List<ScoreVo> findVoListByPeriods(Long scopeId, Long storeId, String beginPeriod, String endPeriod) {
+    public List<ScoreVo> findVoListByPeriods(Long scopeId, String storeCode, String beginPeriod, String endPeriod) {
         LambdaQueryWrapper<ScorePo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ScorePo::getScopeId, scopeId)
-                .eq(ScorePo::getStoreId, storeId)
+                .eq(ScorePo::getStoreCode, storeCode)
                 .between(ScorePo::getPeriod, beginPeriod, endPeriod);
         return ConvertUtils.convert(scoreMapper.selectList(wrapper), ScoreVo.class);
+    }
+
+    @Override
+    public boolean deleteByPeriod(String period) {
+        LambdaQueryWrapper<ScorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ScorePo::getPeriod, period);
+        return scoreMapper.delete(wrapper) >= 1;
     }
 
 }

@@ -45,5 +45,12 @@ public interface QuestionRescueService extends IService<QuestionRescuePo> {
      * @param regulationId
      * @return
      */
-    List<QuestionRescueVo> findListByRegulationId(String period, Long storeId, Long regulationId);
+    List<QuestionRescueVo> findListByRegulationId(String period, String storeCode, Long regulationId);
+
+    /**
+     * 删除所有数据
+     *
+     * @return boolean
+     */
+    boolean deleteAll();
 }

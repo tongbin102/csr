@@ -25,8 +25,8 @@ public class QuestionSurveyPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "细则id")
-    private Long regulationId;
+    @ApiModelProperty(value = "细则描述")
+    private String regulationDescription;
 
     @ApiModelProperty(value = "题目序号")
     private String seriesNo;

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.CityMapper;
 import com.project.csr.model.po.CityPo;
+import com.project.csr.model.po.ProvincePo;
 import com.project.csr.model.vo.CityVo;
 import com.project.csr.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,12 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, CityPo> implements 
         LambdaQueryWrapper<CityPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(CityPo::getId, id);
         return cityMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<CityPo> wrapper = Wrappers.lambdaQuery();
+        return cityMapper.delete(wrapper) >= 1;
     }
 }
 

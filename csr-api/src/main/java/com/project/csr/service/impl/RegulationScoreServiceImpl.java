@@ -57,13 +57,19 @@ public class RegulationScoreServiceImpl extends ServiceImpl<RegulationScoreMappe
     }
 
     @Override
-    public List<RegulationScoreVo> findVoList(Long storeId, String period, String regulationIds) {
+    public List<RegulationScoreVo> findVoList(String storeCode, String period, String regulationIds) {
         LambdaQueryWrapper<RegulationScorePo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(RegulationScorePo::getStoreId, storeId)
+        wrapper.eq(RegulationScorePo::getStoreCode, storeCode)
                 .eq(RegulationScorePo::getPeriod, period)
-                .in(RegulationScorePo::getRegulationId, regulationIds.split(","));
+                .in(RegulationScorePo::getRegulationDescription, regulationIds.split(","));
         return ConvertUtils.convert(regulationScoreMapper.selectList(wrapper), RegulationScoreVo.class);
     }
 
+    @Override
+    public boolean deleteByPeriod(String period) {
+        LambdaQueryWrapper<RegulationScorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(RegulationScorePo::getPeriod, period);
+        return regulationScoreMapper.delete(wrapper) >= 1;
+    }
 }
 

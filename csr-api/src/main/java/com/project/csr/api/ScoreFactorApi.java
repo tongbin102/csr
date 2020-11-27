@@ -90,27 +90,27 @@ public class ScoreFactorApi {
 	@ApiOperation("获取分因子得分情况")
 	@GetMapping(value = "/findInfo")
 	public List<Map<String, Object>> findInfo(@RequestParam("scope_id") Long scopeId,
-                                              @RequestParam("store_id") Long storeId,
+                                              @RequestParam("store_code") String storeCode,
 	                                          @RequestParam("current_period") String currentPeriod,
 	                                          @RequestParam("last_period") String lastPeriod) {
-		return scoreFactorService.findMapList(scopeId, storeId, currentPeriod, lastPeriod);
+		return scoreFactorService.findMapList(scopeId, storeCode, currentPeriod, lastPeriod);
 	}
 
 	@ApiOperation("获取分因子得分情况（经销店）")
 	@GetMapping(value = "/findInfoForStore")
 	public Map<String, Object> findInfoForStore(@RequestParam("scope_id") Long scopeId,
-												@RequestParam("store_id") Long storeId,
+												@RequestParam("store_code") String storeCode,
 	                                            @RequestParam("current_period") String currentPeriod,
 	                                            @RequestParam("last_period") String lastPeriod) {
 
 		Map<String, Object> resultMap = new HashMap<>();
-		List<ScoreVo> totalScoreVoList = scoreService.findVoList(scopeId, Long.toString(storeId), currentPeriod, lastPeriod);
+		List<ScoreVo> totalScoreVoList = scoreService.findVoList(scopeId, storeCode, currentPeriod, lastPeriod);
 		resultMap.put("totalScoreList", totalScoreVoList);
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("current_period", currentPeriod);
 		params.put("last_period", lastPeriod);
-		params.put("store_id", storeId);
+		params.put("store_code", storeCode);
 		List<ScoreFactorVo> scoreFactorVoList = scoreFactorService.findVoList(params);
 		resultMap.put("scoreFactorList", scoreFactorVoList);
 		return resultMap;
@@ -138,10 +138,10 @@ public class ScoreFactorApi {
 	@ApiOperation("根据期间范围获取分因子得分情况")
 	@GetMapping(value = "/findInfoByPeriods")
 	public List<Map<String, Object>> findInfoByPeriods(@RequestParam("scope_id") Long scopeId,
-													   @RequestParam("store_id") Long storeId,
+													   @RequestParam("store_code") String storeCode,
 													   @RequestParam("begin_period") String beginPeriod,
 													   @RequestParam("end_period") String endPeriod) {
-		return scoreFactorService.findVoMapList(scopeId, storeId, beginPeriod, endPeriod);
+		return scoreFactorService.findVoMapList(scopeId, storeCode, beginPeriod, endPeriod);
 	}
 
 }

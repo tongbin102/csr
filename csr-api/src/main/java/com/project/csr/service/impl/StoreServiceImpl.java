@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.StoreMapper;
+import com.project.csr.model.po.CityPo;
 import com.project.csr.model.po.StorePo;
 import com.project.csr.model.vo.StoreVo;
 import com.project.csr.service.StoreService;
@@ -48,10 +49,16 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, StorePo> implemen
     }
 
     @Override
-    public List<StorePo> findByParentId(Long parentId) {
+    public List<StorePo> findByParentCode(String parentCode) {
         LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(StorePo::getParentId, parentId);
+        wrapper.eq(StorePo::getParentCode, parentCode);
         return storeMapper.selectList(wrapper);
+    }
+
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
+        return storeMapper.delete(wrapper) >= 1;
     }
 }
 

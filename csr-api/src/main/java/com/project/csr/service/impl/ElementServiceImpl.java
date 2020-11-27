@@ -45,5 +45,11 @@ public class ElementServiceImpl extends ServiceImpl<ElementMapper, ElementPo> im
         return elementMapper.update(po, wrapper) >= 1;
     }
 
+    @Override
+    public boolean deleteAll() {
+        LambdaQueryWrapper<ElementPo> wrapper = Wrappers.lambdaQuery();
+        return elementMapper.delete(wrapper) >= 1;
+    }
+
 }
 

@@ -47,7 +47,13 @@ public interface RegulationScoreChannelService extends IService<RegulationScoreC
      * @param regulationIds
      * @return
      */
-    List<RegulationScoreChannelVo> findVoList(Long storeId, String period, Long factorId, Integer channelType);
+    List<RegulationScoreChannelVo> findVoList(String storeCode, String period, Long factorId, Integer channelType);
 
+    /**
+     * 通过期数删除数据
+     *
+     * @return boolean
+     */
+    boolean deleteByPeriod(String period);
 
 }
