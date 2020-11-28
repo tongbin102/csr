@@ -18,15 +18,15 @@ import java.util.Objects;
  * @since 2020-11-11
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+// @EqualsAndHashCode(callSuper = true)
 @TableName("regulation")
 @ApiModel(value = "RegulationPo对象", description = "细则表")
 public class RegulationPo extends BasePo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "因子要素id")
-    private Long elementId;
+    @ApiModelProperty(value = "因子要素code")
+    private String elementCode;
 
     @ApiModelProperty(value = "细则描述")
     private String description;
@@ -43,12 +43,12 @@ public class RegulationPo extends BasePo {
             return false;
         }
         RegulationPo that = (RegulationPo) o;
-        return Objects.equals(elementId, that.elementId) && Objects.equals(description, that.description);
+        return Objects.equals(elementCode, that.elementCode) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(elementId, description);
+        return Objects.hash(elementCode, description);
     }
 
 }

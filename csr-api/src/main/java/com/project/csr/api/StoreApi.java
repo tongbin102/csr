@@ -1,18 +1,17 @@
 package com.project.csr.api;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.project.csr.model.po.StorePo;
 import com.project.csr.model.vo.StoreVo;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.project.csr.service.StoreService;
 import com.project.csr.utils.ConvertUtils;
-import com.project.csr.model.po.StorePo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -71,6 +70,14 @@ public class StoreApi {
     @PutMapping("/prohibitById/{id}")
     public boolean prohibitById(@PathVariable String id) {
         return storeService.prohibitById(id);
+    }
+
+    @ApiOperation("根据code查询经销店表数据")
+    @GetMapping("/findByCode")
+    public StoreVo findByCode(@RequestParam("code") String code) {
+        LambdaQueryWrapper<StorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(StorePo::getCode, code);
+        return ConvertUtils.convert(storeService.getOne(wrapper), StoreVo.class);
     }
 
 }

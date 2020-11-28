@@ -48,14 +48,6 @@ public interface RegulationService extends IService<RegulationPo> {
     List<RegulationPo> findListFromIds(String ids, String delimiter);
 
     /**
-     * 通过id获取Vo
-     *
-     * @param id
-     * @return
-     */
-    RegulationVo findVoById(Long id);
-
-    /**
      * 通过因子id获取VoList
      *
      * @param factorId

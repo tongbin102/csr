@@ -41,4 +41,5 @@ public interface RegionService extends IService<RegionPo> {
      * 删除所有数据
      */
     boolean deleteAll();
+
 }

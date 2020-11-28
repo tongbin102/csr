@@ -41,9 +41,9 @@
         SELECT current.id,
             current.period,
             current.scope_id,
-            current.store_id,
+            current.store_code,
             current.name,
-            current.factor_id,
+            current.factor_code,
             f.name AS factor_name,
             current.score,
             current.rank_country,
@@ -58,14 +58,14 @@
             IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM factor f
         LEFT JOIN score_factor current
-        ON current.factor_id = f.id
+        ON current.factor_code = f.code
         AND current.period = #{current_period}
-        AND current.store_id = #{store_id}
+        AND current.store_code = #{store_code}
         LEFT JOIN score_factor last
-        ON last.factor_id = f.id AND last.period = #{last_period} AND last.store_id = current.store_id
+        ON last.factor_code = f.code AND last.period = #{last_period} AND last.store_code = current.store_code
         WHERE 1 = 1
-        <if test="factor_id != null">
-            AND f.id = #{factor_id}
+        <if test="factor_code != null">
+            AND f.code = #{factor_code}
         </if>
         ORDER BY f.id
     </select>

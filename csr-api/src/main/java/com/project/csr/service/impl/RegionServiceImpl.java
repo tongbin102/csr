@@ -50,5 +50,6 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, RegionPo> imple
         LambdaQueryWrapper<RegionPo> wrapper = Wrappers.lambdaQuery();
         return regionMapper.delete(wrapper) >= 1;
     }
+
 }
 

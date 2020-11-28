@@ -74,12 +74,6 @@ public class RegulationApi {
         return regulationService.prohibitById(id);
     }
 
-    @ApiOperation("通过id获取Vo")
-    @GetMapping("/findVoById/{id}")
-    public RegulationVo findVoById(@PathVariable Long id) {
-        return ConvertUtils.convert(regulationService.findVoById(id), RegulationVo.class);
-    }
-
     @ApiOperation("获取因子要素细则评分规则情况")
     @GetMapping(value = "/findInfo")
     public List<RegulationVo> findInfo(@RequestParam("store_code") String storeCode,

@@ -75,14 +75,6 @@ public class RegulationServiceImpl extends ServiceImpl<RegulationMapper, Regulat
     }
 
     @Override
-    public RegulationVo findVoById(Long id) {
-        RegulationVo regulationVo = ConvertUtils.convert(this.getById(id), RegulationVo.class);
-        ElementPo elementPo = elementService.getById(regulationVo.getElementId());
-        regulationVo.setElementName(elementPo.getName());
-        return regulationVo;
-    }
-
-    @Override
     public List<RegulationVo> findVoListByFactorId(Long factorId) {
         Map<String, Object> params = new HashMap<>();
         params.put("factor_id", factorId);

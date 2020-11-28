@@ -27,8 +27,8 @@ public class ElementPo extends BasePo {
     @ApiModelProperty(value = "要素code")
     private String code;
 
-    @ApiModelProperty(value = "因子")
-    private Long factorId;
+    @ApiModelProperty(value = "因子code")
+    private String factorCode;
 
     @ApiModelProperty(value = "考核单元")
     private String name;
@@ -42,11 +42,11 @@ public class ElementPo extends BasePo {
             return false;
         }
         ElementPo that = (ElementPo) o;
-        return Objects.equals(factorId, that.factorId) && Objects.equals(code, that.code);
+        return Objects.equals(factorCode, that.factorCode) && Objects.equals(code, that.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(factorId, code);
+        return Objects.hash(factorCode, code);
     }
 }

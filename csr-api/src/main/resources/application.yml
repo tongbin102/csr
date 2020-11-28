@@ -3,3 +3,4 @@ spring:
     name: csr-api
   profiles:
     active: dev
+#    active: test

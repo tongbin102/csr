@@ -138,11 +138,11 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<CityPo> cityPoSet = new HashSet<>();
         storeImportVoList
                 .forEach(storeImportVo -> {
-                    CityPo cityPo = new CityPo();
-                    cityPo.setCode(storeImportVo.getCity());
-                    cityPo.setName(storeImportVo.getCity());
-                    cityPo.setProvinceCode(storeImportVo.getProvince());
-                    cityPoSet.add(cityPo);
+                    // CityPo cityPo = new CityPo();
+                    // cityPo.setCode(storeImportVo.getCity());
+                    // cityPo.setName(storeImportVo.getCity());
+                    // cityPo.setProvinceCode(storeImportVo.getProvince());
+                    // cityPoSet.add(cityPo);
 
                     CityPo superiorCityPo = new CityPo();
                     superiorCityPo.setCode(storeImportVo.getSuperiorCity());
@@ -275,21 +275,21 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         List<RegulationImportVo> regulationImportVoList = ConvertUtils.convert(regulationImportListener.getRows(), RegulationImportVo.class);
 
         // 导入因子
-        Set<FactorPo> factorPoSet = new HashSet<>();
-        regulationImportVoList.forEach(regulationImportVo -> {
-            FactorPo factorPo = new FactorPo();
-            factorPo.setCode(regulationImportVo.getFactorName().trim());
-            factorPo.setName(regulationImportVo.getFactorName().trim());
-            factorPoSet.add(factorPo);
-        });
-        List<FactorPo> factorPoList = new ArrayList<>(factorPoSet);
-        factorService.deleteAll();
-        factorService.saveBatch(factorPoList);
+        // Set<FactorPo> factorPoSet = new HashSet<>();
+        // regulationImportVoList.forEach(regulationImportVo -> {
+        //     FactorPo factorPo = new FactorPo();
+        //     factorPo.setCode(regulationImportVo.getFactorName().trim());
+        //     factorPo.setName(regulationImportVo.getFactorName().trim());
+        //     factorPoSet.add(factorPo);
+        // });
+        // List<FactorPo> factorPoList = new ArrayList<>(factorPoSet);
+        // factorService.deleteAll();
+        // factorService.saveBatch(factorPoList);
         // 导入要素
         Set<ElementPo> elementPoSet = new HashSet<>();
         regulationImportVoList.forEach(regulationImportVo -> {
             ElementPo elementPo = new ElementPo();
-            factorPoList.stream().filter(factorPo -> factorPo.getCode().equals(regulationImportVo.getFactorName())).findFirst().ifPresent(factorPo -> elementPo.setFactorId(Long.parseLong(factorPo.getId())));
+            elementPo.setFactorCode(regulationImportVo.getFactorName().trim());
             elementPo.setCode(regulationImportVo.getElementName().trim());
             elementPo.setName(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim());
             elementPoSet.add(elementPo);
@@ -301,8 +301,9 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<RegulationPo> regulationPoSet = new HashSet<>();
         regulationImportVoList.forEach(regulationImportVo -> {
             RegulationPo regulationPo = new RegulationPo();
-            // elementPoList.stream().filter(elementPo -> elementPo.getFactorId().equals(regulationImportVo.getFactorId()) && elementPo.getCode().equals(regulationImportVo.getElementName())).findFirst().ifPresent(elementPo -> regulationPo.setElementId(Long.parseLong(elementPo.getId())));
-            regulationPo.setDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + ";" + regulationImportVo.getDescription().replace("\n", "<br/>").trim());
+            regulationPo.setElementCode(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim());
+            // regulationPo.setDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + ";" + regulationImportVo.getDescription().replace("\n", "<br/>").trim());
+            regulationPo.setDescription(regulationImportVo.getDescription().replace("\n", "<br/>").trim());
             regulationPo.setScoreType(regulationImportVo.getScoreType().trim());
             regulationPoSet.add(regulationPo);
         });
