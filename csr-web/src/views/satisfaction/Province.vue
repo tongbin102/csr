@@ -8,7 +8,7 @@
       <a-col :span="24">
         <a-table id="scoreTable" :columns="scoreColumns" :data-source="scoreData" :pagination="false" :loading="scoreLoading">
           <template slot="score" slot-scope="text, record, index">
-            <span v-if="index === 0">{{ provinceName }}总得分：{{ record.score }}</span>
+            <span v-if="index === 0">{{ name }}总得分：{{ record.score }}</span>
             <a-button type="link" v-else @click="handleClickCity(record.storeCode)">
               <span style="text-decoration: underline;">{{ record.storeName }}得分：{{ record.score }}</span>
             </a-button>
@@ -76,7 +76,7 @@ import moment from 'moment';
 import { getScoreInfo, getScoreChannelInfo, getScoreFactorInfo } from '@/api/score';
 import { getChannelList1 } from '@/api/channel';
 import { getAllFactor } from '@/api/factor';
-import { getProvinceById } from '@/api/province';
+import { getProvinceByCode } from '@/api/province';
 
 export default {
   data () {
@@ -138,7 +138,8 @@ export default {
     return {
       title: '',
       scopeId: 3,
-      storeCode: '',
+      code: '',
+      name: '',
       month: '',
       period: '',
       lastPeriod: '',
@@ -159,34 +160,34 @@ export default {
     this.fetchColumns();
     this.fetchScoreData({
       scope_id: this.scopeId,
-      parent_code: this.storeCode,
+      parent_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreChannelData({
       scope_id: this.scopeId,
-      store_code: this.storeCode,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreFactorData({
       scope_id: this.scopeId,
-      store_code: this.storeCode,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
   },
   methods: {
     initialData () {
-      this.storeCode = this.$route.query.store_code;
+      this.code = this.$route.query.code;
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
       this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');
 
-      getProvinceById(this.id).then(res => {
+      getProvinceByCode(this.code).then(res => {
         const province = res.resData;
         this.title = '所属区域：' + province.name;
-        this.provinceName = province.name;
+        this.name = province.name;
       });
     },
     fetchColumns (params = {}) {
@@ -257,10 +258,10 @@ export default {
         this.scoreFactorData = res.resData;
       });
     },
-    handleClickCity (storeCode) {
+    handleClickCity (code) {
       this.$router.push({
         path: '/satisfaction/city',
-        query: { store_code: storeCode }
+        query: { code: code }
       });
     },
     handleClickChannelAnalysis () {
@@ -268,7 +269,7 @@ export default {
         path: '/analysis/channel',
         query: {
           scope_id: this.scopeId,
-          store_code: this.storeCode
+          code: this.code
         }
       });
     },
@@ -277,7 +278,7 @@ export default {
         path: '/analysis/factor',
         query: {
           scope_id: this.scopeId,
-          store_code: this.storeCode
+          code: this.code
         }
       });
     }

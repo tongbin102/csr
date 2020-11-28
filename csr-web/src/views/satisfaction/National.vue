@@ -116,7 +116,7 @@ export default {
     return {
       title: '',
       scopeId: 1,
-      storeCode: '',
+      code: '',
       month: '',
       period: '',
       lastPeriod: '',
@@ -138,26 +138,26 @@ export default {
     this.fetchColumns();
     this.fetchScoreData({
       scope_id: this.scopeId,
-      parent_code: this.storeCode,
+      parent_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreChannelData({
       scope_id: this.scopeId,
-      store_code: this.storeCode,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreFactorData({
       scope_id: this.scopeId,
-      store_code: this.storeCode,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
   },
   methods: {
     initialData () {
-      this.storeCode = 'national';
+      this.code = 'national';
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
       this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');
@@ -231,10 +231,10 @@ export default {
         this.scoreFactorData = res.resData;
       });
     },
-    handleClickRegion (storeCode) {
+    handleClickRegion (code) {
       this.$router.push({
         path: '/satisfaction/region',
-        query: { store_code: storeCode }
+        query: { code: code }
       });
     },
     handleClickChannelAnalysis () {
@@ -242,7 +242,7 @@ export default {
         path: '/analysis/channel',
         query: {
           scope_id: this.scopeId,
-          store_code: this.storeCode
+          code: this.code
         }
       });
     },
@@ -251,7 +251,7 @@ export default {
         path: '/analysis/factor',
         query: {
           scope_id: this.scopeId,
-          store_code: this.storeCode
+          code: this.code
         }
       });
     }

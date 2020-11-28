@@ -1,22 +1,28 @@
 import request from '@/utils/request';
 
 const storeApi = {
-  findStoreById: '/storeApi/findById',
-  findStoreByParentId: '/storeApi/findByParentId'
+  findStoreByCode: '/storeApi/findByCode',
+  findStoreByParentCode: '/storeApi/findByParentCode'
 };
 
 export default storeApi;
 
-export function getStoreById (id) {
+export function getStoreByCode (code) {
   return request({
-    url: storeApi.findStoreById + '/' + id,
-    method: 'get'
+    url: storeApi.findStoreByCode,
+    method: 'get',
+    params: {
+      code: code
+    }
   });
 }
 
-export function getStoreByParentId (parentId) {
+export function getStoreByParentCode (parentCode) {
   return request({
-    url: storeApi.findStoreByParentId + '/' + parentId,
-    method: 'get'
+    url: storeApi.findStoreByParentCode,
+    method: 'get',
+    params: {
+      parent_code: parentCode
+    }
   });
 }

@@ -78,7 +78,7 @@ import moment from 'moment';
 import { getScoreFactorInfoForStore, getScoreChannelInfo, getScoreFactorInfo } from '@/api/score';
 import { getChannelList1 } from '@/api/channel';
 import { getAllFactor } from '@/api/factor';
-import { getStoreById } from '@/api/store';
+import { getStoreByCode } from '@/api/store';
 
 export default {
   data () {
@@ -141,8 +141,8 @@ export default {
     return {
       title: '',
       scopeId: 6,
-      id: '',
-      storeName: '',
+      code: '',
+      name: '',
       month: '',
       period: '',
       lastPeriod: '',
@@ -163,34 +163,34 @@ export default {
     this.fetchColumns();
     this.fetchScoreData({
       scope_id: this.scopeId,
-      store_id: this.id,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreChannelData({
       scope_id: this.scopeId,
-      store_id: this.id,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreFactorData({
       scope_id: this.scopeId,
-      store_id: this.id,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
   },
   methods: {
     initialData () {
-      this.id = this.$route.query.id;
+      this.code = this.$route.query.code;
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
       this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');
 
-      getStoreById(this.id).then(res => {
+      getStoreByCode(this.code).then(res => {
         const store = res.resData;
         this.title = '所属区域：' + store.name;
-        this.storeName = store.name;
+        this.name = store.name;
       });
     },
     fetchColumns (params = {}) {
@@ -208,7 +208,7 @@ export default {
         channelList.forEach((channel) => {
           scoreChannelColumns.push({
             title: channel.name,
-            dataIndex: channel.id,
+            dataIndex: channel.name,
             key: channel.id,
             width: (90 / channelList.length) + '%',
             align: 'center'
@@ -230,7 +230,7 @@ export default {
         factorList.forEach((factor) => {
           scoreFactorColumns.push({
             title: factor.name,
-            dataIndex: factor.id,
+            dataIndex: factor.name,
             key: factor.id,
             width: (90 / factorList.length) + '%',
             align: 'center'
@@ -264,7 +264,7 @@ export default {
       this.$router.push({
         path: '/factor/Details',
         query: {
-          store_id: this.id,
+          code: this.code,
           factor_id: factorId
         }
       });
@@ -274,7 +274,7 @@ export default {
         path: '/analysis/channel',
         query: {
           scope_id: this.scopeId,
-          store_id: this.id
+          code: this.code
         }
       });
     },
@@ -283,7 +283,7 @@ export default {
         path: '/analysis/factor',
         query: {
           scope_id: this.scopeId,
-          store_id: this.id
+          code: this.code
         }
       });
     }

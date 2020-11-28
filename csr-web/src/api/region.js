@@ -1,14 +1,17 @@
 import request from '@/utils/request';
 
 const regionApi = {
-  findRegionById: '/regionApi/findById'
+  findRegionByCode: '/regionApi/findByCode'
 };
 
 export default regionApi;
 
-export function getRegionById (id) {
+export function getRegionByCode (code) {
   return request({
-    url: regionApi.findRegionById + '/' + id,
-    method: 'get'
+    url: regionApi.findRegionByCode,
+    method: 'get',
+    params: {
+      code: code
+    }
   });
 }

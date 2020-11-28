@@ -1,14 +1,17 @@
 import request from '@/utils/request';
 
 const provinceApi = {
-  findProvinceById: '/provinceApi/findById'
+  findProvinceByCode: '/provinceApi/findByCode'
 };
 
 export default provinceApi;
 
-export function getProvinceById (id) {
+export function getProvinceByCode (code) {
   return request({
-    url: provinceApi.findProvinceById + '/' + id,
-    method: 'get'
+    url: provinceApi.findProvinceByCode,
+    method: 'get',
+    params: {
+      code: code
+    }
   });
 }

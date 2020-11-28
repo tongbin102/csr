@@ -1,14 +1,17 @@
 import request from '@/utils/request';
 
 const cityApi = {
-  findCityById: '/cityApi/findById'
+  findCityByCode: '/cityApi/findByCode'
 };
 
 export default cityApi;
 
-export function getCityById (id) {
+export function getCityByCode (code) {
   return request({
-    url: cityApi.findCityById + '/' + id,
-    method: 'get'
+    url: cityApi.findCityByCode,
+    method: 'get',
+    params: {
+      code: code
+    }
   });
 }

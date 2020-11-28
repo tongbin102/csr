@@ -8,8 +8,8 @@
       <a-col :span="24">
         <a-table id="scoreTable" :columns="scoreColumns" :data-source="scoreData" :pagination="false" :loading="scoreLoading">
           <template slot="score" slot-scope="text, record, index">
-            <span v-if="index === 0">{{ storeName }}总得分：{{ record.score }}</span>
-            <a-button type="link" v-else @click="handleClickStore(record.storeId)">
+            <span v-if="index === 0">{{ name }}总得分：{{ record.score }}</span>
+            <a-button type="link" v-else @click="handleClickStore(record.storeCode)">
               <span style="text-decoration: underline;">{{ record.storeName }}得分：{{ record.score }}</span>
             </a-button>
           </template>
@@ -76,7 +76,7 @@ import moment from 'moment';
 import { getScoreInfo, getScoreChannelInfo, getScoreFactorInfo } from '@/api/score';
 import { getChannelList1 } from '@/api/channel';
 import { getAllFactor } from '@/api/factor';
-import { getStoreById } from '@/api/store';
+import { getStoreByCode } from '@/api/store';
 
 export default {
   data () {
@@ -138,7 +138,8 @@ export default {
     return {
       title: '',
       scopeId: 5,
-      id: '',
+      code: '',
+      name: '',
       month: '',
       period: '',
       lastPeriod: '',
@@ -159,34 +160,34 @@ export default {
     this.fetchColumns();
     this.fetchScoreData({
       scope_id: this.scopeId,
-      parent_id: this.id,
+      parent_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreChannelData({
       scope_id: this.scopeId,
-      store_id: this.id,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchScoreFactorData({
       scope_id: this.scopeId,
-      store_id: this.id,
+      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
   },
   methods: {
     initialData () {
-      this.id = this.$route.query.id;
+      this.code = this.$route.query.code;
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
       this.lastPeriod = moment().subtract(1, 'month').format('yyyyMM');
 
-      getStoreById(this.id).then(res => {
+      getStoreByCode(this.code).then(res => {
         const store = res.resData;
         this.title = '所属区域：' + store.name;
-        this.storeName = store.name;
+        this.name = store.name;
       });
     },
     fetchColumns (params = {}) {
@@ -204,7 +205,7 @@ export default {
         channelList.forEach((channel) => {
           scoreChannelColumns.push({
             title: channel.name,
-            dataIndex: channel.id,
+            dataIndex: channel.name,
             key: channel.id,
             width: (90 / channelList.length) + '%',
             align: 'center'
@@ -227,7 +228,7 @@ export default {
           scoreFactorColumns.push({
             // title: factor.name,
             slots: { title: factor.id },
-            dataIndex: factor.id,
+            dataIndex: factor.name,
             key: factor.id,
             width: (90 / factorList.length) + '%',
             align: 'center'
@@ -257,10 +258,10 @@ export default {
         this.scoreFactorData = res.resData;
       });
     },
-    handleClickStore (id) {
+    handleClickStore (code) {
       this.$router.push({
         path: '/satisfaction/store',
-        query: { id: id }
+        query: { code: code }
       });
     },
     handleClickChannelAnalysis () {
@@ -268,7 +269,7 @@ export default {
         path: '/analysis/channel',
         query: {
           scope_id: this.scopeId,
-          store_id: this.id
+          code: this.code
         }
       });
     },
@@ -277,7 +278,7 @@ export default {
         path: '/analysis/factor',
         query: {
           scope_id: this.scopeId,
-          store_id: this.id
+          code: this.code
         }
       });
     }
