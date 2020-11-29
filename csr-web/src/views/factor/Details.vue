@@ -17,7 +17,7 @@
           :customRow="setCustomRow">
           <template slot="score" slot-scope="text, record, index">
             <span v-if="index === 0">{{ record.factorName + '：' + record.score }}</span>
-            <a-button type="link" v-else @click="handleClickStore(record.factorId)">{{ record.factorName }}得分：{{ record.score }} </a-button>
+            <a-button type="link" v-else @click="handleClickStore(record.factorCode)">{{ record.factorName }}得分：{{ record.score }} </a-button>
           </template>
           <span slot="scoreTitle"></span>
 
@@ -63,33 +63,33 @@
           <template v-for="channel in channelList" :slot="'evaluateChannelScore' + channel.id" slot-scope="text, record">
             <a-button class="scoreChannelBtn" :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 1)" size="small">
               <span
-                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '优秀'"
-                style="color: #09CDFF">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '优秀'"
+                style="color: #09CDFF">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
               <span
-                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '优良'"
-                style="color: #2DD42D">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '优良'"
+                style="color: #2DD42D">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
               <span
-                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '达标'"
-                style="color: #FFD27A">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '达标'"
+                style="color: #FFD27A">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
               <span
-                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] === '薄弱'"
-                style="color: #FF3030">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '薄弱'"
+                style="color: #FF3030">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
             </a-button>
           </template>
           <template v-for="channel in channelList" :slot="'bonusChannelScore' + channel.id" slot-scope="text,record">
             <a-button class="scoreChannelBtn" :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 2)" size="small">
               <span
-                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '优秀'"
-                style="color: #09CDFF">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '优秀'"
+                style="color: #09CDFF">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
               <span
-                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '优良'"
-                style="color: #2DD42D">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '优良'"
+                style="color: #2DD42D">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
               <span
-                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '达标'"
-                style="color: #FFD27A">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '达标'"
+                style="color: #FFD27A">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
               <span
-                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.id] === '薄弱'"
-                style="color: #FF3030">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.id] || '' }}</span>
+                v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '薄弱'"
+                style="color: #FF3030">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
             </a-button>
           </template>
         </a-table>
@@ -131,8 +131,8 @@ export default {
       }
     ];
     return {
-      storeId: '',
-      factorId: '',
+      storeCode: '',
+      factorCode: '',
       month: moment().add('month', 0).format('yyyy年MM月'),
       period: moment().add('month', 0).format('yyyyMM'),
       lastPeriod: moment().subtract(1, 'month').format('yyyyMM'),
@@ -140,7 +140,7 @@ export default {
       channelList: [],
       // 扣分渠道列表
       channelList2: [],
-      activeKey: this.factorId,
+      activeKey: this.factorCode,
       panes: [],
       scoreFactorLoading: false,
       scoreFactorColumns: [],
@@ -162,50 +162,49 @@ export default {
   },
   mounted () {
     this.initialData();
-    this.tabActiveKey = this.$route.query.factor_id;
+    this.tabActiveKey = this.$route.query.factor_code;
     // await this.fetchChannelList2({
     //   ctype: 2
     // });
 
     this.fetchFactorColumns();
     this.fetchFactorData({
-      store_id: this.storeId,
-      factor_id: this.factorId,
+      store_code: this.storeCode,
+      factor_code: this.factorCode,
       current_period: this.period,
       last_period: this.lastPeriod
     });
     this.fetchRegulationScoreColumns();
     this.fetchRegulationScoreData({
-      store_id: this.storeId,
+      store_code: this.storeCode,
       period: this.period,
-      factor_id: this.factorId
+      factor_code: this.factorCode
     });
 
     this.$watch('$route', (route) => {
       console.log('change');
-      const factorId = route.query.factor_id;
-      this.tabActiveKey = factorId;
-      this.factorId = factorId;
+      const factorCode = route.query.factor_code;
+      this.tabActiveKey = factorCode;
+      this.factorCode = factorCode;
       this.fetchFactorData({
-        store_id: this.storeId,
-        factor_id: this.factorId,
+        store_code: this.storeCode,
+        factor_code: this.factorCode,
         current_period: this.period,
         last_period: this.lastPeriod
       });
       this.fetchRegulationScoreData({
-        store_id: this.storeId,
+        store_code: this.storeCode,
         period: this.period,
-        factor_id: this.factorId
+        factor_code: this.factorCode
       });
     });
   },
   watch: {
     activeKey: function (val) {
-      console.log(555);
       // this.$route.query.factorId = val;
       this.$router.push({
         // path: '/factor/Details',
-        query: merge(this.$route.query, { factor_id: val })
+        query: merge(this.$route.query, { factor_code: val })
       });
     },
     $route () {
@@ -214,8 +213,8 @@ export default {
   },
   methods: {
     initialData () {
-      this.storeId = this.$route.query.store_id;
-      this.factorId = this.$route.query.factor_id;
+      this.storeCode = this.$route.query.store_code;
+      this.factorCode = this.$route.query.factor_code;
       getAllFactor().then(res => {
         const factorList = res.resData;
         const panes = [];
@@ -223,11 +222,11 @@ export default {
           panes.push({
             title: factor.name,
             content: factor.name,
-            key: factor.id
+            key: factor.code
           });
         });
         this.panes = panes;
-        this.activeKey = this.$route.query.factor_id;
+        this.activeKey = this.$route.query.factor_code;
       });
     },
     fetchFactorColumns () {
@@ -451,10 +450,9 @@ export default {
         ];
         const evaluateChannelScoreChildren = [];
         channelList.forEach((channel) => {
-          // console.log(elementScoreColumns[2].children[1]);
           evaluateChannelScoreChildren.push({
             title: channel.name,
-            dataIndex: 'evaluateChannelScore' + channel.id,
+            dataIndex: 'evaluateChannelScore' + channel.name,
             key: 'evaluateChannelScore' + channel.id,
             align: 'center',
             width: '7.5%',
@@ -484,7 +482,7 @@ export default {
         channelList.forEach((channel) => {
           bonusChannelScoreChildren.push({
             title: channel.name,
-            dataIndex: 'bonusChannelScore' + channel.id,
+            dataIndex: 'bonusChannelScore' + channel.name,
             key: 'bonusChannelScore' + channel.id,
             align: 'center',
             width: '7.5%',
@@ -517,7 +515,7 @@ export default {
       getRegulationScoreInfo(params).then(res => {
         this.regulationScoreLoading = false;
         this.regulationScoreData = res.resData;
-        // console.log(res.resData);
+        console.log(res.resData);
         // const regulationScoreData = res.resData;
         const deductChannelScoreData = [];
         this.regulationScoreData.forEach(score => {
@@ -564,7 +562,7 @@ export default {
         path: '/regulation/' + channelCode,
         // name: 'RegulationSurvey',
         query: {
-          store_id: this.storeId,
+          store_code: this.storeCode,
           regulation_id: regulationId,
           score_type: scoreType
         }
@@ -575,7 +573,7 @@ export default {
       this.$router.push({
         path: '/regulation/' + channelCode,
         query: {
-          store_id: this.storeId,
+          store_code: this.storeCode,
           regulation_id: regulationId
         }
       });

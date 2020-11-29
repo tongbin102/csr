@@ -88,7 +88,7 @@ export const asyncRouterMap = [
       {
         path: '/factor',
         name: 'Factor',
-        component: BaseLayout,
+        component: RouteView,
         meta: { title: '业务模块' },
         redirect: '/factor/details',
         children: [
@@ -178,7 +178,7 @@ export const asyncRouterMap = [
       {
         path: '/analysis',
         name: 'Analysis',
-        component: BaseLayout,
+        component: RouteView,
         meta: { title: '趋势分析' },
         redirect: '/analysis/channel',
         children: [

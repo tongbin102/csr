@@ -15,7 +15,7 @@
           :tableLayout="fixed">
           <template slot="score" slot-scope="text, record, index">
             <span v-if="index === 0">{{ storeName }}总得分：{{ record.score }}</span>
-            <a-button type="link" v-else @click="handleClickStore(record.factorId)">
+            <a-button type="link" v-else @click="handleClickStore(record.factorCode)">
               <span style="text-decoration: underline;">{{ record.factorName }}得分：{{ record.score }}</span>
             </a-button>
           </template>
@@ -260,12 +260,12 @@ export default {
         this.scoreFactorData = res.resData;
       });
     },
-    handleClickStore (factorId) {
+    handleClickStore (factorCode) {
       this.$router.push({
         path: '/factor/Details',
         query: {
-          code: this.code,
-          factor_id: factorId
+          store_code: this.code,
+          factor_code: factorCode
         }
       });
     },
