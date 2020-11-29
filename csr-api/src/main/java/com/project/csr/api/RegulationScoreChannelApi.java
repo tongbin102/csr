@@ -9,10 +9,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -77,10 +84,10 @@ public class RegulationScoreChannelApi {
     @GetMapping(value = "/findVoList")
     public List<RegulationScoreChannelVo> findVoList(@RequestParam("store_code") String storeCode,
                                                @RequestParam("period") String period,
-                                               @RequestParam("factor_id") Long factorId,
+                                               @RequestParam("factor_code") String factorCode,
                                                @RequestParam("channel_type") Integer channelType) {
 
-        return regulationScoreChannelService.findVoList(storeCode, period, factorId, channelType);
+        return regulationScoreChannelService.findVoList(storeCode, period, factorCode, channelType);
     }
 
 }

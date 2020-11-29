@@ -2,21 +2,23 @@ package com.project.csr.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.dao.RegulationScoreChannelMapper;
+import com.project.csr.model.po.ChannelPo;
 import com.project.csr.model.po.RegulationScoreChannelPo;
 import com.project.csr.model.vo.RegulationScoreChannelVo;
 import com.project.csr.service.ChannelService;
 import com.project.csr.service.RegulationScoreChannelService;
 import com.project.csr.service.RegulationService;
 import com.project.csr.utils.ConvertUtils;
-import com.project.csr.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -58,17 +60,19 @@ public class RegulationScoreChannelServiceImpl extends ServiceImpl<RegulationSco
     }
 
     @Override
-    public List<RegulationScoreChannelVo> findVoList(String storeCode, String period, Long factorId, Integer channelType) {
+    public List<RegulationScoreChannelVo> findVoList(String storeCode, String period, String factorCode, Integer channelType) {
         LambdaQueryWrapper<RegulationScoreChannelPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(RegulationScoreChannelPo::getStoreCode, storeCode)
                 .eq(RegulationScoreChannelPo::getPeriod, period);
-        if (null != factorId) {
-            String regulationIds = ToolsUtils.getIdsFromList(regulationService.findVoListByFactorId(factorId), ",");
-            wrapper.in(RegulationScoreChannelPo::getRegulationDescription, regulationIds.split(","));
+        if (StringUtils.isNotBlank(factorCode)) {
+            String regulationDescriptions = regulationService.findVoListByFactorCode(factorCode).stream().map(regulationVo -> regulationVo.getElementCode() + ";" + regulationVo.getDescription()).collect(Collectors.joining(","));
+//            String regulationIds = ToolsUtils.getIdsFromList(regulationService.findVoListByFactorCode(factorCode), ",");
+            wrapper.in(RegulationScoreChannelPo::getRegulationDescription, regulationDescriptions.split(","));
         }
         if (null != channelType) {
-            String channelIds = ToolsUtils.getIdsFromList(channelService.findListByCtype(channelType), ",");
-            wrapper.in(RegulationScoreChannelPo::getChannelCode, channelIds.split(","));
+//            String channelIds = ToolsUtils.getIdsFromList(channelService.findListByCtype(channelType), ",");
+            String channelCodes = channelService.findListByCtype(channelType).stream().map(ChannelPo::getCode).collect(Collectors.joining(","));
+            wrapper.in(RegulationScoreChannelPo::getChannelCode, channelCodes.split(","));
         }
         return ConvertUtils.convert(regulationScoreChannelMapper.selectList(wrapper), RegulationScoreChannelVo.class);
     }

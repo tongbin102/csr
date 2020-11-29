@@ -19,41 +19,42 @@ import java.util.List;
  */
 public interface RegulationScoreChannelService extends IService<RegulationScoreChannelPo> {
 
-    /**
-     * 分页查询
-     *
-     * @param regulationScoreChannelVo 查询条件
-     * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.RegulationScoreChannelPo>
-     * @author bin.tong
-     * @since 2020-11-11
-     */
-    IPage<RegulationScoreChannelPo> findListByPage(RegulationScoreChannelVo regulationScoreChannelVo);
+	/**
+	 * 分页查询
+	 *
+	 * @param regulationScoreChannelVo 查询条件
+	 * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.RegulationScoreChannelPo>
+	 * @author bin.tong
+	 * @since 2020-11-11
+	 */
+	IPage<RegulationScoreChannelPo> findListByPage(RegulationScoreChannelVo regulationScoreChannelVo);
 
-    /**
-     * 根据ID禁用数据
-     *
-     * @param id 主键id
-     * @return boolean
-     * @author bin.tong
-     * @since 2020-11-11
-     */
-    boolean prohibitById(String id);
+	/**
+	 * 根据ID禁用数据
+	 *
+	 * @param id 主键id
+	 * @return boolean
+	 * @author bin.tong
+	 * @since 2020-11-11
+	 */
+	boolean prohibitById(String id);
 
-    /**
-     * 通过regulationsIds查询列表
-     *
-     * @param storeId
-     * @param period
-     * @param regulationIds
-     * @return
-     */
-    List<RegulationScoreChannelVo> findVoList(String storeCode, String period, Long factorId, Integer channelType);
+	/**
+	 * 通过regulationsIds查询列表
+	 *
+	 * @param storeCode
+	 * @param period
+	 * @param factorCode
+	 * @param channelType
+	 * @return
+	 */
+	List<RegulationScoreChannelVo> findVoList(String storeCode, String period, String factorCode, Integer channelType);
 
-    /**
-     * 通过期数删除数据
-     *
-     * @return boolean
-     */
-    boolean deleteByPeriod(String period);
+	/**
+	 * 通过期数删除数据
+	 *
+	 * @return boolean
+	 */
+	boolean deleteByPeriod(String period);
 
 }

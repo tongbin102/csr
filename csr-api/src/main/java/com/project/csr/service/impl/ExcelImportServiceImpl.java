@@ -290,7 +290,8 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         regulationImportVoList.forEach(regulationImportVo -> {
             ElementPo elementPo = new ElementPo();
             elementPo.setFactorCode(regulationImportVo.getFactorName().trim());
-            elementPo.setCode(regulationImportVo.getElementName().trim());
+//            elementPo.setCode(regulationImportVo.getElementName().trim());
+            elementPo.setCode(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim());
             elementPo.setName(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim());
             elementPoSet.add(elementPo);
         });

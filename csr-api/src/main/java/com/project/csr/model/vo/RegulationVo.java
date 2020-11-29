@@ -28,8 +28,6 @@ public class RegulationVo extends RegulationPo implements Serializable {
 
     private String elementName;
 
-    private String regulationDescription;
-
     private Map<String, Object> regulationScoreMap;
 
     private Map<String, Object> regulationScoreChannelMap;

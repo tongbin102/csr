@@ -16,7 +16,7 @@
                 <result column="create_time" property="createTime"/>
                 <result column="updater" property="updater"/>
                 <result column="update_time" property="updateTime"/>
-                    <result column="element_id" property="elementId"/>
+                    <result column="element_code" property="elementCode"/>
                     <result column="description" property="description"/>
                     <result column="score_type" property="scoreType"/>
         </resultMap>
@@ -29,7 +29,7 @@
                 create_time,
                 updater,
                 update_time,
-            element_id, description, score_type
+            element_code, description, score_type
         </sql>
 
         <select id="findVoList" resultType="com.project.csr.model.vo.RegulationVo">
@@ -39,13 +39,13 @@
                        r.create_time,
                        r.updater,
                        r.update_time,
-                       r.element_id,
+                       r.element_code,
                        e.name AS element_name,
                        r.description,
                        r.score_type
                 FROM regulation r
-                INNER JOIN element e ON e.id = r.element_id
-                WHERE e.factor_id = #{factor_id}
+                INNER JOIN element e ON e.code = r.element_code
+                WHERE e.factor_code = #{factor_code}
         </select>
 
 </mapper>

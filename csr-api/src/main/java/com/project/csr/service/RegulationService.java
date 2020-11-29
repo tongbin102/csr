@@ -19,48 +19,48 @@ import java.util.List;
  */
 public interface RegulationService extends IService<RegulationPo> {
 
-    /**
-     * 分页查询
-     *
-     * @param regulationVo 查询条件
-     * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.RegulationPo>
-     * @author bin.tong
-     * @since 2020-11-11
-     */
-    IPage<RegulationPo> findListByPage(RegulationVo regulationVo);
+	/**
+	 * 分页查询
+	 *
+	 * @param regulationVo 查询条件
+	 * @return com.baomidou.mybatisplus.core.metadata.IPage<com.ghtg.csr.pojo.po.RegulationPo>
+	 * @author bin.tong
+	 * @since 2020-11-11
+	 */
+	IPage<RegulationPo> findListByPage(RegulationVo regulationVo);
 
-    /**
-     * 根据ID禁用数据
-     *
-     * @param id 主键id
-     * @return boolean
-     * @author bin.tong
-     * @since 2020-11-11
-     */
-    boolean prohibitById(String id);
+	/**
+	 * 根据ID禁用数据
+	 *
+	 * @param id 主键id
+	 * @return boolean
+	 * @author bin.tong
+	 * @since 2020-11-11
+	 */
+	boolean prohibitById(String id);
 
-    /**
-     * 通过ids查询列表
-     *
-     * @param ids
-     * @return
-     */
-    List<RegulationPo> findListFromIds(String ids, String delimiter);
+	/**
+	 * 通过ids查询列表
+	 *
+	 * @param ids
+	 * @return
+	 */
+	List<RegulationPo> findListFromIds(String ids, String delimiter);
 
-    /**
-     * 通过因子id获取VoList
-     *
-     * @param factorId
-     * @return
-     */
-    List<RegulationVo> findVoListByFactorId(Long factorId);
+	/**
+	 * 通过因子code获取VoList
+	 *
+	 * @param factorCode
+	 * @return
+	 */
+	List<RegulationVo> findVoListByFactorCode(String factorCode);
 
-    List<RegulationVo> findInfo(String storeCode, String period, Long factorId);
+	List<RegulationVo> findInfo(String storeCode, String period, String factorCode);
 
-    /**
-     * 删除所有数据
-     *
-     * @return boolean
-     */
-    boolean deleteAll();
+	/**
+	 * 删除所有数据
+	 *
+	 * @return boolean
+	 */
+	boolean deleteAll();
 }
