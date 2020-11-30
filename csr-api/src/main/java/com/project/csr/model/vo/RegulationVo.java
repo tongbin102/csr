@@ -24,10 +24,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 public class RegulationVo extends RegulationPo implements Serializable {
 
-    // private ElementPo elementPo;
-
-    private String elementName;
-
     private Map<String, Object> regulationScoreMap;
 
     private Map<String, Object> regulationScoreChannelMap;

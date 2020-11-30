@@ -30,7 +30,16 @@ public class UserStorePo extends BasePo {
     @ApiModelProperty(value = "范围id")
     private Long scopeId;
 
-    @ApiModelProperty(value = "所辖区域/店code")
+    @ApiModelProperty(value = "所辖省份code")
+    private String provinceCode;
+
+    @ApiModelProperty(value = "所辖城市店code")
+    private String cityCode;
+
+    @ApiModelProperty(value = "所辖一级店code")
+    private String superiorCode;
+
+    @ApiModelProperty(value = "所辖二级店code")
     private String storeCode;
 
     @Override

@@ -18,6 +18,9 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="user_code" property="userCode"/>
                     <result column="scope_id" property="scopeId"/>
+                    <result column="province_code" property="provinceCode"/>
+                    <result column="city_code" property="cityCode"/>
+                    <result column="superior_code" property="superiorCode"/>
                     <result column="store_code" property="storeCode"/>
         </resultMap>
 
@@ -29,7 +32,7 @@
                 create_time,
                 updater,
                 update_time,
-            user_code, scope_id, store_code
+            user_code, scope_id, province_code, city_code, superior_code, store_code
         </sql>
 
 </mapper>

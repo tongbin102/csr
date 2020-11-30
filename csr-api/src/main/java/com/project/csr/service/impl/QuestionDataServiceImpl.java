@@ -63,8 +63,9 @@ public class QuestionDataServiceImpl extends ServiceImpl<QuestionDataMapper, Que
 
     @Override
     public List<QuestionDataVo> findListByRegulationId(String period, String storeCode, Long regulationId) {
+        RegulationPo regulationPo = regulationService.getById(regulationId);
         LambdaQueryWrapper<QuestionDataPo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(QuestionDataPo::getRegulationDescription, regulationId);
+        wrapper.eq(QuestionDataPo::getRegulationDescription, regulationPo.getElementCode() + ";" + regulationPo.getDescription());
         List<QuestionDataVo> questionDataVoList = ConvertUtils.convert(questionDataMapper.selectList(wrapper), QuestionDataVo.class);
         String questionIds = ToolsUtils.getIdsFromList(questionDataVoList, ",");
         List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");

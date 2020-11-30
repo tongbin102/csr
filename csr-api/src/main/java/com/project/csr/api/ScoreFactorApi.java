@@ -1,6 +1,8 @@
 package com.project.csr.api;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.project.csr.common.enums.ResCodeEnum;
+import com.project.csr.common.exceptions.GlobalException;
 import com.project.csr.model.po.ScoreFactorPo;
 import com.project.csr.model.vo.ScoreFactorVo;
 import com.project.csr.model.vo.ScoreVo;
@@ -98,7 +100,9 @@ public class ScoreFactorApi {
         Map<String, Object> resultMap = new HashMap<>();
         List<ScoreVo> totalScoreVoList = scoreService.findVoList(scopeId, storeCode, currentPeriod, lastPeriod);
         resultMap.put("totalScoreList", totalScoreVoList);
-
+        if (totalScoreVoList == null || totalScoreVoList.size() == 0) {
+            throw new GlobalException(ResCodeEnum.RESCODE_FORBIDDEN);
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("current_period", currentPeriod);
         params.put("last_period", lastPeriod);

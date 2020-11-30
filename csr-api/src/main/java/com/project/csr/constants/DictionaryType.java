@@ -8,16 +8,22 @@ public class DictionaryType {
 
     /************************** ROLE 权限 ********************************/
     public static final Long ROLE_ID_ADMIN = 1L;
+    public static final String ROLE_NAME_ADMIN = "admin";
 
     public static final Long ROLE_ID_NATIONAL = 2L;
+    public static final String ROLE_NAME_NATIONAL = "national";
 
     public static final Long ROLE_ID_REGION = 3L;
+    public static final String ROLE_NAME_REGION = "region";
 
     public static final Long ROLE_ID_AREA = 4L;
+    public static final String ROLE_NAME_AREA = "area";
 
     public static final Long ROLE_ID_SUPERIOR = 5L;
+    public static final String ROLE_NAME_SUPERIOR = "superior";
 
     public static final Long ROLE_ID_STORE = 6L;
+    public static final String ROLE_NAME_STORE = "store";
 
 
     /************************** Channel 渠道 ********************************/

@@ -9,8 +9,11 @@ import com.project.csr.dao.UserStoreMapper;
 import com.project.csr.model.po.UserStorePo;
 import com.project.csr.model.vo.UserStoreVo;
 import com.project.csr.service.UserStoreService;
+import com.project.csr.utils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -49,6 +52,13 @@ public class UserStoreServiceImpl extends ServiceImpl<UserStoreMapper, UserStore
     public boolean deleteAll() {
         LambdaQueryWrapper<UserStorePo> wrapper = Wrappers.lambdaQuery();
         return userStoreMapper.delete(wrapper) >= 1;
+    }
+
+    @Override
+    public List<UserStoreVo> findVoByUserCode(String userCode) {
+        LambdaQueryWrapper<UserStorePo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserStorePo::getUserCode, userCode);
+        return ConvertUtils.convert(userStoreMapper.selectList(wrapper), UserStoreVo.class);
     }
 }
 

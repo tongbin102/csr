@@ -204,6 +204,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
             } else if ("OEM".equals(roleCode.trim())) {
                 // 厂家账户
                 userPo.setRoleId(DictionaryType.ROLE_ID_NATIONAL);
+                // userPo.setRef(DictionaryType.ROLE_NAME_NATIONAL);
             } else {
                 if (null == userPo.getRoleId()) {
                     // 大区账户
@@ -216,6 +217,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                     // 区域用户
                     storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getAreaManager().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
                         userPo.setRoleId(DictionaryType.ROLE_ID_AREA);
+                        userPo.setRef(storeImportVo.getRegion());
                         // userPo.setRef(storeImportVo.getAreaManager());
                     });
                 }
@@ -243,29 +245,42 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<UserStorePo> userStorePoSet = new HashSet<>();
         storeImportVoList.forEach(storeImportVo -> {
             String storeCode = storeImportVo.getCode();
+            String superiorCode = storeImportVo.getSuperiorCode();
+            String cityCode = storeImportVo.getSuperiorCity();
+            String provinceCode = storeImportVo.getProvince();
 
             UserStorePo userStorePo = new UserStorePo();
             userStorePo.setUserCode(storeImportVo.getCode());
             userStorePo.setStoreCode(storeCode);
+            userStorePo.setSuperiorCode(superiorCode);
+            userStorePo.setCityCode(cityCode);
+            userStorePo.setProvinceCode(provinceCode);
             userStorePoSet.add(userStorePo);
             UserStorePo userSuperiorPo = new UserStorePo();
             userSuperiorPo.setUserCode(storeImportVo.getSuperiorCode());
             userSuperiorPo.setStoreCode(storeCode);
+            userSuperiorPo.setSuperiorCode(superiorCode);
+            userSuperiorPo.setCityCode(cityCode);
+            userSuperiorPo.setProvinceCode(provinceCode);
             userStorePoSet.add(userSuperiorPo);
             UserStorePo userAreaPo = new UserStorePo();
             userPoList.stream().filter(userPo -> userPo.getName().equals(storeImportVo.getAreaManager().trim())).findFirst().ifPresent(userPo -> userAreaPo.setUserCode(userPo.getUsername()));
             userAreaPo.setStoreCode(storeCode);
+            userAreaPo.setSuperiorCode(superiorCode);
+            userAreaPo.setCityCode(cityCode);
+            userAreaPo.setProvinceCode(provinceCode);
             userStorePoSet.add(userAreaPo);
             UserStorePo userRegionPo = new UserStorePo();
             userPoList.stream().filter(userPo -> userPo.getName().equals(storeImportVo.getRegionManager().trim())).findFirst().ifPresent(userPo -> userRegionPo.setUserCode(userPo.getUsername()));
             userRegionPo.setStoreCode(storeCode);
+            userRegionPo.setSuperiorCode(superiorCode);
+            userRegionPo.setCityCode(cityCode);
+            userRegionPo.setProvinceCode(provinceCode);
             userStorePoSet.add(userRegionPo);
         });
         List<UserStorePo> userStorePoList = new ArrayList<>(userStorePoSet);
         userStoreService.deleteAll();
         userStoreService.saveBatch(userStorePoList);
-
-        // String a = "";
     }
 
     @Override
@@ -345,7 +360,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<QuestionMonitorPo> questionMonitorPoSet = new HashSet<>();
         questionMonitorImportVoList.forEach(questionMonitorImportVo -> {
             QuestionMonitorPo questionMonitorPo = new QuestionMonitorPo();
-            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionMonitorImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionMonitorPo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
+            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionMonitorImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionMonitorPo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + ";" + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
             questionMonitorPo.setSeriesNo(questionMonitorImportVo.getSeriesNo());
             questionMonitorPo.setSuggestion(questionMonitorImportVo.getSuggestion().replace("\n", "<br/>"));
             questionMonitorPo.setDescription(questionMonitorImportVo.getDescription().replace("\n", "<br/>"));
@@ -365,7 +380,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<QuestionAssistancePo> questionAssistancePoSet = new HashSet<>();
         questionAssistanceImportVoList.forEach(questionAssistanceImportVo -> {
             QuestionAssistancePo questionAssistancePo = new QuestionAssistancePo();
-            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionAssistanceImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionAssistancePo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
+            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionAssistanceImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionAssistancePo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + ";" + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
             questionAssistancePo.setSeriesNo(questionAssistanceImportVo.getSeriesNo());
             questionAssistancePo.setAnalysisPoint(questionAssistanceImportVo.getAnalysisPoint().replace("\n", "<br/>"));
             questionAssistancePo.setKpi(questionAssistanceImportVo.getKpi().replace("\n", "<br/>"));
@@ -386,7 +401,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<QuestionRescuePo> questionRescuePoSet = new HashSet<>();
         questionRescueImportVoList.forEach(questionRescueImportVo -> {
             QuestionRescuePo questionRescuePo = new QuestionRescuePo();
-            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionRescueImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionRescuePo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
+            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionRescueImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionRescuePo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + ";" + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
             questionRescuePo.setSeriesNo(questionRescueImportVo.getSeriesNo());
             questionRescuePo.setAnalysisPoint(questionRescueImportVo.getAnalysisPoint().replace("\n", "<br/>"));
             questionRescuePo.setKpi(questionRescueImportVo.getKpi().replace("\n", "<br/>"));
@@ -404,7 +419,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<QuestionDataPo> questionDataPoSet = new HashSet<>();
         questionDataImportVoList.forEach(questionDataImportVo -> {
             QuestionDataPo questionDataPo = new QuestionDataPo();
-            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionDataImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionDataPo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
+            regulationImportVoList.stream().filter(regulationImportVo -> regulationImportVo.getQuestionSeriesNo().equals(questionDataImportVo.getSeriesNo())).findFirst().ifPresent(regulationImportVo -> questionDataPo.setRegulationDescription(regulationImportVo.getFactorName().trim() + ";" + regulationImportVo.getElementName().trim() + ";" + regulationImportVo.getDescription().replace("\n", "<br/>").trim()));
             questionDataPo.setSeriesNo(questionDataImportVo.getSeriesNo());
             questionDataPo.setAnalysisPoint(questionDataImportVo.getAnalysisPoint().replace("\n", "<br/>"));
             questionDataPo.setKpi(questionDataImportVo.getKpi().replace("\n", "<br/>"));

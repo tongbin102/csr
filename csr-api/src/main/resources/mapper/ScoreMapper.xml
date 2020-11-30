@@ -160,6 +160,12 @@
         <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
             #{store_code}
         </foreach>
+        <if test="permission_codes != null">
+        AND s.code IN
+        <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
+            #{permission_code}
+        </foreach>
+        </if>
     </select>
 
     <select id="findCityVoList" resultType="com.project.csr.model.vo.ScoreVo">
@@ -191,6 +197,12 @@
         <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
             #{store_code}
         </foreach>
+        <if test="permission_codes != null">
+            AND s.code IN
+            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
+                #{permission_code}
+            </foreach>
+        </if>
     </select>
 
     <select id="findSuperiorVoList" resultType="com.project.csr.model.vo.ScoreVo">
@@ -222,6 +234,12 @@
         <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
             #{store_code}
         </foreach>
+        <if test="permission_codes != null">
+            AND s.code IN
+            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
+                #{permission_code}
+            </foreach>
+        </if>
     </select>
 
     <select id="findStoreVoList" resultType="com.project.csr.model.vo.ScoreVo">
@@ -253,6 +271,12 @@
         <foreach collection="store_codes" item="store_code" index="index" open="(" close=")" separator=",">
             #{store_code}
         </foreach>
+        <if test="permission_codes != null">
+            AND s.code IN
+            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
+                #{permission_code}
+            </foreach>
+        </if>
     </select>
 
 </mapper>

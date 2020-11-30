@@ -6,6 +6,8 @@ import com.project.csr.model.po.UserStorePo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.csr.model.vo.UserStoreVo;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户-区域/店关系表 服务类
@@ -41,4 +43,12 @@ public interface UserStoreService extends IService<UserStorePo> {
      * 删除所有数据
      */
     boolean deleteAll();
+
+    /**
+     * 通过用户code获取Vo数据
+     *
+     * @param userCode
+     * @return
+     */
+    List<UserStoreVo> findVoByUserCode(String userCode);
 }
