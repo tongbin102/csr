@@ -39,7 +39,7 @@ export const asyncRouterMap = [
             meta: {
               title: '大区满意度情况',
               keepAlive: false,
-              permission: ['admin', 'national', 'region']
+              permission: ['admin', 'national', 'region', 'area']
             }
           },
           {

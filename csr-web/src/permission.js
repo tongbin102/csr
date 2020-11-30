@@ -65,15 +65,15 @@ router.beforeEach((to, from, next) => {
                     next({
                       path: '/satisfaction/region',
                       query: {
-                        store_code: userInfo.ref
+                        code: userInfo.ref
                       }
                     });
                   } else if (roles === 'area') {
                     // 区域顾问
                     next({
-                      path: '/satisfaction/province',
+                      path: '/satisfaction/region',
                       query: {
-                        store_code: userInfo.ref
+                        code: userInfo.ref
                       }
                     });
                   } else if (roles === 'superior') {
@@ -81,7 +81,7 @@ router.beforeEach((to, from, next) => {
                     next({
                       path: '/satisfaction/superior',
                       query: {
-                        store_code: userInfo.ref
+                        code: userInfo.ref
                       }
                     });
                   } else if (roles === 'store') {
@@ -89,7 +89,7 @@ router.beforeEach((to, from, next) => {
                     next({
                       path: '/satisfaction/store',
                       query: {
-                        store_code: userInfo.ref
+                        code: userInfo.ref
                       }
                     });
                   }

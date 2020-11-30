@@ -11,10 +11,9 @@
           :columns="scoreColumns"
           :data-source="scoreData"
           :pagination="false"
-          :loading="scoreLoading"
-          :tableLayout="fixed">
+          :loading="scoreLoading">
           <template slot="score" slot-scope="text, record, index">
-            <span v-if="index === 0">{{ storeName }}总得分：{{ record.score }}</span>
+            <span v-if="index === 0">{{ name }}总得分：{{ record.score }}</span>
             <a-button type="link" v-else @click="handleClickStore(record.factorCode)">
               <span style="text-decoration: underline;">{{ record.factorName }}得分：{{ record.score }}</span>
             </a-button>

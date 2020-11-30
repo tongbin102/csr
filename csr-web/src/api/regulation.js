@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 const regulationApi = {
   getRegulationById: '/regulationApi/findById',
-  getRegulationVoById: 'regulationApi/findVoById',
+  // getRegulationVoById: '/regulationApi/findVoById',
   getRegulationScoreInfo: '/regulationApi/findInfo'
 };
 
@@ -15,12 +15,12 @@ export function getRegulationById (id) {
   });
 }
 
-export function getRegulationVoById (id) {
-  return request({
-    url: regulationApi.getRegulationVoById + '/' + id,
-    method: 'get'
-  });
-}
+// export function getRegulationVoById (id) {
+//   return request({
+//     url: regulationApi.getRegulationVoById + '/' + id,
+//     method: 'get'
+//   });
+// }
 
 export function getRegulationScoreInfo (parameter) {
   return request({

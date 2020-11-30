@@ -38,10 +38,7 @@
           </template>
         </a-table>
 
-        <a-divider></a-divider>
-
         <a-table
-          table-layout="fixed"
           :columns="regulationScoreColumns"
           :data-source="regulationScoreData"
           :pagination="false"
@@ -49,7 +46,7 @@
           :customHeaderRow="setCustomHeaderRow"
           :customRow="setCustomRow">
           <template slot="element" slot-scope="text, record">
-            <span>{{ record.elementName || '' }}</span>
+            <span>{{ record.elementCode.split(';')[1] || '' }}</span>
           </template>
           <template slot="regulation" slot-scope="text, record">
             <span v-html="record.description"></span>
@@ -182,7 +179,7 @@ export default {
     });
 
     this.$watch('$route', (route) => {
-      console.log('change');
+      // console.log('change');
       const factorCode = route.query.factor_code;
       this.tabActiveKey = factorCode;
       this.factorCode = factorCode;
@@ -206,9 +203,6 @@ export default {
         // path: '/factor/Details',
         query: merge(this.$route.query, { factor_code: val })
       });
-    },
-    $route () {
-      console.log('3333');
     }
   },
   methods: {
@@ -515,7 +509,7 @@ export default {
       getRegulationScoreInfo(params).then(res => {
         this.regulationScoreLoading = false;
         this.regulationScoreData = res.resData;
-        console.log(res.resData);
+        // console.log(res.resData);
         // const regulationScoreData = res.resData;
         const deductChannelScoreData = [];
         this.regulationScoreData.forEach(score => {
@@ -541,18 +535,18 @@ export default {
       return {
         style: {
           fontSize: '6px',
-          height: '40px',
+          height: '40px'
           // lineHeight: '40px',
-          wordWrap: 'break-word',
-          wordBreak: 'normal'
+          // wordWrap: 'break-word',
+          // wordBreak: 'normal'
         }
       };
     },
     setCustomRow (record) {
       return {
         style: {
-          height: '40px',
-          lineHeight: '40px'
+          // height: '40px'
+          // lineHeight: '40px'
           // borderBottom: 'none'
         }
       };

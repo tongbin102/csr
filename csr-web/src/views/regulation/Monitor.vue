@@ -5,10 +5,9 @@
       <a-breadcrumb-separator>——</a-breadcrumb-separator>
       <a-breadcrumb-item>{{ regulationDescription }}</a-breadcrumb-item>
     </a-breadcrumb> -->
-    <a-row>
-      <a-col :span="8">
-        <span>{{ title }}</span>
-      </a-col>
+    <a-row class="title">
+      <a-col :span="8"><span>{{ elementName + " —— " }}</span></a-col>
+      <a-col :span="16"><span v-html="regulationDescription"></span></a-col>
     </a-row>
     <a-divider></a-divider>
     <a-row style="margin: 24px 0; font-weight: bold; color: #09CDFF;">
@@ -49,7 +48,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { getRegulationVoById } from '@/api/regulation';
+import { getRegulationById } from '@/api/regulation';
 import { getQuestionMonitorList } from '@/api/question';
 
 export default {
@@ -75,8 +74,7 @@ export default {
     return {
       title: '',
       period: '',
-      storeId: '',
-      elementId: '',
+      storeCode: '',
       elementName: '',
       regulationId: '',
       regulationDescription: '',
@@ -88,36 +86,26 @@ export default {
   },
   created () {
     this.initialData();
-    this.period = moment().add('month', 0).format('yyyyMM');
-    this.storeId = this.$route.query.store_id;
-    this.regulationId = this.$route.query.regulation_id;
-    if (this.regulationId) {
-      this.getTitle();
-      this.getQuestionMonitorList({
-        period: this.period,
-        store_id: this.storeId,
-        regulation_id: this.regulationId
-      });
-    }
   },
   methods: {
     initialData (regulationId) {
       this.period = moment().add('month', 0).format('yyyyMM');
-      this.storeId = this.$route.query.store_id;
+      this.storeCode = this.$route.query.store_code;
       this.regulationId = this.$route.query.regulation_id;
       if (this.regulationId) {
-        this.getTitle();
+        this.getRegulationById();
         this.getQuestionMonitorList({
           period: this.period,
-          store_id: this.storeId,
+          store_code: this.storeCode,
           regulation_id: this.regulationId
         });
       }
     },
-    getTitle () {
-      getRegulationVoById(this.regulationId).then(res => {
-        const regulationVo = res.resData;
-        this.title = regulationVo.elementName + '——' + regulationVo.description;
+    getRegulationById () {
+      getRegulationById(this.regulationId).then(res => {
+        const regulation = res.resData;
+        this.elementName = regulation.elementCode.split(';')[1];
+        this.regulationDescription = regulation.description;
       });
     },
     getQuestionMonitorList (params = {}) {
@@ -149,22 +137,6 @@ export default {
   }
 };
 </script>
-
 <style lang="less" scoped>
-.suggestion {
-  margin: 24px 0;
-}
-
-.suggestion .detail {
-  border: 1px solid;
-}
-
-.description {
-  margin: 24px 0;
-}
-
-.description .detail {
-  border: 1px solid;
-}
-
+@import './Regulation.less';
 </style>

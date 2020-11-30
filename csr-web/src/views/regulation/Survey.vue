@@ -1,12 +1,9 @@
 <template>
   <div>
-    <!-- <a-breadcrumb separator="">
-      <a-breadcrumb-item>{{ elementName }}</a-breadcrumb-item>
-      <a-breadcrumb-separator>——</a-breadcrumb-separator>
-      <a-breadcrumb-item>{{ regulationDescription }}</a-breadcrumb-item>
-    </a-breadcrumb> -->
     <a-row class="title">
-      <a-col :span="8">{{ title }}</a-col>
+      <a-col :span="8"><span>{{ elementName + " ——" }}</span></a-col>
+      <a-col :span="1"></a-col>
+      <a-col :span="14" offset="1"><span v-html="regulationDescription"></span></a-col>
     </a-row>
 
     <a-divider></a-divider>
@@ -26,7 +23,7 @@
       <div>
         <a-row v-if="questionSurvey.scoreItem =='综合分'">
           <a-col :span="24">
-            <span style="color: #0000FF">综合得分S=答案1分值*答案1占比%+答案2分值*答案2占比%+答案3分值*答案3占比%+答案4分值*答案4占比%+答案5分值*答案5占比%</span>
+            <span style="font-size: 12px; font-style: italic; color: #0000FF">综合得分S=答案1分值*答案1占比%+答案2分值*答案2占比%+答案3分值*答案3占比%+答案4分值*答案4占比%+答案5分值*答案5占比%</span>
           </a-col>
         </a-row>
         <a-row style="margin: 24px 0;">
@@ -55,7 +52,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { getRegulationVoById } from '@/api/regulation';
+import { getRegulationById } from '@/api/regulation';
 import { getQuestionSurveyList } from '@/api/question';
 
 export default {
@@ -152,8 +149,7 @@ export default {
     return {
       title: '',
       period: '',
-      storeId: '',
-      elementId: '',
+      storeCode: '',
       elementName: '',
       regulationId: '',
       regulationDescription: '',
@@ -168,21 +164,22 @@ export default {
   methods: {
     initialData () {
       this.period = moment().add('month', 0).format('yyyyMM');
-      this.storeId = this.$route.query.store_id;
+      this.storeCode = this.$route.query.store_code;
       this.regulationId = this.$route.query.regulation_id;
       if (this.regulationId) {
-        this.getTitle();
+        this.getRegulationById();
         this.getQuestionSurveyList({
           period: this.period,
-          store_id: this.storeId,
+          store_code: this.storeCode,
           regulation_id: this.regulationId
         });
       }
     },
-    getTitle () {
-      getRegulationVoById(this.regulationId).then(res => {
-        const regulationVo = res.resData;
-        this.title = regulationVo.elementName + '——' + regulationVo.description;
+    getRegulationById () {
+      getRegulationById(this.regulationId).then(res => {
+        const regulation = res.resData;
+        this.elementName = regulation.elementCode.split(';')[1];
+        this.regulationDescription = regulation.description;
       });
     },
     getQuestionSurveyList (params = {}) {
@@ -193,10 +190,6 @@ export default {
   }
 };
 </script>
-
 <style lang="less" scoped>
-.title {
-  margin: 24px 0;
-  font-weight: bold;
-}
+@import './Regulation.less';
 </style>
