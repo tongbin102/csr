@@ -34,6 +34,9 @@ public class StorePo extends BasePo {
     @ApiModelProperty(value = "规模")
     private String scale;
 
+    @ApiModelProperty(value = "所属大区code")
+    private String regionCode;
+
     @ApiModelProperty(value = "所属城市code")
     private String cityCode;
 

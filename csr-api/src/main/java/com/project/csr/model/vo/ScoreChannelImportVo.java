@@ -45,4 +45,8 @@ public class ScoreChannelImportVo {
      */
     private String score;
 
+    private Long scopeId;
+
+    private String regionCode;
+
 }

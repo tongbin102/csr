@@ -19,6 +19,7 @@
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
                     <result column="scale" property="scale"/>
+                    <result column="region_code" property="regionCode"/>
                     <result column="city_code" property="cityCode"/>
                     <result column="parent_code" property="parentCode"/>
         </resultMap>
@@ -31,7 +32,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, name, scale, city_code, parent_code
+            code, name, scale, region_code, city_code, parent_code
         </sql>
 
 </mapper>

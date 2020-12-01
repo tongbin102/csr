@@ -8,6 +8,9 @@ import com.project.csr.model.po.*;
 import com.project.csr.model.vo.*;
 import com.project.csr.service.*;
 import com.project.csr.utils.ConvertUtils;
+import com.project.csr.utils.ToolsUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Store;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +19,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author: bin.tong
  * @date: 2020/11/24 9:53
  **/
+@Slf4j
 @Service
 public class ExcelImportServiceImpl implements ExcelImportService {
 
@@ -97,7 +99,6 @@ public class ExcelImportServiceImpl implements ExcelImportService {
     @Override
     public void importUsersAndStores(MultipartFile file) throws IOException {
         // 先导入区域、店，再导入用户
-
         DefaultExcelListener<T> storeImportListener = new DefaultExcelListener<>();
         EasyExcelUtils.asyncReadModel(file.getInputStream(), storeImportListener, StoreImportVo.class, 1, 1);
         List<StoreImportVo> storeImportVoList = ConvertUtils.convert(storeImportListener.getRows(), StoreImportVo.class);
@@ -148,6 +149,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                     superiorCityPo.setCode(storeImportVo.getSuperiorCity());
                     superiorCityPo.setName(storeImportVo.getSuperiorCity());
                     superiorCityPo.setProvinceCode(storeImportVo.getProvince());
+                    superiorCityPo.setRegionCode(storeImportVo.getRegion());
                     cityPoSet.add(superiorCityPo);
                 });
         List<CityPo> cityPoList = new ArrayList<>(cityPoSet);
@@ -162,6 +164,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                     superiorPo.setCode(storeImportVo.getSuperiorCode());
                     superiorPo.setName(storeImportVo.getSuperiorName());
                     superiorPo.setCityCode(storeImportVo.getSuperiorCity());
+                    superiorPo.setRegionCode(storeImportVo.getRegion());
                     superiorPoSet.add(superiorPo);
                 });
         List<StorePo> superiorPoList = new ArrayList<>(superiorPoSet);
@@ -177,6 +180,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                     storePo.setScale(storeImportVo.getScale());
                     storePo.setCityCode(storeImportVo.getCity());
                     storePo.setParentCode(storeImportVo.getSuperiorCode());
+                    storePo.setRegionCode(storeImportVo.getRegion());
                     storePoSet.add(storePo);
                 });
         List<StorePo> storePoList = new ArrayList<>(storePoSet);
@@ -436,6 +440,10 @@ public class ExcelImportServiceImpl implements ExcelImportService {
     @Override
     public void importScoresFactor(MultipartFile file, String period) throws IOException {
 
+        List<ProvincePo> provincePoList = provinceService.list();
+        List<CityPo> cityPoList = cityService.list();
+        List<StorePo> storePoList = storeService.list();
+
         DefaultExcelListener<T> scoreFactorImportListener = new DefaultExcelListener<>();
         EasyExcelUtils.asyncReadModel(file.getInputStream(), scoreFactorImportListener, ScoreFactorImportVo.class, 0, 1);
         List<ScoreFactorImportVo> scoreFactorImportVoList = ConvertUtils.convert(scoreFactorImportListener.getRows(), ScoreFactorImportVo.class);
@@ -444,20 +452,25 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         scoreFactorImportVoList.forEach(scoreFactorImportVo -> {
             if ("总计".equals(scoreFactorImportVo.getFactorName().trim())) {
                 ScorePo scorePo = new ScorePo();
-                scorePo.setPeriod(scoreFactorImportVo.getPeriod());
+                // scorePo.setPeriod(scoreFactorImportVo.getPeriod());
+                scorePo.setPeriod(period);
                 Long scopeId = getScopeIdFromName(scoreFactorImportVo.getScopeName());
+                scoreFactorImportVo.setScopeId(scopeId);
                 if (null != scopeId) {
+                    String storeCode = scoreFactorImportVo.getStoreCode().trim();
+                    String regionCode = ToolsUtils.getRegionCode(scopeId, storeCode, provincePoList, cityPoList, storePoList);
+                    scoreFactorImportVo.setRegionCode(regionCode);
                     scorePo.setScopeId(scopeId);
                     scorePo.setStoreCode(scoreFactorImportVo.getStoreCode().trim());
                     scorePo.setScore(scoreFactorImportVo.getScore().trim());
-                    // scorePo.setRankCountry();
-                    // scorePo.setRankScope();
                     scorePoSet.add(scorePo);
                 }
             } else {
                 ScoreFactorPo scoreFactorPo = new ScoreFactorPo();
-                scoreFactorPo.setPeriod(scoreFactorImportVo.getPeriod());
+                // scoreFactorPo.setPeriod(scoreFactorImportVo.getPeriod());
+                scoreFactorPo.setPeriod(period);
                 Long scopeId = getScopeIdFromName(scoreFactorImportVo.getScopeName());
+                scoreFactorImportVo.setScopeId(scopeId);
                 if (null != scopeId) {
                     scoreFactorPo.setScopeId(scopeId);
                     scoreFactorPo.setStoreCode(scoreFactorImportVo.getStoreCode().trim());
@@ -467,16 +480,72 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                 }
             }
         });
+        //计算全国排名 & 区域排名
         List<ScorePo> scorePoList = new ArrayList<>(scorePoSet);
+        scorePoList.forEach(scorePo -> {
+            int score = StringUtils.isEmpty(scorePo.getScore()) ? 0 : Integer.parseInt(scorePo.getScore());
+            // 全国排名
+            long countCountry = scoreFactorImportVoList
+                    .stream()
+                    .filter(vo -> vo.getPeriod().equals(scorePo.getPeriod())
+                            && vo.getScopeId().equals(scorePo.getScopeId())
+                            && !vo.getStoreCode().equals(scorePo.getStoreCode())
+                            && (StringUtils.isEmpty(vo.getScore()) ? 0 : Integer.parseInt(vo.getScore())) > score).count();
+            scorePo.setRankCountry((int) countCountry + 1);
+            // 区域排名
+            Long scopeId = scorePo.getScopeId();
+            String storeCode = scorePo.getStoreCode();
+            String regionCode = ToolsUtils.getRegionCode(scopeId, storeCode, provincePoList, cityPoList, storePoList);
+            long countScope = scoreFactorImportVoList
+                    .stream()
+                    .filter(vo -> vo.getPeriod().equals(scorePo.getPeriod())
+                            && vo.getScopeId().equals(scorePo.getScopeId())
+                            && StringUtils.isNotBlank(vo.getRegionCode())
+                            && vo.getRegionCode().equals(regionCode)
+                            && !vo.getStoreCode().equals(scorePo.getStoreCode())
+                            && (StringUtils.isEmpty(vo.getScore()) ? 0 : Integer.parseInt(vo.getScore())) > score).count();
+            scorePo.setRankScope((int) countScope + 1);
+        });
         scoreService.deleteByPeriod(period);
         scoreService.saveBatch(scorePoList);
         List<ScoreFactorPo> scoreFactorPoList = new ArrayList<>(scoreFactorPoSet);
+        // 计算全国排名和区域排名
+        scoreFactorPoList.forEach(scoreFactorPo -> {
+            int score = StringUtils.isEmpty(scoreFactorPo.getScore()) ? 0 : Integer.parseInt(scoreFactorPo.getScore());
+            // 全国排名
+            long countCountry = scoreFactorImportVoList
+                    .stream()
+                    .filter(vo -> vo.getPeriod().equals(scoreFactorPo.getPeriod())
+                            && vo.getScopeId().equals(scoreFactorPo.getScopeId())
+                            && vo.getFactorName().equals(scoreFactorPo.getFactorCode())
+                            && !vo.getStoreCode().equals(scoreFactorPo.getStoreCode())
+                            && (StringUtils.isEmpty(vo.getScore()) ? 0 : Integer.parseInt(vo.getScore())) > score).count();
+            scoreFactorPo.setRankCountry((int) countCountry + 1);
+            // 区域排名
+            Long scopeId = scoreFactorPo.getScopeId();
+            String storeCode = scoreFactorPo.getStoreCode();
+            String regionCode = ToolsUtils.getRegionCode(scopeId, storeCode, provincePoList, cityPoList, storePoList);
+            long countScope = scoreFactorImportVoList
+                    .stream()
+                    .filter(vo -> vo.getPeriod().equals(scoreFactorPo.getPeriod())
+                            && vo.getScopeId().equals(scoreFactorPo.getScopeId())
+                            && StringUtils.isNotBlank(vo.getRegionCode())
+                            && vo.getRegionCode().equals(regionCode)
+                            && vo.getFactorName().equals(scoreFactorPo.getFactorCode())
+                            && !vo.getStoreCode().equals(scoreFactorPo.getStoreCode())
+                            && (StringUtils.isEmpty(vo.getScore()) ? 0 : Integer.parseInt(vo.getScore())) > score).count();
+            scoreFactorPo.setRankScope((int) countScope + 1);
+        });
+
         scoreFactorService.deleteByPeriod(period);
         scoreFactorService.saveBatch(scoreFactorPoList);
     }
 
     @Override
     public void importScoresChannel(MultipartFile file, String period) throws IOException {
+        List<ProvincePo> provincePoList = provinceService.list();
+        List<CityPo> cityPoList = cityService.list();
+        List<StorePo> storePoList = storeService.list();
 
         DefaultExcelListener<T> scoreChannelImportListener = new DefaultExcelListener<>();
         EasyExcelUtils.asyncReadModel(file.getInputStream(), scoreChannelImportListener, ScoreChannelImportVo.class, 1, 1);
@@ -484,20 +553,51 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<ScoreChannelPo> scoreChannelPoSet = new HashSet<>();
         scoreChannelImportVoList.forEach(scoreChannelImportVo -> {
             ScoreChannelPo scoreChannelPo = new ScoreChannelPo();
-            scoreChannelPo.setPeriod(scoreChannelImportVo.getPeriod());
+            // scoreChannelPo.setPeriod(scoreChannelImportVo.getPeriod());
+            scoreChannelPo.setPeriod(period);
             Long scopeId = getScopeIdFromName(scoreChannelImportVo.getScopeName());
+            scoreChannelImportVo.setScopeId(scopeId);
             if (null != scopeId) {
+                String storeCode = scoreChannelImportVo.getStoreCode().trim();
+                String regionCode = ToolsUtils.getRegionCode(scopeId, storeCode, provincePoList, cityPoList, storePoList);
+                scoreChannelImportVo.setRegionCode(regionCode);
                 scoreChannelPo.setScopeId(scopeId);
-                scoreChannelPo.setStoreCode(scoreChannelImportVo.getStoreCode().trim());
+                scoreChannelPo.setStoreCode(storeCode);
                 scoreChannelPo.setChannelCode(scoreChannelImportVo.getChannelName().trim());
                 scoreChannelPo.setScore(scoreChannelImportVo.getScore().trim());
                 scoreChannelPoSet.add(scoreChannelPo);
             }
         });
         List<ScoreChannelPo> scoreChannelPoList = new ArrayList<>(scoreChannelPoSet);
+        // 计算全国排名和区域排名
+        scoreChannelPoList.forEach(scoreChannelPo -> {
+            int score = StringUtils.isEmpty(scoreChannelPo.getScore()) ? 0 : Integer.parseInt(scoreChannelPo.getScore());
+            // 全国排名
+            long countCountry = scoreChannelImportVoList
+                    .stream()
+                    .filter(vo -> vo.getPeriod().equals(scoreChannelPo.getPeriod())
+                            && vo.getScopeId().equals(scoreChannelPo.getScopeId())
+                            && vo.getChannelName().equals(scoreChannelPo.getChannelCode())
+                            && !vo.getStoreCode().equals(scoreChannelPo.getStoreCode())
+                            && (StringUtils.isEmpty(vo.getScore()) ? 0 : Integer.parseInt(vo.getScore())) > score).count();
+            scoreChannelPo.setRankCountry((int) countCountry + 1);
+            // 区域排名
+            Long scopeId = scoreChannelPo.getScopeId();
+            String storeCode = scoreChannelPo.getStoreCode();
+            String regionCode = ToolsUtils.getRegionCode(scopeId, storeCode, provincePoList, cityPoList, storePoList);
+            long countScope = scoreChannelImportVoList
+                    .stream()
+                    .filter(vo -> vo.getPeriod().equals(scoreChannelPo.getPeriod())
+                            && vo.getScopeId().equals(scoreChannelPo.getScopeId())
+                            && StringUtils.isNotBlank(vo.getRegionCode())
+                            && vo.getRegionCode().equals(regionCode)
+                            && vo.getChannelName().equals(scoreChannelPo.getChannelCode())
+                            && !vo.getStoreCode().equals(scoreChannelPo.getStoreCode())
+                            && (StringUtils.isEmpty(vo.getScore()) ? 0 : Integer.parseInt(vo.getScore())) > score).count();
+            scoreChannelPo.setRankScope((int) countScope + 1);
+        });
         scoreChannelService.deleteByPeriod(period);
         scoreChannelService.saveBatch(scoreChannelPoList);
-
     }
 
     @Override
@@ -510,7 +610,8 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         Set<ScoreQuestionPo> scoreQuestionPoSet = new HashSet<>();
         scoreQuestionImportVoList.forEach(scoreQuestionImportVo -> {
             ScoreQuestionPo scoreQuestionPo = new ScoreQuestionPo();
-            scoreQuestionPo.setPeriod(scoreQuestionImportVo.getPeriod().trim());
+            // scoreQuestionPo.setPeriod(scoreQuestionImportVo.getPeriod().trim());
+            scoreQuestionPo.setPeriod(period);
             scoreQuestionPo.setStoreCode(scoreQuestionImportVo.getStoreCode().trim());
             channelPoList.stream().filter(channelPo -> channelPo.getQuestionPrefix().equals(scoreQuestionImportVo.getQuestionSeriesNo().trim().substring(0, 1))).findFirst().ifPresent(channelPo -> scoreQuestionPo.setChannelCode(channelPo.getCode()));
             String channelCode = scoreQuestionPo.getChannelCode();
@@ -545,7 +646,8 @@ public class ExcelImportServiceImpl implements ExcelImportService {
 
             if ("综合".equals(regulationScoreImportVo.getChannelName().trim())) {
                 RegulationScorePo regulationScorePo = new RegulationScorePo();
-                regulationScorePo.setPeriod(regulationScoreImportVo.getPeriod());
+                // regulationScorePo.setPeriod(regulationScoreImportVo.getPeriod());
+                regulationScorePo.setPeriod(period);
                 regulationScorePo.setStoreCode(regulationScoreImportVo.getStoreCode());
                 regulationScorePo.setRegulationDescription(regulationScoreImportVo.getFactorName().trim() + ";" + regulationScoreImportVo.getElementName().trim() + ";" + regulationScoreImportVo.getRegulationDescription().replace("\n", "<br/>").trim());
                 regulationScorePo.setScoreType(getScoreType(regulationScoreImportVo.getScoreType()));
@@ -555,7 +657,8 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                 regulationScorePoSet.add(regulationScorePo);
             } else {
                 RegulationScoreChannelPo regulationScoreChannelPo = new RegulationScoreChannelPo();
-                regulationScoreChannelPo.setPeriod(regulationScoreImportVo.getPeriod());
+                // regulationScoreChannelPo.setPeriod(regulationScoreImportVo.getPeriod());
+                regulationScoreChannelPo.setPeriod(period);
                 regulationScoreChannelPo.setStoreCode(regulationScoreImportVo.getStoreCode().trim());
                 regulationScoreChannelPo.setRegulationDescription(regulationScoreImportVo.getFactorName().trim() + ";" + regulationScoreImportVo.getElementName().trim() + ";" + regulationScoreImportVo.getRegulationDescription().replace("\n", "<br/>").trim());
                 regulationScoreChannelPo.setChannelCode(regulationScoreImportVo.getChannelName().trim());

@@ -18,6 +18,7 @@
                 <result column="update_time" property="updateTime"/>
                     <result column="code" property="code"/>
                     <result column="name" property="name"/>
+                    <result column="region_code" property="regionCode"/>
                     <result column="province_code" property="provinceCode"/>
         </resultMap>
 
@@ -29,7 +30,7 @@
                 create_time,
                 updater,
                 update_time,
-            code, name, province_code
+            code, name, region_code, province_code
         </sql>
 
 </mapper>

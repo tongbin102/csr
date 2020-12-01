@@ -33,6 +33,9 @@ public class CityPo extends BasePo {
     @ApiModelProperty(value = "所属省份code")
     private String provinceCode;
 
+    @ApiModelProperty(value = "所属大区code")
+    private String regionCode;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

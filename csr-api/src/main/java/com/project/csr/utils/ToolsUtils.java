@@ -1,7 +1,13 @@
 package com.project.csr.utils;
 
+import cn.hutool.core.convert.ConvertException;
 import com.project.csr.common.model.BasePo;
-import org.springframework.util.StringUtils;
+import com.project.csr.constants.DictionaryType;
+import com.project.csr.model.po.CityPo;
+import com.project.csr.model.po.ProvincePo;
+import com.project.csr.model.po.StorePo;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -216,5 +222,39 @@ public class ToolsUtils {
             delimiter = ",";
         }
         return list.stream().map(BasePo::getId).collect(Collectors.joining(delimiter));
+    }
+
+    public static String getRegionCodeByProvinceCode(String provinceCode, List<ProvincePo> provincePoList) {
+        return provincePoList.stream().filter(provincePo -> provincePo.getCode().equals(provinceCode)).map(ProvincePo::getRegionCode).findFirst().orElse(null);
+    }
+
+    public static String getRegionCodeByCityCode(String cityCode, List<CityPo> cityPoList) {
+        return cityPoList.stream().filter(cityPo -> cityPo.getCode().equals(cityCode)).map(CityPo::getRegionCode).findFirst().orElse(null);
+    }
+
+    public static String getRegionCodeBySuperiorCode(String superiorCode, List<StorePo> superiorPoList) {
+        return superiorPoList.stream().filter(superiorPo -> superiorPo.getCode().equals(superiorCode) && StringUtils.isBlank(superiorPo.getParentCode())).map(StorePo::getRegionCode).findFirst().orElse(null);
+    }
+
+    public static String getRegionCodeByStoreCode(String storeCode, List<StorePo> storePoList) {
+        return storePoList.stream().filter(storePo -> storePo.getCode().equals(storeCode) && StringUtils.isNotBlank(storePo.getParentCode())).map(StorePo::getRegionCode).findFirst().orElse(null);
+    }
+
+    public static String getRegionCode(Long scopeId, String code, List<ProvincePo> provincePoList, List<CityPo> cityPoList, List<StorePo> storePoList) {
+        String regionCode = null;
+        if (scopeId.equals(DictionaryType.SCOPE_ID_NATIONAL)) {
+            regionCode = "";
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_REGION)) {
+            regionCode = code;
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_PROVINCE)) {
+            regionCode = ToolsUtils.getRegionCodeByProvinceCode(code, provincePoList);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_CITY)) {
+            regionCode = ToolsUtils.getRegionCodeByCityCode(code, cityPoList);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_SUPERIOR)) {
+            regionCode = ToolsUtils.getRegionCodeBySuperiorCode(code, storePoList);
+        } else if (scopeId.equals(DictionaryType.SCOPE_ID_STORE)) {
+            regionCode = ToolsUtils.getRegionCodeByStoreCode(code, storePoList);
+        }
+        return regionCode;
     }
 }
