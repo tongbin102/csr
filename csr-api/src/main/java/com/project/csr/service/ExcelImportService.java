@@ -54,6 +54,15 @@ public interface ExcelImportService {
     void importScoresQuestion(MultipartFile file, String period) throws IOException;
 
     /**
+     * 导入经销商投诉单
+     *
+     * @param file
+     * @param period
+     * @throws IOException
+     */
+    void importQuestionComplain(MultipartFile file, String period) throws IOException;
+
+    /**
      * 导入经销商因子要素成绩单
      *
      * @param file

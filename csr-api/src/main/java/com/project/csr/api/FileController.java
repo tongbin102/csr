@@ -71,6 +71,13 @@ public class FileController {
         return "success";
     }
 
+    @ApiOperation("导入经销商投诉单")
+    @PostMapping("/importQuestionComplain")
+    public String importQuestionComplain(@RequestParam("file") MultipartFile file, @RequestParam("period") String period) throws IOException {
+        importService.importQuestionComplain(file, period);
+        return "success";
+    }
+
     @ApiOperation("导入经销商因子要素成绩单")
     @PostMapping("/importRegulationScore")
     public String importRegulationScore(@RequestParam("file") MultipartFile file, @RequestParam("period") String period) throws IOException {

@@ -45,9 +45,9 @@ public interface ScoreService extends IService<ScorePo> {
      * 获取得分信息
      *
      * @param scopeId
+     * @param parentCode
      * @param currentPeriod
      * @param lastPeriod
-     * @param parentId
      * @return
      */
     List<ScoreVo> findScoreInfo(Long scopeId, String parentCode, String currentPeriod, String lastPeriod);

@@ -42,7 +42,8 @@ public class CodeGenerator {
             // "question_rescue", "question_data",
             // "score_question",
             // "region", "province", "city",
-            "user_store"
+            // "user_store",
+            "question_complain"
     };
 
     private static final String JDBC_URL = "jdbc:mysql://10.55.3.4:3306/csr?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8";
