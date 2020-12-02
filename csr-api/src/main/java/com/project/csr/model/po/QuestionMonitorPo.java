@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 过程监控-题目明细表
@@ -48,5 +50,23 @@ public class QuestionMonitorPo extends BasePo {
 
     @ApiModelProperty(value = "薄弱")
     private String weak;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        QuestionMonitorPo that = (QuestionMonitorPo) o;
+        return Objects.equals(regulationDescription, that.regulationDescription)
+                && Objects.equals(seriesNo, that.seriesNo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(regulationDescription, seriesNo);
+    }
 
 }

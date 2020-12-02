@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 客户调研-题目明细表
@@ -18,12 +20,12 @@ import lombok.EqualsAndHashCode;
  * @since 2020-11-10
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+// @EqualsAndHashCode(callSuper = true)
 @TableName("question_survey")
-@ApiModel(value="QuestionSurveyPo对象", description="客户调研-题目明细表")
+@ApiModel(value = "QuestionSurveyPo对象", description = "客户调研-题目明细表")
 public class QuestionSurveyPo extends BasePo {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3350303997275191978L;
 
     @ApiModelProperty(value = "细则描述")
     private String regulationDescription;
@@ -66,5 +68,23 @@ public class QuestionSurveyPo extends BasePo {
 
     @ApiModelProperty(value = "薄弱")
     private String weak;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        QuestionSurveyPo that = (QuestionSurveyPo) o;
+        return Objects.equals(regulationDescription, that.regulationDescription)
+                && Objects.equals(seriesNo, that.seriesNo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(regulationDescription, seriesNo);
+    }
 
 }

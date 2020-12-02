@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 投诉单表
@@ -40,5 +42,24 @@ public class QuestionComplainPo extends BasePo {
     @ApiModelProperty(value = "描述")
     private String description;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        QuestionComplainPo that = (QuestionComplainPo) o;
+        return Objects.equals(seriesNo, that.seriesNo)
+                && Objects.equals(period, that.period)
+                && Objects.equals(storeCode, that.storeCode)
+                && Objects.equals(factorCode, that.factorCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(seriesNo, period, storeCode, factorCode);
+    }
 
 }

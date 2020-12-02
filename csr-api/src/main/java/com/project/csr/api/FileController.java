@@ -26,16 +26,6 @@ public class FileController {
     @Autowired
     private ExcelImportService importService;
 
-    // @ApiOperation("导入配置文件")
-    // @PostMapping("/uploadConfig")
-    // public String uploadConfig(@RequestParam("file") MultipartFile file) throws IOException {
-    //     // log.info("aaaa");
-    //     AnalysisEventListener<T> list = new DefaultExcelListener<T>();
-    //     EasyExcelUtils.asyncRead(file.getInputStream(), list, 0, 0);
-    //     List<Map<Integer, String>> list1 = EasyExcelUtils.syncRead(file.getInputStream(), 0, 0);
-    //     return "success";
-    // }
-
     @ApiOperation("导入用户及店信息")
     @PostMapping("/importUsersAndStores")
     public String importUsersAndStores(@RequestParam("file") MultipartFile file) throws IOException {
