@@ -266,6 +266,17 @@ export default {
           this.scoreFileData[2].status = 'done';
         }
       });
+      // 导入经销商投诉单
+      this.scoreFileData[3].status = 'loading';
+      this.$http.post('/fileApi/importQuestionComplain', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => {
+        if (res.resCode === 200) {
+          this.scoreFileData[3].status = 'done';
+        }
+      });
       // 导入经销商因子要素成绩单
       this.scoreFileData[4].status = 'loading';
       this.$http.post('/fileApi/importRegulationScore', form, {
