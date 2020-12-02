@@ -153,7 +153,6 @@ export default {
   },
   methods: {
     initialData () {
-      this.isPermitted();
       this.code = 'national';
       this.month = moment().add('month', 0).format('yyyy年MM月');
       this.period = moment().add('month', 0).format('yyyyMM');
