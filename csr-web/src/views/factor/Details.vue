@@ -9,12 +9,12 @@
       :tabBarStyle="tabBarStyle">
       <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
         <a-table
+          id="scoreFactorTable"
+          :table-layout="tableLayout"
           :columns="scoreFactorColumns"
           :data-source="scoreFactorData"
           :pagination="false"
-          :loading="scoreFactorLoading"
-          :customHeaderRow="setCustomHeaderRow"
-          :customRow="setCustomRow">
+          :loading="scoreFactorLoading">
           <template slot="score" slot-scope="text, record, index">
             <span v-if="index === 0">{{ record.factorName + '：' + record.score }}</span>
             <a-button type="link" v-else @click="handleClickStore(record.factorCode)">{{ record.factorName }}得分：{{ record.score }} </a-button>
@@ -22,29 +22,29 @@
           <span slot="scoreTitle"></span>
 
           <template slot="rankCountry" slot-scope="text, record">
-            <span class="increase" v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
-            <span class="hold" v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
-            <span class="decrease" v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
+            <span v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
+            <span v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
+            <span v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
           </template>
           <template slot="rankScope" slot-scope="text, record">
-            <span class="increase" v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
-            <span class="hold" v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
-            <span class="decrease" v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
+            <span v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
+            <span v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
+            <span v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
           </template>
-          <template slot="diff" slot-scope="text, record">
-            <span class="increase" v-if="record.scoreDiff > 0">{{ '提高+' + record.scoreDiff }}</span>
-            <span class="hold" v-if="record.scoreDiff === 0">持平</span>
-            <span class="decrease" v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff }}</span>
+          <template slot="scoreDiff" slot-scope="text, record">
+            <span v-if="record.scoreDiff > 0">{{ '提高+' + record.scoreDiff }}</span>
+            <span v-if="record.scoreDiff === 0">持平</span>
+            <span v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff }}</span>
           </template>
         </a-table>
 
         <a-table
+          id="regulationScoreTable"
+          :table-layout="tableLayout"
           :columns="regulationScoreColumns"
           :data-source="regulationScoreData"
           :pagination="false"
-          :loading="regulationScoreLoading"
-          :customHeaderRow="setCustomHeaderRow"
-          :customRow="setCustomRow">
+          :loading="regulationScoreLoading">
           <template slot="element" slot-scope="text, record">
             <span>{{ record.elementCode.split(';')[1] || '' }}</span>
           </template>
@@ -91,7 +91,13 @@
           </template>
         </a-table>
 
-        <a-table :columns="deductChannelScoreColumns" :data-source="deductChannelScoreData" :pagination="false" :showHeader="false" :locale="locale">
+        <a-table
+          id="deductTable"
+          :columns="deductChannelScoreColumns"
+          :data-source="deductChannelScoreData"
+          :pagination="false"
+          :showHeader="false"
+          :locale="locale">
           <template slot="deductScore" slot-scope="text, record">
             <a-button type="link" @click="handleClickDeductScore(record.channelCode, record.regulationId)">{{ record.deductScore }}</a-button>
           </template>
@@ -154,7 +160,8 @@ export default {
       },
       locale: {
         emptyText: '无扣分'
-      }
+      },
+      tableLayout: 'fixed'
     };
   },
   mounted () {
@@ -230,43 +237,18 @@ export default {
           key: 'score',
           slots: { title: 'scoreTitle' },
           scopedSlots: { customRender: 'score' },
-          width: '40%',
-          customCell: function (record, index) {
-            return {
-              style: {
-                padding: 0,
-                fontSize: '6px'
-              }
-            };
-          },
-          customHeaderCell: function () {
-            return {
-              style: {
-                padding: 0,
-                fontSize: '10px'
-              }
-            };
-          }
+          width: '25%'
         },
         {
           title: '全国排名',
           dataIndex: 'rankCountry',
           key: 'rankCountry',
           scopedSlots: { customRender: 'rankCountry' },
-          width: '20%',
+          width: '25%',
           customCell: function (record, index) {
             return {
               style: {
-                padding: 0,
-                fontSize: '6px'
-              }
-            };
-          },
-          customHeaderCell: function () {
-            return {
-              style: {
-                padding: 0,
-                fontSize: '10px'
+                color: record.rankCountryDiff > 0 ? '#31D582' : record.rankCountryDiff < 0 ? '#FF4B4B' : ''
               }
             };
           }
@@ -276,43 +258,25 @@ export default {
           dataIndex: 'rankScope',
           key: 'rankScope',
           scopedSlots: { customRender: 'rankScope' },
-          width: '20%',
+          width: '25%',
           customCell: function (record, index) {
             return {
               style: {
-                padding: 0,
-                fontSize: '6px'
-              }
-            };
-          },
-          customHeaderCell: function () {
-            return {
-              style: {
-                padding: 0,
-                fontSize: '10px'
+                color: record.rankScopeDiff > 0 ? '#31D582' : record.rankScopeDiff < 0 ? '#FF4B4B' : ''
               }
             };
           }
         },
         {
           title: '环比上期',
-          dataIndex: 'diff',
-          key: 'diff',
-          scopedSlots: { customRender: 'diff' },
-          width: '20%',
+          dataIndex: 'scoreDiff',
+          key: 'scoreDiff',
+          scopedSlots: { customRender: 'scoreDiff' },
+          width: '25%',
           customCell: function (record, index) {
             return {
               style: {
-                padding: 0,
-                fontSize: '6px'
-              }
-            };
-          },
-          customHeaderCell: function () {
-            return {
-              style: {
-                padding: 0,
-                fontSize: '10px'
+                color: record.scoreDiff > 0 ? '#31D582' : record.scoreDiff < 0 ? '#FF4B4B' : ''
               }
             };
           }
@@ -345,15 +309,7 @@ export default {
             key: 'element',
             align: 'left',
             width: '25%',
-            scopedSlots: { customRender: 'element' },
-            customCell: function (record, index) {
-              return {
-                style: {
-                  padding: 0,
-                  fontSize: '6px'
-                }
-              };
-            }
+            scopedSlots: { customRender: 'element' }
           },
           {
             title: '细则',
@@ -361,15 +317,7 @@ export default {
             key: 'regulation',
             align: 'left',
             width: '15%',
-            scopedSlots: { customRender: 'regulation' },
-            customCell: function (record, index) {
-              return {
-                style: {
-                  padding: 0,
-                  fontSize: '6px'
-                }
-              };
-            }
+            scopedSlots: { customRender: 'regulation' }
           },
           {
             title: '综合得分',
@@ -383,24 +331,7 @@ export default {
                 key: 'evaluateScore',
                 align: 'center',
                 width: '7.5%',
-                scopedSlots: { customRender: 'evaluateScore' },
-                customCell: function (record, index) {
-                  return {
-                    style: {
-                      padding: 0,
-                      fontSize: '4px'
-                    }
-                  };
-                },
-                customHeaderCell: function () {
-                  return {
-                    style: {
-                      padding: '0 10px',
-                      fontSize: '6px',
-                      whiteSpace: 'pre-wrap'
-                    }
-                  };
-                }
+                scopedSlots: { customRender: 'evaluateScore' }
               },
               {
                 title: '加分项',
@@ -408,24 +339,7 @@ export default {
                 key: 'bonusScore',
                 align: 'center',
                 width: '7.5%',
-                scopedSlots: { customRender: 'bonusScore' },
-                customCell: function (record, index) {
-                  return {
-                    style: {
-                      padding: 0,
-                      fontSize: '4px'
-                    }
-                  };
-                },
-                customHeaderCell: function () {
-                  return {
-                    style: {
-                      padding: '0 10px',
-                      fontSize: '6px',
-                      whiteSpace: 'pre-wrap'
-                    }
-                  };
-                }
+                scopedSlots: { customRender: 'bonusScore' }
               }
             ]
           },
@@ -450,25 +364,7 @@ export default {
             key: 'evaluateChannelScore' + channel.id,
             align: 'center',
             width: '7.5%',
-            scopedSlots: { customRender: 'evaluateChannelScore' + channel.id },
-            customCell: function (record, index) {
-              return {
-                style: {
-                  padding: 0,
-                  fontSize: '4px'
-                  // color: evaluateChannelScore === '优秀' ? '#09CDFF' : evaluateChannelScore === '优良' ? '#2DD42D' : evaluateChannelScore === '达标' ? '#FFD27A' : '#FF3030'
-                }
-              };
-            },
-            customHeaderCell: function () {
-              return {
-                style: {
-                  padding: '0 10px',
-                  fontSize: '6px',
-                  whiteSpace: 'pre-wrap'
-                }
-              };
-            }
+            scopedSlots: { customRender: 'evaluateChannelScore' + channel.id }
           });
         });
         regulationScoreColumns[3].children = evaluateChannelScoreChildren;
@@ -480,24 +376,7 @@ export default {
             key: 'bonusChannelScore' + channel.id,
             align: 'center',
             width: '7.5%',
-            scopedSlots: { customRender: 'bonusChannelScore' + channel.id },
-            customCell: function (record, index) {
-              return {
-                style: {
-                  padding: 0,
-                  fontSize: '4px'
-                }
-              };
-            },
-            customHeaderCell: function () {
-              return {
-                style: {
-                  padding: '0 10px',
-                  fontSize: '6px',
-                  whiteSpace: 'pre-wrap'
-                }
-              };
-            }
+            scopedSlots: { customRender: 'bonusChannelScore' + channel.id }
           });
         });
         regulationScoreColumns[4].children = bonusChannelScoreChildren;
@@ -515,14 +394,17 @@ export default {
         this.regulationScoreData.forEach(score => {
           this.channelList2.forEach(channel => {
             // eslint-disable-next-line no-prototype-builtins
-            if (score.regulationScoreChannelMap.hasOwnProperty('deductChannelScore' + channel.id)) {
-              deductChannelScoreData.push({
-                deductName: channel.name,
-                deductScore: score.regulationScoreChannelMap['deductChannelScore' + channel.id],
-                channelId: channel.id,
-                channelCode: channel.code,
-                regulationId: score.id
-              });
+            if (score.regulationScoreChannelMap.hasOwnProperty('deductChannelScore' + channel.name)) {
+              const deductScore = score.regulationScoreChannelMap['deductChannelScore' + channel.name];
+              if (deductScore !== '0') {
+                deductChannelScoreData.push({
+                  deductName: channel.name,
+                  deductScore: deductScore,
+                  channelId: channel.id,
+                  channelCode: channel.code,
+                  regulationId: score.id
+                });
+              }
             }
           });
         });
@@ -530,26 +412,6 @@ export default {
         // console.log(this.deductChannelScoreData);
         // this.regulationScoreData = [...res.resData, ...deductChannelScoreList];
       });
-    },
-    setCustomHeaderRow () {
-      return {
-        style: {
-          fontSize: '6px',
-          height: '40px'
-          // lineHeight: '40px',
-          // wordWrap: 'break-word',
-          // wordBreak: 'normal'
-        }
-      };
-    },
-    setCustomRow (record) {
-      return {
-        style: {
-          // height: '40px'
-          // lineHeight: '40px'
-          // borderBottom: 'none'
-        }
-      };
     },
     handleClickGrade (channelCode, regulationId, scoreType) {
       this.$router.push({

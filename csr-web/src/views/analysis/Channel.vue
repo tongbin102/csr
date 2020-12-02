@@ -28,23 +28,16 @@
           <!-- <bar :data="barData['barChannel' + channel.id]" :title="channel.name" :extend="barExtend" /> -->
         </a-col>
       </a-row>
-
     </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
-// import Bar from '@/components/Charts/Bar';
-// import MiniBar from '@/components/Charts/MiniBar';
 import { getScoreChannelInfoByPeriods } from '@/api/score';
 import { getChannelList1 } from '@/api/channel';
 
 export default {
-  components: {
-    // Bar,
-    // MiniBar
-  },
   data () {
     const barColor = '#00CCFF';
     this.barExtend = {
@@ -55,13 +48,13 @@ export default {
     return {
       period: '',
       scopeId: '',
-      storeId: '',
+      code: '',
       channelList1: [],
       scoreChannelLoading: false,
       scoreChannelColumns: [],
       scoreChannelData: [],
       barData: {},
-      // totalOptions: {}
+      totalOptions: {},
       chartOptions: {},
       barColor
 
@@ -79,18 +72,19 @@ export default {
       this.getScoreChannelColumn();
       this.period = moment().add('month', 0).format('yyyyMM');
       this.scopeId = this.$route.query.scope_id;
-      this.storeId = this.$route.query.store_id;
+      this.code = this.$route.query.code;
       const beginPeriod = moment().subtract(5, 'month').format('yyyyMM');
       this.getScoreChannelInfoByPeriods({
         begin_period: beginPeriod,
         end_period: this.period,
         scope_id: this.scopeId,
-        store_id: this.storeId
+        store_code: this.code
       });
     },
     getScoreChannelInfoByPeriods (params = {}) {
       this.scoreChannelLoading = true;
       getScoreChannelInfoByPeriods(params).then(res => {
+        // console.log(res.resData);
         const scoreChannelInfo = res.resData;
         this.scoreChannelLoading = false;
         this.scoreChannelData = [scoreChannelInfo[scoreChannelInfo.length - 1].scoreChannel];
@@ -167,7 +161,7 @@ export default {
         res.resData.forEach((channel) => {
           scoreChannelColumns.push({
             title: channel.name,
-            dataIndex: channel.id,
+            dataIndex: channel.name,
             key: channel.id,
             width: '33%',
             align: 'center'

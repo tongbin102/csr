@@ -13,12 +13,7 @@ export default {
   name: 'Exception404',
   methods: {
     toHome () {
-      // console.log(this);
-      // this.$router.push('/aaa');
-
-      // this.$router.push({ path: '/satisfaction/national' });
       this.$router.push({ path: '/' });
-      console.log(333);
     }
   }
 };

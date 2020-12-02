@@ -4,7 +4,7 @@ const questionApi = {
   getQuestionSurveyList: '/questionSurveyApi/findList',
   getQuestionMonitorList: '/questionMonitorApi/findList',
   getQuestionAssistanceList: '/questionAssistanceApi/findList',
-  // getQuestionComplainList: '/questionComplainApi/findList',
+  getQuestionComplainList: '/questionComplainApi/findList',
   getQuestionRescueList: '/questionRescueApi/findList',
   getQuestionDataList: '/questionDataApi/findList'
 };
@@ -34,13 +34,13 @@ export function getQuestionAssistanceList (parameter) {
   });
 }
 
-// export function getQuestionCompainList (parameter) {
-//   return request({
-//     url: questionApi.getQuestionComplainList,
-//     method: 'get',
-//     params: parameter
-//   });
-// }
+export function getQuestionComplainList (parameter) {
+  return request({
+    url: questionApi.getQuestionComplainList,
+    method: 'get',
+    params: parameter
+  });
+}
 
 export function getQuestionRescueList (parameter) {
   return request({

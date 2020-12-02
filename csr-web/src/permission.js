@@ -25,7 +25,7 @@ router.beforeEach((to, from, next) => {
       NProgress.done();
     } else {
       // check login user.roles is null
-      console.log(store.getters.roles);
+      // console.log(store.getters.roles);
       if (store.getters.roles.length === 0) {
         // request login userInfo
         store
@@ -51,7 +51,7 @@ router.beforeEach((to, from, next) => {
                   const roles = store.getters.roles;
                   // console.log('roles: ', roles);
                   const userInfo = store.getters.userInfo;
-                  console.log(userInfo);
+                  // console.log(userInfo);
                   if (roles === 'admin') {
                     // 管理员账户
                     next({ path: '/admin/upload' });
@@ -116,7 +116,7 @@ router.beforeEach((to, from, next) => {
       } else {
         if (to.path === '/') {
           const roles = store.getters.roles;
-          console.log('roles: ', roles);
+          // console.log('roles: ', roles);
           if (roles === 'admin') {
             next({ path: '/admin/upload' });
           } else if (roles === 'national') {

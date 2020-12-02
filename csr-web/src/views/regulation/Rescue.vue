@@ -67,7 +67,7 @@ export default {
       this.storeCode = this.$route.query.store_code;
       this.regulationId = this.$route.query.regulation_id;
       if (this.regulationId) {
-        this.getTitle();
+        this.getRegulationById();
         this.getQuestionRescueList({
           period: this.period,
           store_code: this.storeCode,

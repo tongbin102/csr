@@ -29,7 +29,8 @@ export const asyncRouterMap = [
             meta: {
               title: '全国满意度情况',
               keepAlive: false,
-              permission: ['admin', 'national']
+              // permission: ['admin', 'national']
+              permission: ['admin', 'national', 'region', 'area', 'superior', 'store']
             }
           },
           {

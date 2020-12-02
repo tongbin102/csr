@@ -6,11 +6,18 @@
     </a-row>
     <a-row id="satisfactionDetails">
       <a-col :span="24">
-        <a-table id="scoreTable" :columns="scoreColumns" :data-source="scoreData" :pagination="false" :loading="scoreLoading">
+        <a-table
+          id="scoreTable"
+          :table-layout="tableLayout"
+          :columns="scoreColumns"
+          :data-source="scoreData"
+          :pagination="false"
+          :loading="scoreLoading">
           <template slot="score" slot-scope="text, record, index">
             <span v-if="index === 0">{{ name }}大区总得分：{{ record.score }}</span>
             <a-button type="link" v-else @click="handleClickProvince(record.storeCode)">
-              <span style="text-decoration: underline;">{{ record.storeName }}得分：{{ record.score }}</span>
+              <span>{{ record.storeName }}得分：</span>
+              <span>{{ record.score }}</span>
             </a-button>
           </template>
           <span slot="scoreTitle"></span>
@@ -152,7 +159,8 @@ export default {
       scoreChannelData: [],
       scoreFactorColumns: [],
       scoreFactorData: [],
-      factorList: []
+      factorList: [],
+      tableLayout: 'fixed'
     };
   },
   mounted () {
@@ -161,18 +169,6 @@ export default {
     this.fetchScoreData({
       scope_id: this.scopeId,
       parent_code: this.code,
-      current_period: this.period,
-      last_period: this.lastPeriod
-    });
-    this.fetchScoreChannelData({
-      scope_id: this.scopeId,
-      store_code: this.code,
-      current_period: this.period,
-      last_period: this.lastPeriod
-    });
-    this.fetchScoreFactorData({
-      scope_id: this.scopeId,
-      store_code: this.code,
       current_period: this.period,
       last_period: this.lastPeriod
     });
@@ -238,11 +234,23 @@ export default {
         this.scoreFactorColumns = scoreFactorColumns;
       });
     },
-    fetchScoreData (params = {}) {
+    async fetchScoreData (params = {}) {
       this.scoreLoading = true;
-      getScoreInfo(params).then(res => {
+      await getScoreInfo(params).then(res => {
         this.scoreLoading = false;
         this.scoreData = [...res.resData.totalScoreList, ...res.resData.childScoreList];
+      });
+      this.fetchScoreChannelData({
+        scope_id: this.scopeId,
+        store_code: this.code,
+        current_period: this.period,
+        last_period: this.lastPeriod
+      });
+      this.fetchScoreFactorData({
+        scope_id: this.scopeId,
+        store_code: this.code,
+        current_period: this.period,
+        last_period: this.lastPeriod
       });
     },
     fetchScoreChannelData (params = {}) {

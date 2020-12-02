@@ -13,9 +13,19 @@
       <a-table :columns="scoreFactorColumns" :data-source="scoreFactorData" :pagination="false" :loading="scoreFactorLoading">
       </a-table>
       <a-row>
-        <a-col :span="12"><bar :data="barData.barTotal" title="总分" /></a-col>
+        <a-col :span="12">
+          <!-- <v-chart :options="chartOptions.total" :auto-resize="true"></v-chart> -->
+          <div class="Echarts">
+            <div id="totalChart" :style="{padding: '5px', width: '100%', height: '200px'}"></div>
+          </div>
+          <!-- <bar :data="barData.barTotal" title="总分" style="height:100px;" /> -->
+          <!-- <mini-bar :data="barData.barTotal" /> -->
+        </a-col>
         <a-col :span="12" v-for="factor in factorList1" :key="factor.id">
-          <bar :data="barData['barFactor' + factor.id]" :title="factor.name" />
+          <div class="Echarts">
+            <div :id="'factorChart'+ factor.id" :style="{padding: '5px', width: '100%', height: '200px'}"></div>
+          </div>
+          <!-- <bar :data="barData['barChannel' + channel.id]" :title="channel.name" :extend="barExtend" /> -->
         </a-col>
       </a-row>
 
@@ -25,41 +35,50 @@
 
 <script>
 import moment from 'moment';
-import Bar from '@/components/Charts/Bar';
 import { getScoreFactorInfoByPeriods } from '@/api/score';
 import { getAllFactor } from '@/api/factor';
 
 export default {
-  components: {
-    Bar
-  },
   data () {
+    const barColor = '#00CCFF';
+    this.barExtend = {
+      series: {
+        label: { show: true, position: 'top' }
+      }
+    };
     return {
       period: '',
       scopeId: '',
-      storeId: '',
+      code: '',
       factorList1: [],
       scoreFactorLoading: false,
       scoreFactorColumns: [],
       scoreFactorData: [],
-      barData: {}
+      barData: {},
+      totalOptions: {},
+      chartOptions: {},
+      barColor
     };
   },
   mounted () {
     this.initialData();
+    window.onresize = () => {
+      //  根据窗口大小调整曲线大小
+      this.totalChart.resize();
+    };
   },
   methods: {
     initialData () {
       this.getScoreFactorColumn();
       this.period = moment().add('month', 0).format('yyyyMM');
       this.scopeId = this.$route.query.scope_id;
-      this.storeId = this.$route.query.store_id;
+      this.code = this.$route.query.code;
       const beginPeriod = moment().subtract(5, 'month').format('yyyyMM');
       this.getScoreFactorInfoByPeriods({
         begin_period: beginPeriod,
         end_period: this.period,
         scope_id: this.scopeId,
-        store_id: this.storeId
+        store_code: this.code
       });
     },
     getScoreFactorInfoByPeriods (params = {}) {
@@ -69,30 +88,68 @@ export default {
         this.scoreFactorLoading = false;
         this.scoreFactorData = [scoreFactorInfo[scoreFactorInfo.length - 1].scoreFactor];
 
-        const barTotal = [];
+        const totalOptions = {
+          title: { text: '总分' },
+          tooltip: {},
+          xAxis: {
+            data: []
+          },
+          yAxis: {},
+          series: [{
+            name: '得分',
+            type: 'bar',
+            itemStyle: {
+              color: this.barColor
+            },
+            label: {
+              fontSize: 6
+            },
+            data: []
+          }]
+        };
+        const xAxisData = [];
+        const seriesData = [];
         scoreFactorInfo.forEach(scoreFactor => {
-          barTotal.push({
-            x: scoreFactor.period,
-            y: scoreFactor.score || 0
-          });
+          xAxisData.push(moment(scoreFactor.period).format('M月'));
+          seriesData.push(parseInt(scoreFactor.score) || 0);
         });
-        this.barData.barTotal = barTotal;
+        totalOptions.xAxis.data = xAxisData;
+        totalOptions.series[0].data = seriesData;
+        this.chartOptions.total = totalOptions;
+        this.initTotalChart();
 
         this.factorList1.forEach(factor => {
-          const barFactor = [];
-          // console.log(scoreFactorInfo);
+          const factorOptions = {
+            title: { text: factor.name },
+            tooltip: {},
+            xAxis: {
+              data: []
+            },
+            yAxis: {},
+            series: [{
+              name: '得分',
+              type: 'bar',
+              itemStyle: {
+                color: this.barColor
+              },
+              label: {
+                fontSize: 6
+              },
+              data: []
+            }]
+          };
+          const xAxisData = [];
+          const seriesData = [];
 
-          scoreFactorInfo.forEach(info => {
-            const scoreFactor = info.scoreFactor;
-            barFactor.push({
-              x: info.period,
-              // eslint-disable-next-line no-prototype-builtins
-              y: scoreFactor.hasOwnProperty([factor.id]) ? scoreFactor[factor.id] : 0
-            });
+          scoreFactorInfo.forEach(scoreFactor => {
+            xAxisData.push(moment(scoreFactor.period).format('M月'));
+            seriesData.push(parseInt(scoreFactor.score) || 0);
           });
-          this.barData['barFactor' + factor.id] = barFactor;
+          factorOptions.xAxis.data = xAxisData;
+          factorOptions.series[0].data = seriesData;
+          this.chartOptions['factorOptions' + factor.id] = factorOptions;
+          this.initFactorChart(factor.id);
         });
-          // console.log(this.barData);
       });
     },
     getScoreFactorColumn (params = {}) {
@@ -102,7 +159,7 @@ export default {
         res.resData.forEach((factor) => {
           scoreFactorColumns.push({
             title: factor.name,
-            dataIndex: factor.id,
+            dataIndex: factor.name,
             key: factor.id,
             width: '16%',
             align: 'center'
@@ -110,6 +167,15 @@ export default {
         });
         this.scoreFactorColumns = scoreFactorColumns;
       });
+    },
+    initTotalChart () {
+      console.log(this.chartOptions.total);
+      const totalChart = this.$echarts.init(document.getElementById('totalChart'));
+      totalChart.setOption(this.chartOptions.total);
+    },
+    initFactorChart (factorId) {
+      const factorChart = this.$echarts.init(document.getElementById('factorChart' + factorId));
+      factorChart.setOption(this.chartOptions['factorOptions' + factorId]);
     }
   }
 
