@@ -58,35 +58,47 @@
             <span>{{ record.regulationScoreMap.bonusScore || '' }}</span>
           </template>
           <template v-for="channel in channelList" :slot="'evaluateChannelScore' + channel.id" slot-scope="text, record">
-            <a-button class="scoreChannelBtn" :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 1)" size="small">
+            <a-button
+              class="scoreChannelBtn"
+              :key="channel.id"
+              type="link"
+              @click="handleClickGrade(channel.code, record.id, 1)"
+              size="small"
+              v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name]">
               <span
                 v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '优秀'"
-                style="color: #09CDFF">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
+                style="color: #09CDFF">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] }}</span>
               <span
                 v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '优良'"
-                style="color: #2DD42D">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
+                style="color: #2DD42D">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] }}</span>
               <span
                 v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '达标'"
-                style="color: #FFD27A">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
+                style="color: #FFD27A">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] }}</span>
               <span
                 v-if="record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] === '薄弱'"
-                style="color: #FF3030">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] || '' }}</span>
+                style="color: #FF3030">{{ record.regulationScoreChannelMap['evaluateChannelScore' + channel.name] }}</span>
             </a-button>
           </template>
           <template v-for="channel in channelList" :slot="'bonusChannelScore' + channel.id" slot-scope="text,record">
-            <a-button class="scoreChannelBtn" :key="channel.id" type="link" @click="handleClickGrade(channel.code, record.id, 2)" size="small">
+            <a-button
+              class="scoreChannelBtn"
+              :key="channel.id"
+              type="link"
+              @click="handleClickGrade(channel.code, record.id, 2,record.regulationScoreChannelMap['bonusChannelScore' + channel.name])"
+              size="small"
+              v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name]">
               <span
                 v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '优秀'"
-                style="color: #09CDFF">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
+                style="color: #09CDFF">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] }}</span>
               <span
                 v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '优良'"
-                style="color: #2DD42D">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
+                style="color: #2DD42D">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] }}</span>
               <span
                 v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '达标'"
-                style="color: #FFD27A">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
+                style="color: #FFD27A">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] }}</span>
               <span
                 v-if="record.regulationScoreChannelMap['bonusChannelScore' + channel.name] === '薄弱'"
-                style="color: #FF3030">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] || '' }}</span>
+                style="color: #FF3030">{{ record.regulationScoreChannelMap['bonusChannelScore' + channel.name] }}</span>
             </a-button>
           </template>
         </a-table>

@@ -42,7 +42,7 @@
         </a-row>
         <a-row v-if="questionSurvey.scoreItem != '综合分'">
           <a-col :xs="24" :sm="16">
-            <a-table :columns="regulationColumns2" :data-source="[ questionSurvey ]" :pagination="false" bordered>
+            <a-table table-layout="fixed" :columns="regulationColumns2" :data-source="[ questionSurvey ]" :pagination="false" bordered>
             </a-table>
           </a-col>
         </a-row>

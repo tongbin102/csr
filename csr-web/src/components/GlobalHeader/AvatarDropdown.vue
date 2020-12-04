@@ -15,6 +15,11 @@
           个人设置
         </a-menu-item>
         <a-menu-divider v-if="menu" /> -->
+        <a-menu-item v-if="menu" key="import" @click="handleToSettings">
+          <a-icon type="import" />
+          数据导入
+        </a-menu-item>
+        <a-menu-divider v-if="menu" />
         <a-menu-item key="logout" @click="handleLogout">
           <a-icon type="logout" />
           退出登录
@@ -46,9 +51,9 @@ export default {
     // handleToCenter () {
     //   this.$router.push({ path: '/account/center' });
     // },
-    // handleToSettings () {
-    //   this.$router.push({ path: '/account/settings' });
-    // },
+    handleToSettings () {
+      this.$router.push({ path: '/admin/upload' });
+    },
     handleLogout (e) {
       Modal.confirm({
         title: this.$t('layouts.usermenu.dialog.title'),

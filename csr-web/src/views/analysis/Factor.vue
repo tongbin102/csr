@@ -1,19 +1,28 @@
 <template>
   <div>
     <a-row>
-      <a-col :span="24">满意度趋势分析</a-col>
+      <a-col :span="24" style="font-weight: bold;">满意度趋势分析</a-col>
     </a-row>
-    <div class="content">
-      <a-row>
-        <a-col :span="12">分渠道得分</a-col>
+    <div class="analysis-content">
+      <a-row class="title">
+        <a-col :span="6">
+          <span>分因子得分</span>
+        </a-col>
+        <a-col :span="6" :offset="12">
+          <span>趋势分析</span>
+        </a-col>
       </a-row>
 
-      <a-divider></a-divider>
-
-      <a-table :columns="scoreFactorColumns" :data-source="scoreFactorData" :pagination="false" :loading="scoreFactorLoading">
+      <a-table
+        id="scoreFactorTable"
+        table-layout="fixed"
+        :columns="scoreFactorColumns"
+        :data-source="scoreFactorData"
+        :pagination="false"
+        :loading="scoreFactorLoading">
       </a-table>
       <a-row>
-        <a-col :span="12">
+        <a-col :xs="24" :sm="12">
           <!-- <v-chart :options="chartOptions.total" :auto-resize="true"></v-chart> -->
           <div class="Echarts">
             <div id="totalChart" :style="{padding: '5px', width: '100%', height: '200px'}"></div>
@@ -21,7 +30,7 @@
           <!-- <bar :data="barData.barTotal" title="总分" style="height:100px;" /> -->
           <!-- <mini-bar :data="barData.barTotal" /> -->
         </a-col>
-        <a-col :span="12" v-for="factor in factorList1" :key="factor.id">
+        <a-col :xs="24" :sm="12" v-for="factor in factorList1" :key="factor.id">
           <div class="Echarts">
             <div :id="'factorChart'+ factor.id" :style="{padding: '5px', width: '100%', height: '200px'}"></div>
           </div>
@@ -57,7 +66,9 @@ export default {
       barData: {},
       totalOptions: {},
       chartOptions: {},
-      barColor
+      barColor,
+      totalChart: {},
+      factorChartList: []
     };
   },
   mounted () {
@@ -65,6 +76,9 @@ export default {
     window.onresize = () => {
       //  根据窗口大小调整曲线大小
       this.totalChart.resize();
+      this.factorChartList.forEach(factorChart => {
+        factorChart.resize();
+      });
     };
   },
   methods: {
@@ -89,51 +103,112 @@ export default {
         this.scoreFactorData = [scoreFactorInfo[scoreFactorInfo.length - 1].scoreFactor];
 
         const totalOptions = {
-          title: { text: '总分' },
-          tooltip: {},
-          xAxis: {
-            data: []
+          title: {
+            text: '总分',
+            left: 'center',
+            top: 0
           },
-          yAxis: {},
-          series: [{
-            name: '得分',
-            type: 'bar',
-            itemStyle: {
-              color: this.barColor
-            },
-            label: {
-              fontSize: 6
-            },
-            data: []
-          }]
+          tooltip: {
+            formatter: ' {a}: ({c})'
+          },
+          grid: [
+            { x: '14%', y: '14%', width: '76%', height: '76%' }
+          ],
+          xAxis: [
+            {
+              gridIndex: 0,
+              type: 'category',
+              axisLabel: {
+                interval: 0 // 强制显示文字
+              },
+              data: []
+            }
+          ],
+          yAxis: [
+            {
+              show: true,
+              type: 'value',
+              gridIndex: 0,
+              splitLine: {
+                show: true
+              }
+            }
+          ],
+          series: [
+            {
+              name: '得分',
+              type: 'bar',
+              xAxisIndex: 0,
+              yAxisIndex: 0,
+              label: {
+                show: true,
+                color: '#313131',
+                position: 'inside'
+              },
+              itemStyle: {
+                color: this.barColor
+              },
+              data: []
+            }
+          ]
         };
         const xAxisData = [];
         const seriesData = [];
         scoreFactorInfo.forEach(scoreFactor => {
-          xAxisData.push(moment(scoreFactor.period).format('M月'));
-          seriesData.push(parseInt(scoreFactor.score) || 0);
+          const month = moment(scoreFactor.period).format('M月');
+          xAxisData.push({ value: month });
+          seriesData.push([month, parseInt(scoreFactor.score) || null]);
         });
-        totalOptions.xAxis.data = xAxisData;
+        totalOptions.xAxis[0].data = xAxisData;
         totalOptions.series[0].data = seriesData;
         this.chartOptions.total = totalOptions;
         this.initTotalChart();
 
         this.factorList1.forEach(factor => {
           const factorOptions = {
-            title: { text: factor.name },
-            tooltip: {},
-            xAxis: {
-              data: []
+            title: {
+              text: factor.name,
+              left: 'center',
+              top: 0
             },
-            yAxis: {},
+            tooltip: {
+              formatter: ' {a}: ({c})'
+            },
+            grid: [
+              { x: '14%', y: '14%', width: '76%', height: '76%' }
+            ],
+            xAxis: [
+              {
+                gridIndex: 0,
+                type: 'category',
+                axisLabel: {
+                  interval: 0 // 强制显示文字
+                },
+                data: []
+              }
+            ],
+            yAxis: [
+              {
+                show: true,
+                type: 'value',
+                gridIndex: 0,
+                splitLine: {
+                  show: true
+                }
+              }
+            ],
             series: [{
               name: '得分',
               type: 'bar',
+              xAxisIndex: 0,
+              yAxisIndex: 0,
+              label: {
+                show: true,
+                color: '#313131',
+                position: 'inside'
+              },
               itemStyle: {
                 color: this.barColor
-              },
-              label: {
-                fontSize: 6
               },
               data: []
             }]
@@ -142,10 +217,11 @@ export default {
           const seriesData = [];
 
           scoreFactorInfo.forEach(scoreFactor => {
-            xAxisData.push(moment(scoreFactor.period).format('M月'));
-            seriesData.push(parseInt(scoreFactor.score) || 0);
+            const month = moment(scoreFactor.period).format('M月');
+            xAxisData.push({ value: month });
+            seriesData.push([month, parseInt(scoreFactor.scoreFactor[factor.name]) || null]);
           });
-          factorOptions.xAxis.data = xAxisData;
+          factorOptions.xAxis[0].data = xAxisData;
           factorOptions.series[0].data = seriesData;
           this.chartOptions['factorOptions' + factor.id] = factorOptions;
           this.initFactorChart(factor.id);
@@ -169,13 +245,15 @@ export default {
       });
     },
     initTotalChart () {
-      console.log(this.chartOptions.total);
+      // console.log(this.chartOptions.total);
       const totalChart = this.$echarts.init(document.getElementById('totalChart'));
       totalChart.setOption(this.chartOptions.total);
+      this.totalChart = totalChart;
     },
     initFactorChart (factorId) {
       const factorChart = this.$echarts.init(document.getElementById('factorChart' + factorId));
       factorChart.setOption(this.chartOptions['factorOptions' + factorId]);
+      this.factorChartList.push(factorChart);
     }
   }
 
@@ -183,7 +261,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.content {
-  border: 1px solid;
-}
+@import './Analysis.less';
 </style>

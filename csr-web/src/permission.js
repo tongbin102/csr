@@ -116,21 +116,49 @@ router.beforeEach((to, from, next) => {
       } else {
         if (to.path === '/') {
           const roles = store.getters.roles;
-          // console.log('roles: ', roles);
+          console.log('roles: ', roles);
+          const userInfo = store.getters.userInfo;
+          console.log(userInfo);
           if (roles === 'admin') {
+            // 管理员账户
             next({ path: '/admin/upload' });
           } else if (roles === 'national') {
             next({ path: '/satisfaction/national' });
           } else if (roles === 'region') {
-            next({ path: '/satisfaction/region' });
+            next({
+              path: '/satisfaction/region',
+              query: {
+                code: userInfo.ref
+              }
+            });
           } else if (roles === 'province') {
-            next({ path: '/satisfaction/province' });
+            next({
+              path: '/satisfaction/province',
+              query: {
+                code: userInfo.ref
+              }
+            });
           } else if (roles === 'city') {
-            next({ path: '/satisfaction/city' });
+            next({
+              path: '/satisfaction/city',
+              query: {
+                code: userInfo.ref
+              }
+            });
           } else if (roles === 'superior') {
-            next({ path: '/satisfaction/superior' });
+            next({
+              path: '/satisfaction/superior',
+              query: {
+                code: userInfo.ref
+              }
+            });
           } else if (roles === 'store') {
-            next({ path: '/satisfaction/store' });
+            next({
+              path: '/satisfaction/store',
+              query: {
+                code: userInfo.ref
+              }
+            });
           }
         } else {
           // 跳转到目的路由

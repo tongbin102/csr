@@ -38,6 +38,7 @@
             <a-col :span="24">
               <span style="font-weight: bold;">分渠道得分</span>
               <a-button type="link" style="float: right; color: #47DADA; height:100%; line-height:100%;" @click="handleClickChannelAnalysis">
+                <!-- <span><a-icon type="line-chart" /></span> -->
                 <span style="text-decoration: underline;">趋势分析</span>
               </a-button>
             </a-col>
