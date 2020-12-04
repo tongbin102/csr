@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.csr.constants.DictionaryType;
 import com.project.csr.dao.QuestionSurveyMapper;
 import com.project.csr.model.po.QuestionSurveyPo;
+import com.project.csr.model.po.RegionPo;
 import com.project.csr.model.po.RegulationPo;
 import com.project.csr.model.po.ScoreQuestionPo;
 import com.project.csr.model.vo.QuestionSurveyVo;
@@ -67,20 +68,16 @@ public class QuestionSurveyServiceImpl extends ServiceImpl<QuestionSurveyMapper,
         LambdaQueryWrapper<QuestionSurveyPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionSurveyPo::getRegulationDescription, regulationPo.getElementCode() + ";" + regulationPo.getDescription());
         List<QuestionSurveyVo> questionSurveyVoList = ConvertUtils.convert(questionSurveyMapper.selectList(wrapper), QuestionSurveyVo.class);
-        String questionIds = ToolsUtils.getIdsFromList(questionSurveyVoList, ",");
-        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeCode, DictionaryType.CHANNEL_CODE_SURVEY, questionIds);
+        // String questionIds = ToolsUtils.getIdsFromList(questionSurveyVoList, ",");
+        String questionSeriesNos = questionSurveyVoList.stream().map(QuestionSurveyVo::getSeriesNo).collect(Collectors.joining(","));
+
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionSeriesNos(period, storeCode, DictionaryType.CHANNEL_CODE_SURVEY, questionSeriesNos);
 
         questionSurveyVoList.stream().forEach(questionSurveyVo -> {
-            // 获取类别
-            List<RegulationPo> list1 = regulationPoList.stream().filter(r -> r.getId().equals(questionSurveyVo.getRegulationDescription())).collect(Collectors.toList());
-            if (list1.size() > 0) {
-                questionSurveyVo.setScoreType(list1.get(0).getScoreType());
-            }
-            List<ScoreQuestionPo> list2 = scoreQuestionPoList.stream().filter(q -> q.getQuestionSeriesNo().toString().equals(questionSurveyVo.getSeriesNo())).collect(Collectors.toList());
-            if (list2.size() > 0) {
-                questionSurveyVo.setScore(list2.get(0).getScore());
-                questionSurveyVo.setGrade(list2.get(0).getGrade());
+            List<ScoreQuestionPo> list = scoreQuestionPoList.stream().filter(q -> q.getQuestionSeriesNo().toString().equals(questionSurveyVo.getSeriesNo())).collect(Collectors.toList());
+            if (list.size() > 0) {
+                questionSurveyVo.setScore(list.get(0).getScore());
+                questionSurveyVo.setGrade(list.get(0).getGrade());
             }
         });
 

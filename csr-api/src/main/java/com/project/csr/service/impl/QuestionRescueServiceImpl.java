@@ -11,6 +11,7 @@ import com.project.csr.model.po.QuestionRescuePo;
 import com.project.csr.model.po.RegulationPo;
 import com.project.csr.model.po.ScoreQuestionPo;
 import com.project.csr.model.vo.QuestionRescueVo;
+import com.project.csr.model.vo.QuestionSurveyVo;
 import com.project.csr.service.QuestionRescueService;
 import com.project.csr.service.RegulationService;
 import com.project.csr.service.ScoreQuestionService;
@@ -67,20 +68,17 @@ public class QuestionRescueServiceImpl extends ServiceImpl<QuestionRescueMapper,
         LambdaQueryWrapper<QuestionRescuePo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionRescuePo::getRegulationDescription, regulationPo.getElementCode() + ";" + regulationPo.getDescription());
         List<QuestionRescueVo> questionRescueVoList = ConvertUtils.convert(questionRescueMapper.selectList(wrapper), QuestionRescueVo.class);
-        String questionIds = ToolsUtils.getIdsFromList(questionRescueVoList, ",");
-        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeCode, DictionaryType.CHANNEL_CODE_RESCUE, questionIds);
+        // String questionIds = ToolsUtils.getIdsFromList(questionRescueVoList, ",");
+        String questionSeriesNos = questionRescueVoList.stream().map(QuestionRescueVo::getSeriesNo).collect(Collectors.joining(","));
+        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionSeriesNos, ",");
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionSeriesNos(period, storeCode, DictionaryType.CHANNEL_CODE_RESCUE, questionSeriesNos);
 
         questionRescueVoList.stream().forEach(questionRescueVo -> {
             // 获取类别
-            List<RegulationPo> list1 = regulationPoList.stream().filter(r -> r.getId().equals(questionRescueVo.getRegulationDescription().toString())).collect(Collectors.toList());
-            if (list1.size() > 0) {
-                questionRescueVo.setScoreType(list1.get(0).getScoreType());
-            }
-            List<ScoreQuestionPo> list2 = scoreQuestionPoList.stream().filter(q -> q.getQuestionSeriesNo().toString().equals(questionRescueVo.getSeriesNo())).collect(Collectors.toList());
-            if (list2.size() > 0) {
-                questionRescueVo.setScore(list2.get(0).getScore());
-                questionRescueVo.setGrade(list2.get(0).getGrade());
+            List<ScoreQuestionPo> list = scoreQuestionPoList.stream().filter(q -> q.getQuestionSeriesNo().toString().equals(questionRescueVo.getSeriesNo())).collect(Collectors.toList());
+            if (list.size() > 0) {
+                questionRescueVo.setScore(list.get(0).getScore());
+                questionRescueVo.setGrade(list.get(0).getGrade());
             }
         });
 

@@ -11,6 +11,7 @@ import com.project.csr.model.po.QuestionMonitorPo;
 import com.project.csr.model.po.RegulationPo;
 import com.project.csr.model.po.ScoreQuestionPo;
 import com.project.csr.model.vo.QuestionMonitorVo;
+import com.project.csr.model.vo.QuestionSurveyVo;
 import com.project.csr.service.QuestionMonitorService;
 import com.project.csr.service.RegulationService;
 import com.project.csr.service.ScoreQuestionService;
@@ -67,19 +68,16 @@ public class QuestionMonitorServiceImpl extends ServiceImpl<QuestionMonitorMappe
         LambdaQueryWrapper<QuestionMonitorPo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(QuestionMonitorPo::getRegulationDescription, regulationPo.getElementCode() + ";" + regulationPo.getDescription());
         List<QuestionMonitorVo> questionMonitorVoList = ConvertUtils.convert(questionMonitorMapper.selectList(wrapper), QuestionMonitorVo.class);
-        String questionIds = ToolsUtils.getIdsFromList(questionMonitorVoList, ",");
-        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionIds, ",");
-        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionIds(period, storeCode, DictionaryType.CHANNEL_CODE_MONITOR, questionIds);
+        // String questionIds = ToolsUtils.getIdsFromList(questionMonitorVoList, ",");
+        String questionSeriesNos = questionMonitorVoList.stream().map(QuestionMonitorVo::getSeriesNo).collect(Collectors.joining(","));
+        List<RegulationPo> regulationPoList = regulationService.findListFromIds(questionSeriesNos, ",");
+        List<ScoreQuestionPo> scoreQuestionPoList = scoreQuestionService.findByStoreAndQuestionSeriesNos(period, storeCode, DictionaryType.CHANNEL_CODE_MONITOR, questionSeriesNos);
 
         questionMonitorVoList.stream().forEach(questionMonitorVo -> {
             // 获取类别
-            List<RegulationPo> list1 = regulationPoList.stream().filter(r -> r.getId().equals(questionMonitorVo.getRegulationDescription().toString())).collect(Collectors.toList());
-            if (list1.size() > 0) {
-                questionMonitorVo.setScoreType(list1.get(0).getScoreType());
-            }
-            List<ScoreQuestionPo> list2 = scoreQuestionPoList.stream().filter(q -> q.getQuestionSeriesNo().toString().equals(questionMonitorVo.getSeriesNo())).collect(Collectors.toList());
-            if (list2.size() > 0) {
-                questionMonitorVo.setGrade(list2.get(0).getGrade());
+            List<ScoreQuestionPo> list = scoreQuestionPoList.stream().filter(q -> q.getQuestionSeriesNo().toString().equals(questionMonitorVo.getSeriesNo())).collect(Collectors.toList());
+            if (list.size() > 0) {
+                questionMonitorVo.setGrade(list.get(0).getGrade());
             }
         });
 

@@ -39,7 +39,7 @@ public interface ScoreQuestionService extends IService<ScoreQuestionPo> {
      */
     boolean prohibitById(String id);
 
-    List<ScoreQuestionPo> findByStoreAndQuestionIds(String period, String storeCode, String channelCode, String questionSeriesNos);
+    List<ScoreQuestionPo> findByStoreAndQuestionSeriesNos(String period, String storeCode, String channelCode, String questionSeriesNos);
 
     /**
      * 通过期数删除数据

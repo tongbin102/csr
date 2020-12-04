@@ -33,7 +33,7 @@ CREATE TABLE `channel`
     `update_time`     datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='渠道表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='渠道表';
 
 -- ----------------------------
 -- Records of channel
@@ -69,7 +69,7 @@ CREATE TABLE `city`
     `update_time`   datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='城市表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='城市表';
 
 -- ----------------------------
 -- Records of city
@@ -92,7 +92,7 @@ CREATE TABLE `element`
     `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='因子要素表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='因子要素表';
 
 -- ----------------------------
 -- Records of element
@@ -114,7 +114,7 @@ CREATE TABLE `factor`
     `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='因子表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='因子表';
 
 -- ----------------------------
 -- Records of factor
@@ -149,7 +149,7 @@ CREATE TABLE `province`
     `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='省份表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='省份表';
 
 -- ----------------------------
 -- Records of province
@@ -162,11 +162,11 @@ DROP TABLE IF EXISTS `question_assistance`;
 CREATE TABLE `question_assistance`
 (
     `id`                     bigint(20) NOT NULL,
-    `regulation_description` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
-    `series_no`              varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目序号',
-    `analysis_point`         varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
-    `kpi`                    varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
-    `kpi_description`        varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
+    `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
+    `series_no`              varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目序号',
+    `analysis_point`         varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
+    `kpi`                    varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
+    `kpi_description`        varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
     `excellent`              varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '优秀',
     `good`                   varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '优良',
     `standard`               varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '达标',
@@ -178,7 +178,7 @@ CREATE TABLE `question_assistance`
     `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='服务助手评分规则表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='服务助手评分规则表';
 
 -- ----------------------------
 -- Records of question_assistance
@@ -195,7 +195,7 @@ CREATE TABLE `question_complain`
     `period`      varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
     `factor_code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
     `store_code`  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '优秀',
-    `description` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
+    `description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
     `valid_ind`   bit(1)                             DEFAULT NULL COMMENT '有效标识',
     `creator`     varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
     `create_time` datetime                           DEFAULT NULL COMMENT '创建时间',
@@ -203,7 +203,7 @@ CREATE TABLE `question_complain`
     `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='服务助手评分规则表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='服务助手评分规则表';
 
 -- ----------------------------
 -- Records of question_complain
@@ -218,8 +218,8 @@ CREATE TABLE `question_data`
     `id`                     bigint(20) NOT NULL,
     `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
     `series_no`              varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目序号',
-    `analysis_point`         varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
-    `kpi`                    varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
+    `analysis_point`         varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
+    `kpi`                    varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
     `kpi_description`        varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
     `deduct`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '不达标后扣分',
     `valid_ind`              bit(1)                             DEFAULT NULL COMMENT '有效标识',
@@ -229,7 +229,7 @@ CREATE TABLE `question_data`
     `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='道路救援评分规则表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='道路救援评分规则表';
 
 -- ----------------------------
 -- Records of question_data
@@ -257,7 +257,7 @@ CREATE TABLE `question_monitor`
     `update_time`            datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='过程监控评分规则表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='过程监控评分规则表';
 
 -- ----------------------------
 -- Records of question_monitor
@@ -272,8 +272,8 @@ CREATE TABLE `question_rescue`
     `id`                     bigint(20) NOT NULL,
     `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
     `series_no`              varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目序号',
-    `analysis_point`         varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
-    `kpi`                    varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
+    `analysis_point`         varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
+    `kpi`                    varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
     `kpi_description`        varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
     `deduct`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '不达标后扣分',
     `valid_ind`              bit(1)                             DEFAULT NULL COMMENT '有效标识',
@@ -340,7 +340,7 @@ CREATE TABLE `region`
     `update_time`   datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='大区表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='大区表';
 
 -- ----------------------------
 -- Records of region
@@ -363,7 +363,7 @@ CREATE TABLE `regulation`
     `update_time`  datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='因子要素细则表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='因子要素细则表';
 
 -- ----------------------------
 -- Records of regulation
@@ -378,7 +378,7 @@ CREATE TABLE `regulation_score`
     `id`                     bigint(20) NOT NULL COMMENT '主键id',
     `period`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
     `store_code`             varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '店code',
-    `regulation_description` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
+    `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
     `score_type`             int(1)                             DEFAULT NULL COMMENT '成绩类型：1.考核项 2. 加分项 3. 扣分项',
     `score`                  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '得分',
     `grade`                  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '等级',
@@ -389,7 +389,7 @@ CREATE TABLE `regulation_score`
     `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='因子要素细则评分规则表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='因子要素细则评分规则表';
 
 -- ----------------------------
 -- Records of regulation_score
@@ -404,7 +404,7 @@ CREATE TABLE `regulation_score_channel`
     `id`                     bigint(20) NOT NULL COMMENT '主键id',
     `period`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
     `store_code`             varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '店code',
-    `regulation_description` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
+    `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
     `channel_code`           varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道code',
     `score_type`             int(1)                             DEFAULT NULL COMMENT '成绩类型：1.考核项 2. 加分项 3. 扣分项',
     `score`                  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '得分',
@@ -416,7 +416,7 @@ CREATE TABLE `regulation_score_channel`
     `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='因子要素细则分渠道评分规则表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='因子要素细则分渠道评分规则表';
 
 -- ----------------------------
 -- Records of regulation_score_channel
@@ -475,7 +475,7 @@ CREATE TABLE `scope`
     `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='范围表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='范围表';
 
 -- ----------------------------
 -- Records of scope
@@ -514,7 +514,7 @@ CREATE TABLE `score`
     `update_time`  datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='成绩排名表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='成绩排名表';
 
 -- ----------------------------
 -- Records of score
@@ -542,7 +542,7 @@ CREATE TABLE `score_channel`
     `update_time`  datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='分渠道成绩统计表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='分渠道成绩统计表';
 
 -- ----------------------------
 -- Records of score_channel
@@ -570,7 +570,7 @@ CREATE TABLE `score_factor`
     `update_time`  datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='分因子成绩统计表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='分因子成绩统计表';
 
 -- ----------------------------
 -- Records of score_factor
@@ -596,7 +596,7 @@ CREATE TABLE `score_question`
     `update_time`        datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='门店题目-得分表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='门店题目-得分表';
 
 -- ----------------------------
 -- Records of score_question
@@ -622,7 +622,7 @@ CREATE TABLE `store`
     `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='门店表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='门店表';
 
 -- ----------------------------
 -- Records of store
@@ -684,7 +684,7 @@ CREATE TABLE `user_store`
     `update_time`   datetime                           DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1 COMMENT ='用户-区域/店关系表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='用户-区域/店关系表';
 
 -- ----------------------------
 -- Records of user_store
