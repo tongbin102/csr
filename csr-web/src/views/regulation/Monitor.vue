@@ -11,7 +11,7 @@
     </a-row>
     <a-divider></a-divider>
     <a-row style="margin: 24px 0; font-weight: bold; color: #09CDFF;">
-      <a-col :span="8">过程监控</a-col>
+      <a-col :span="8">过程监控{{ questionMonitor.seriesNo }}</a-col>
       <a-col :span="12" :offset="4">区域经理评分：{{ questionMonitor.grade }}</a-col>
     </a-row>
     <div class="suggestion">

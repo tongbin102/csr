@@ -13,6 +13,7 @@ NProgress.configure({ showSpinner: false }); // NProgress Configuration
 // const allowList = ['login', 'register', 'registerResult']; // no redirect allowList
 const allowList = ['login'];
 const loginRoutePath = '/user/login';
+const changePasswordRoutePath = '/user/changePassword';
 const defaultRoutePath = '/';
 
 router.beforeEach((to, from, next) => {
@@ -52,7 +53,10 @@ router.beforeEach((to, from, next) => {
                   // console.log('roles: ', roles);
                   const userInfo = store.getters.userInfo;
                   // console.log(userInfo);
-                  if (roles === 'admin') {
+                  if (userInfo.loginType === 0) {
+                    console.log(changePasswordRoutePath);
+                    next({ path: changePasswordRoutePath });
+                  } else if (roles === 'admin') {
                     // 管理员账户
                     next({ path: '/admin/upload' });
                   } else if (roles === 'national') {

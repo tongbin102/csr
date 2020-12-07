@@ -42,6 +42,7 @@
 
 <script>
 // import md5 from 'md5';
+// import store from '@/store';
 import { mapActions } from 'vuex';
 import { timeFix } from '@/utils/util';
 
@@ -89,8 +90,13 @@ export default {
           // loginParams.password = md5(values.password);
           loginParams.password = values.password;
           Login(loginParams)
-            .then((res) => this.loginSuccess(res))
-            .catch(err => this.requestFailed(err))
+            .then((res) => {
+              if (res.resCode === 200) {
+                this.loginSuccess(res);
+              } else {
+                this.requestFailed(res);
+              }
+            }).catch(err => this.requestFailed(err))
             .finally(() => {
               state.loginBtn = false;
             });

@@ -11,7 +11,9 @@ const userApi = {
   // get my info
   UserInfo: '/user/info',
   UserMenu: '/user/nav',
-  UserToken: '/token'
+  UserToken: '/token',
+  ResetUserPassword: '/userApi/resetPassword',
+  ChangeUserPassword: '/userApi/changePassword'
 };
 
 /**
@@ -79,5 +81,20 @@ export function get2step (parameter) {
     url: userApi.twoStepCode,
     method: 'post',
     data: parameter
+  });
+}
+
+export function resetUserPassword (parameter) {
+  return request({
+    url: userApi.ResetUserPassword,
+    method: 'put',
+    params: parameter
+  });
+}
+export function changeUserPassword (parameter) {
+  return request({
+    url: userApi.ChangeUserPassword,
+    method: 'put',
+    params: parameter
   });
 }

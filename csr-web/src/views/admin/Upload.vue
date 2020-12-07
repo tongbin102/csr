@@ -1,10 +1,40 @@
 <template>
   <div>
     <a-breadcrumb>
-      <a-breadcrumb-item>系統管理</a-breadcrumb-item>
-      <a-breadcrumb-item><a href="">数据文件导入</a></a-breadcrumb-item>
+      <a-breadcrumb-item>系统管理</a-breadcrumb-item>
+      <a-breadcrumb-item>数据文件导入</a-breadcrumb-item>
     </a-breadcrumb>
+
     <a-divider></a-divider>
+
+    <a-form layout="inline">
+      <a-form-item label="密码重置"></a-form-item>
+      <a-form-item label="用户名">
+        <a-input ref="resetUsername" v-model="resetUsername" placeholder="输入重置密码的用户名" />
+      </a-form-item>
+      <a-form-item>
+        <a-button type="primary" @click="handleResetPassword()">重置</a-button>
+      </a-form-item>
+    </a-form>
+    <a-form layout="inline">
+      <a-form-item style="margin-left: 50px;">
+        <span>or 上传用户名批量重置密码</span>
+      </a-form-item>
+      <a-form-item>
+        <a-upload
+          name="file"
+          :multiple="false"
+          accept=".xls, .xlsx"
+          :customRequest="customRequestReset"
+          :beforeUpload="beforeUploadReset"
+          :showUploadList="false">
+          <a-button type="primary">
+            <a-icon type="upload" />上传
+          </a-button>
+        </a-upload>
+      </a-form-item>
+    </a-form>
+
     <a-divider></a-divider>
 
     <a-form layout="inline">
@@ -16,7 +46,6 @@
           :customRequest="customRequestConfig"
           :beforeUpload="beforeUploadConfig"
           :showUploadList="false">
-
           <a-button type="primary">
             <a-icon type="upload" />上传
           </a-button>
@@ -59,7 +88,6 @@
           :customRequest="customRequestScore"
           :beforeUpload="beforeUploadScore"
           :showUploadList="false">
-
           <a-button type="primary">
             <a-icon type="upload" />上传
           </a-button>
@@ -87,6 +115,7 @@
 
 <script>
 import moment from 'moment';// 推荐在入口文件全局设置
+import { resetUserPassword } from '@/api/login';
 
 export default {
   data () {
@@ -147,6 +176,7 @@ export default {
       }
     ];
     return {
+      resetUsername: '',
       configFileData,
       scoreFileData,
       locale: 'zh-CN',
@@ -157,7 +187,7 @@ export default {
   methods: {
     moment,
     beforeUploadConfig (file) {
-      console.log('before upload');
+      console.log('before upload config');
     },
     beforeUploadScore (file) {
       if (!this.scorePeriod) {
@@ -167,6 +197,9 @@ export default {
         });
         return false;
       }
+    },
+    beforeUploadReset (file) {
+      console.log('before upload reset');
     },
     // handleChange (info) {
     //   console.log(info.file.status);
@@ -293,12 +326,57 @@ export default {
         this.scoreFileData[4].status = 'error';
       });
     },
+    customRequestReset (data) {
+      const form = new FormData();
+      form.append('file', data.file);
+      // 上传用户名批量重置密码
+      this.$http.post('/fileApi/resetPasswordBatch', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => {
+        if (res.resCode === 200) {
+          this.resetSuccess();
+        } else {
+          this.requestFailed(res.resData);
+        }
+      });
+    },
     handleDownLoad () {
       console.log('download');
     },
     onChangeScorePeriod (value) {
       console.log(value);
       this.scorePeriod = value;
+    },
+    handleResetPassword () {
+      // console.log(this.resetUsername);
+      resetUserPassword({ username: this.resetUsername }).then(res => {
+        if (res.resCode === 200) {
+          this.resetSuccess();
+        } else {
+          this.requestFailed(res.resData);
+        }
+      });
+    },
+    resetSuccess () {
+      // 延迟 1 秒显示欢迎信息
+      setTimeout(() => {
+        this.$notification.success({
+          message: '密码重置成功',
+          description: '密码已重置成功！'
+        });
+      }, 1000);
+      this.isLoginError = false;
+    },
+    requestFailed (error) {
+      console.log(error);
+      this.isSubmitError = true;
+      this.$notification.error({
+        message: '错误',
+        description: '密码重置失败！',
+        duration: 4
+      });
     }
   }
 
