@@ -10,26 +10,28 @@
       <a-col :span="16"><span v-html="regulationDescription"></span></a-col>
     </a-row>
     <a-divider></a-divider>
-    <a-row style="margin: 24px 0; font-weight: bold; color: #09CDFF;">
-      <a-col :span="24">服务助手考核 {{ questionAssistance.seriesNo }}</a-col>
-    </a-row>
-    <a-row>
-      <a-col :span="24">分析要点：{{ questionAssistance.analysisPoint }}</a-col>
-      <a-col :span="24">KPI指标：{{ questionAssistance.kpi }}</a-col>
+    <div v-for="questionAssistance in questionAssistanceList" :key="questionAssistance.id">
+      <a-row style="margin: 24px 0; font-weight: bold; color: #09CDFF;">
+        <a-col :span="24">服务助手考核 {{ questionAssistance.seriesNo }}</a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">分析要点：{{ questionAssistance.analysisPoint }}</a-col>
+        <a-col :span="24">KPI指标：{{ questionAssistance.kpi }}</a-col>
 
-      <a-col :span="24">
-        KPI说明：
-        <span v-html="questionAssistance.kpiDescription"></span>
-      </a-col>
-    </a-row>
-    <a-row style="margin: 24px 0; font-weight: bold;">
-      <a-col :span="24"><span style="color: #FF3030">评分结果：{{ questionAssistance.grade }}</span></a-col>
-    </a-row>
-    <a-row>
-      <a-col><span>评分标准</span></a-col>
-    </a-row>
-    <a-table :columns="standardColumns" :data-source="[questionAssistance]" :pagination="false" bordered>
-    </a-table>
+        <a-col :span="24">
+          KPI说明：
+          <span v-html="questionAssistance.kpiDescription"></span>
+        </a-col>
+      </a-row>
+      <a-row style="margin: 24px 0; font-weight: bold;">
+        <a-col :span="24"><span style="color: #FF3030">评分结果：{{ questionAssistance.grade }}</span></a-col>
+      </a-row>
+      <a-row>
+        <a-col><span>评分标准</span></a-col>
+      </a-row>
+      <a-table :columns="standardColumns" :data-source="[questionAssistance]" :pagination="false" bordered>
+      </a-table>
+    </div>
   </div>
 </template>
 <script>
@@ -104,9 +106,9 @@ export default {
     getQuestionAssistanceList (params = {}) {
       getQuestionAssistanceList(params).then(res => {
         this.questionAssistanceList = res.resData;
-        if (this.questionAssistanceList) {
-          this.questionAssistance = this.questionAssistanceList[0];
-        }
+        // if (this.questionAssistanceList) {
+        //   this.questionAssistance = this.questionAssistanceList[0];
+        // }
       });
     }
   }

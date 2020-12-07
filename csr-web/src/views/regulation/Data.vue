@@ -84,7 +84,6 @@ export default {
         this.questionDataList = res.resData;
         if (this.questionDataList) {
           this.questionData = this.questionDataList[0];
-          this.questionData = this.questionDataList[0];
           // console.log(this.questionData);
         }
       });
