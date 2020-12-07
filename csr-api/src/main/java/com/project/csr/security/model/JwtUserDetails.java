@@ -1,5 +1,6 @@
 package com.project.csr.security.model;
 
+import com.project.csr.constants.CsrConstant;
 import com.project.csr.model.vo.UserVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +32,7 @@ public class JwtUserDetails extends UserVo implements UserDetails {
 	public JwtUserDetails(String userName, Collection<? extends GrantedAuthority> authorities) {
 		this.authorities = authorities;
 		this.setUsername(userName);
-		String encode = new BCryptPasswordEncoder().encode("123456");
+		String encode = new BCryptPasswordEncoder().encode(CsrConstant.DEFAULT_RAW_PASSWORD);
 		this.setPassword(encode);
 		this.setAuthorities(authorities);
 	}

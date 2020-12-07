@@ -1,5 +1,7 @@
 package com.project.csr.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.project.csr.constants.CsrConstant;
 import com.project.csr.constants.DictionaryType;
 import com.project.csr.excel.DefaultExcelListener;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author: bin.tong
@@ -204,6 +207,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
             userPo.setUsername(userImportVo.getUsername());
             userPo.setName(userImportVo.getName());
             userPo.setPassword(defaultPassword);
+            userPo.setLoginType(0);
             // 如果用户名称与权限码相等
             String roleCode = userImportVo.getRuleCode().trim();
             if ("ADM".equals(roleCode.trim())) {
@@ -737,6 +741,22 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         List<RegulationScoreChannelPo> regulationScoreChannelPoList = new ArrayList<>(regulationScoreChannelPoSet);
         regulationScoreChannelService.deleteByPeriod(period);
         regulationScoreChannelService.saveBatch(regulationScoreChannelPoList);
+    }
+
+
+    @Override
+    public void resetPasswordBatch(MultipartFile file) throws IOException {
+        UserPo userPo = new UserPo();
+        userPo.setPassword(encoder.encode(CsrConstant.DEFAULT_RAW_PASSWORD));
+        userPo.setLoginType(0);
+
+        DefaultExcelListener<T> resetPasswordBatchImportListener = new DefaultExcelListener<>();
+        EasyExcelUtils.asyncReadModel(file.getInputStream(), resetPasswordBatchImportListener, ResetPasswordBatchImportVo.class, 0, 1);
+        List<ResetPasswordBatchImportVo> resetPasswordBatchImportVoList = ConvertUtils.convert(resetPasswordBatchImportListener.getRows(), ResetPasswordBatchImportVo.class);
+        String usernames = resetPasswordBatchImportVoList.stream().map(ResetPasswordBatchImportVo::getUsername).collect(Collectors.joining(","));
+        LambdaUpdateWrapper<UserPo> wrapper = Wrappers.lambdaUpdate();
+        wrapper.in(UserPo::getUsername, usernames.split(","));
+        userService.update(userPo, wrapper);
     }
 
     private Long getScopeIdFromName(String scopeName) {

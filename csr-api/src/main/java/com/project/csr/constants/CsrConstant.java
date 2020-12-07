@@ -9,6 +9,6 @@ public class CsrConstant {
     /**
      * 默认初始密码
      */
-    public static final String DEFAULT_RAW_PASSWORD = "123456";
+    public static final String DEFAULT_RAW_PASSWORD = "Password@123";
 
 }

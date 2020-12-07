@@ -70,4 +70,12 @@ public interface ExcelImportService {
      * @throws IOException
      */
     void importRegulationScore(MultipartFile file, String period) throws IOException;
+
+    /**
+     * 上传用户名批量重置密码
+     *
+     * @param file
+     * @throws IOException
+     */
+    void resetPasswordBatch(MultipartFile file) throws IOException;
 }

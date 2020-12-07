@@ -38,29 +38,29 @@ public class JwtAuthenticationApi {
     private JwtTokenUtils jwtTokenUtils;
 
     @PostMapping("${jwt.security.path}")
-    public String createAuthenticationToken(@RequestBody UserPo user) throws Exception{
-        log.info("username: "+user.getUsername() + ", password: "+user.getPassword());
-        authenticate(user.getUsername(),user.getPassword());
+    public String createAuthenticationToken(@RequestBody UserPo user) throws Exception {
+        log.info("username: " + user.getUsername() + ", password: " + user.getPassword());
+        authenticate(user.getUsername(), user.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         final String token = jwtTokenUtils.generateToken(userDetails);
         return token;
     }
 
     @GetMapping("/token")
-    public JwtUserDetails getAuthenticatedUser(HttpServletRequest request){
-        String token= request.getHeader(jwtProperties.getTokenHeader()).substring(7);
+    public JwtUserDetails getAuthenticatedUser(HttpServletRequest request) {
+        String token = request.getHeader(jwtProperties.getTokenHeader()).substring(7);
         String username = jwtTokenUtils.getUsernameFromToken(token);
-        JwtUserDetails userDetails =  (JwtUserDetails)userDetailsService.loadUserByUsername(username);
+        JwtUserDetails userDetails = (JwtUserDetails) userDetailsService.loadUserByUsername(username);
         return userDetails;
     }
 
-    private void authenticate(String username, String password)throws Exception{
-        try{
+    private void authenticate(String username, String password) throws Exception {
+        try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e){
-            throw new Exception("USER_DISABLED",e);
-        }catch (BadCredentialsException e){
-            throw new Exception("INVALID_CREDENTIALS",e);
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
 }

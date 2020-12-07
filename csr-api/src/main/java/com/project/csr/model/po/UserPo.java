@@ -59,4 +59,7 @@ public class UserPo extends BasePo {
     @ApiModelProperty(value = "用户描述")
     private String description;
 
+    @ApiModelProperty(value = "登陆类型：0需要设置密码；1不需要设置密码")
+    private Integer loginType;
+
 }

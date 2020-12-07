@@ -75,5 +75,11 @@ public class FileController {
         return "success";
     }
 
+    @ApiOperation("上传用户名批量重置密码")
+    @PostMapping("/resetPasswordBatch")
+    public String resetPasswordBatch(@RequestParam("file") MultipartFile file) throws IOException {
+        importService.resetPasswordBatch(file);
+        return "success";
+    }
 
 }

@@ -27,6 +27,7 @@
                     <result column="phone" property="phone"/>
                     <result column="icon_url" property="iconUrl"/>
                     <result column="description" property="description"/>
+                    <result column="login_type" property="loginType"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
@@ -37,7 +38,7 @@
                 create_time,
                 updater,
                 update_time,
-            username, name, password, role_id, ref, sex, address, birth_date, phone, icon_url, description
+            username, name, password, role_id, ref, sex, address, birth_date, phone, icon_url, description, login_type
         </sql>
 
 </mapper>

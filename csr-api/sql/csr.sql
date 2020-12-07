@@ -167,15 +167,15 @@ CREATE TABLE `question_assistance`
     `analysis_point`         varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
     `kpi`                    varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
     `kpi_description`        varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
-    `excellent`              varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '优秀',
-    `good`                   varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '优良',
-    `standard`               varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '达标',
-    `weak`                   varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '薄弱',
-    `valid_ind`              bit(1)                             DEFAULT NULL COMMENT '有效标识',
-    `creator`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-    `create_time`            datetime                           DEFAULT NULL COMMENT '创建时间',
-    `updater`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-    `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
+    `excellent`              varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '优秀',
+    `good`                   varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '优良',
+    `standard`               varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '达标',
+    `weak`                   varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '薄弱',
+    `valid_ind`              bit(1)                              DEFAULT NULL COMMENT '有效标识',
+    `creator`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '创建人',
+    `create_time`            datetime                            DEFAULT NULL COMMENT '创建时间',
+    `updater`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '最后更新人',
+    `update_time`            datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='服务助手评分规则表';
@@ -191,16 +191,16 @@ DROP TABLE IF EXISTS `question_complain`;
 CREATE TABLE `question_complain`
 (
     `id`          bigint(20) NOT NULL,
-    `series_no`   varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目序号',
-    `period`      varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
-    `factor_code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
-    `store_code`  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '优秀',
+    `series_no`   varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '题目序号',
+    `period`      varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '分析要点',
+    `factor_code` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT 'KPI指标',
+    `store_code`  varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '优秀',
     `description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
-    `valid_ind`   bit(1)                             DEFAULT NULL COMMENT '有效标识',
-    `creator`     varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-    `create_time` datetime                           DEFAULT NULL COMMENT '创建时间',
-    `updater`     varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-    `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
+    `valid_ind`   bit(1)                              DEFAULT NULL COMMENT '有效标识',
+    `creator`     varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '创建人',
+    `create_time` datetime                            DEFAULT NULL COMMENT '创建时间',
+    `updater`     varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '最后更新人',
+    `update_time` datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='服务助手评分规则表';
@@ -217,16 +217,16 @@ CREATE TABLE `question_data`
 (
     `id`                     bigint(20) NOT NULL,
     `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
-    `series_no`              varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目序号',
+    `series_no`              varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '题目序号',
     `analysis_point`         varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
     `kpi`                    varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
     `kpi_description`        varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
-    `deduct`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '不达标后扣分',
-    `valid_ind`              bit(1)                             DEFAULT NULL COMMENT '有效标识',
-    `creator`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-    `create_time`            datetime                           DEFAULT NULL COMMENT '创建时间',
-    `updater`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-    `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
+    `deduct`                 varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '不达标后扣分',
+    `valid_ind`              bit(1)                              DEFAULT NULL COMMENT '有效标识',
+    `creator`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '创建人',
+    `create_time`            datetime                            DEFAULT NULL COMMENT '创建时间',
+    `updater`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '最后更新人',
+    `update_time`            datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='道路救援评分规则表';
@@ -242,7 +242,7 @@ DROP TABLE IF EXISTS `question_monitor`;
 CREATE TABLE `question_monitor`
 (
     `id`                     bigint(20) NOT NULL COMMENT '主键id',
-    `regulation_description` varchar(2048) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '细则描述',
+    `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
     `series_no`              varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '题目序号',
     `suggestion`             varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '考核方法建议',
     `description`            varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '相关说明',
@@ -271,16 +271,16 @@ CREATE TABLE `question_rescue`
 (
     `id`                     bigint(20) NOT NULL,
     `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
-    `series_no`              varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目序号',
+    `series_no`              varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '题目序号',
     `analysis_point`         varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '分析要点',
     `kpi`                    varchar(1024) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI指标',
     `kpi_description`        varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'KPI说明',
-    `deduct`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '不达标后扣分',
-    `valid_ind`              bit(1)                             DEFAULT NULL COMMENT '有效标识',
-    `creator`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-    `create_time`            datetime                           DEFAULT NULL COMMENT '创建时间',
-    `updater`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-    `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
+    `deduct`                 varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '不达标后扣分',
+    `valid_ind`              bit(1)                              DEFAULT NULL COMMENT '有效标识',
+    `creator`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '创建人',
+    `create_time`            datetime                            DEFAULT NULL COMMENT '创建时间',
+    `updater`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '最后更新人',
+    `update_time`            datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='道路救援评分规则表';
@@ -296,7 +296,7 @@ DROP TABLE IF EXISTS `question_survey`;
 CREATE TABLE `question_survey`
 (
     `id`                     bigint(20) NOT NULL COMMENT '主键id',
-    `regulation_description` varchar(2048) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '细则描述',
+    `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
     `series_no`              varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '题目序号',
     `description`            varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '题目描述',
     `answer1`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '答案1',
@@ -376,17 +376,17 @@ DROP TABLE IF EXISTS `regulation_score`;
 CREATE TABLE `regulation_score`
 (
     `id`                     bigint(20) NOT NULL COMMENT '主键id',
-    `period`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-    `store_code`             varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '店code',
+    `period`                 varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '期数',
+    `store_code`             varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '店code',
     `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
-    `score_type`             int(1)                             DEFAULT NULL COMMENT '成绩类型：1.考核项 2. 加分项 3. 扣分项',
-    `score`                  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '得分',
-    `grade`                  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '等级',
-    `valid_ind`              bit(1)                             DEFAULT NULL COMMENT '有效标识',
-    `creator`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-    `create_time`            datetime                           DEFAULT NULL COMMENT '创建时间',
-    `updater`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-    `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
+    `score_type`             int(1)                              DEFAULT NULL COMMENT '成绩类型：1.考核项 2. 加分项 3. 扣分项',
+    `score`                  varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '得分',
+    `grade`                  varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '等级',
+    `valid_ind`              bit(1)                              DEFAULT NULL COMMENT '有效标识',
+    `creator`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '创建人',
+    `create_time`            datetime                            DEFAULT NULL COMMENT '创建时间',
+    `updater`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '最后更新人',
+    `update_time`            datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='因子要素细则评分规则表';
@@ -402,18 +402,18 @@ DROP TABLE IF EXISTS `regulation_score_channel`;
 CREATE TABLE `regulation_score_channel`
 (
     `id`                     bigint(20) NOT NULL COMMENT '主键id',
-    `period`                 varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '期数',
-    `store_code`             varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '店code',
+    `period`                 varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '期数',
+    `store_code`             varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '店code',
     `regulation_description` varchar(2048) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '细则描述',
-    `channel_code`           varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '渠道code',
-    `score_type`             int(1)                             DEFAULT NULL COMMENT '成绩类型：1.考核项 2. 加分项 3. 扣分项',
-    `score`                  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '得分',
-    `grade`                  varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '等级',
-    `valid_ind`              bit(1)                             DEFAULT NULL COMMENT '有效标识',
-    `creator`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
-    `create_time`            datetime                           DEFAULT NULL COMMENT '创建时间',
-    `updater`                varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
-    `update_time`            datetime                           DEFAULT NULL COMMENT '最后更新时间',
+    `channel_code`           varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '渠道code',
+    `score_type`             int(1)                              DEFAULT NULL COMMENT '成绩类型：1.考核项 2. 加分项 3. 扣分项',
+    `score`                  varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '得分',
+    `grade`                  varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '等级',
+    `valid_ind`              bit(1)                              DEFAULT NULL COMMENT '有效标识',
+    `creator`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '创建人',
+    `create_time`            datetime                            DEFAULT NULL COMMENT '创建时间',
+    `updater`                varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '最后更新人',
+    `update_time`            datetime                            DEFAULT NULL COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='因子要素细则分渠道评分规则表';
@@ -646,6 +646,7 @@ CREATE TABLE `user`
     `phone`       varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '手机号',
     `icon_url`    varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户头像',
     `description` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户描述',
+    `login_type`  int(1)                             DEFAULT NULL COMMENT '登陆类型：0需要设置密码；1不需要设置密码',
     `valid_ind`   bit(1)                             DEFAULT NULL COMMENT '有效标识',
     `creator`     varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
     `create_time` datetime                           DEFAULT NULL COMMENT '创建时间',

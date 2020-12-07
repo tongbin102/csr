@@ -1,10 +1,12 @@
 package com.project.csr.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.project.csr.constants.CsrConstant;
 import com.project.csr.dao.UserMapper;
 import com.project.csr.model.po.RolePo;
 import com.project.csr.model.po.UserPo;
@@ -13,6 +15,7 @@ import com.project.csr.service.RoleService;
 import com.project.csr.service.UserService;
 import com.project.csr.utils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,6 +29,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements UserService {
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private UserMapper userMapper;
@@ -81,5 +87,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements 
         return userMapper.delete(wrapper) >= 1;
     }
 
+    @Override
+    public boolean resetPassword(String username) {
+        UserPo po = new UserPo();
+        po.setPassword(encoder.encode(CsrConstant.DEFAULT_RAW_PASSWORD));
+        po.setLoginType(0);
+        LambdaQueryWrapper<UserPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserPo::getUsername, username);
+        return userMapper.update(po, wrapper) >= 1;
+    }
+
+    @Override
+    public boolean changePassword(String username, String password) {
+        UserPo po = new UserPo();
+        po.setPassword(encoder.encode(password));
+        po.setLoginType(1);
+        LambdaQueryWrapper<UserPo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserPo::getUsername, username);
+        return userMapper.update(po, wrapper) >= 1;
+
+    }
 }
 

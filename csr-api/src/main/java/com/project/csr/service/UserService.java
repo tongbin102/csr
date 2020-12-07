@@ -39,6 +39,7 @@ public interface UserService extends IService<UserPo> {
 
     /**
      * 禁用所有数据
+     *
      * @return
      */
     boolean prohibitAllExceptAdmin();
@@ -55,4 +56,21 @@ public interface UserService extends IService<UserPo> {
      * 删除除Admin以外的用户
      */
     boolean deleteUsersExceptAdmin();
+
+    /**
+     * 重置密码
+     *
+     * @param username
+     * @return
+     */
+    boolean resetPassword(String username);
+
+    /**
+     * 修改密码
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    boolean changePassword(String username, String password);
 }
