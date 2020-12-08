@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.project.csr.common.enums.ResCodeEnum;
 import com.project.csr.common.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -19,8 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author: bin.tong
- * @date: 2020/11/3 11:37
+ * 登录账号密码错误等情况下,会调用的处理类
+ *
+ * @author bin.tong
+ * @since 2020/11/3 11:37
  **/
 @Slf4j
 @Component
@@ -28,6 +31,9 @@ public class JwtAuthenticationFailureHandler implements AuthenticationFailureHan
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("Login failure! JwtAuthenticationFailureHandler:" + authException.getMessage());
+
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setHeader("Content-Type", "application/json;charset=UTF-8");
         String resMsg = "";
         if (authException instanceof LockedException) {
             resMsg = "账户被锁定，登录失败！";
@@ -42,7 +48,6 @@ public class JwtAuthenticationFailureHandler implements AuthenticationFailureHan
         } else {
             resMsg = "登录失败！";
         }
-
         response.getWriter().write(JSON.toJSONString(new BaseResponse<>(ResCodeEnum.RESCODE_UNAUTHORIZED, resMsg)));
     }
 }

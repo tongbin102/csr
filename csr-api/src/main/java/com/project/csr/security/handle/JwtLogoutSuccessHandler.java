@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author: bin.tong
- * @date: 2020/11/3 11:47
+ * 登出成功的调用类
+ *
+ * @author bin.tong
+ * @since 2020/11/3 11:47
  **/
 @Slf4j
 @Component

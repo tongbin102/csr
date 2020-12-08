@@ -16,14 +16,16 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * @author: bin.tong
- * @date: 2020/10/30 17:18
+ * 匿名未登录的时候访问,需要登录的资源的调用类
+ *
+ * @author bin.tong
+ * @since 2020/10/30 17:18
  **/
 @Slf4j
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2326318368872420155L;
 
     @Override
     public void commence(HttpServletRequest request,
@@ -32,11 +34,11 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
             throws IOException, ServletException {
         log.info("JwtAuthenticationEntryPoint: " + authException.getMessage());
 
-        response.setStatus(HttpStatus.OK.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setHeader("Content-Type", "application/json;charset=UTF-8");
-        BaseResponse responseBody = new BaseResponse(ResCodeEnum.RESCODE_UNAUTHORIZED, "UNAUTHORIZED");
-        response.getWriter().write(JSON.toJSONString(responseBody));
         // response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED");
+
+        response.getWriter().write(JSON.toJSONString(new BaseResponse<>(ResCodeEnum.RESCODE_UNAUTHORIZED, "UNAUTHORIZED")));
 
     }
 }
