@@ -91,11 +91,11 @@ export default {
           loginParams.password = values.password;
           Login(loginParams)
             .then((res) => {
-              if (res.resCode === 200) {
+              // if (res.resCode === 200) {
                 this.loginSuccess(res);
-              } else {
-                this.requestFailed(res);
-              }
+              // } else {
+                // this.requestFailed(res);
+              // }
             }).catch(err => this.requestFailed(err))
             .finally(() => {
               state.loginBtn = false;
@@ -108,6 +108,7 @@ export default {
       });
     },
     loginSuccess (res) {
+      console.log(res);
       // console.log(res);
       // check res.homePage define, set $router.push name res.homePage
       // Why not enter onComplete
@@ -130,13 +131,13 @@ export default {
       }, 1000);
       this.isLoginError = false;
     },
-    requestFailed (err) {
+    requestFailed () {
       this.isLoginError = true;
-      this.$notification.error({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
-      });
+      // this.$notification.error({
+      //   message: '错误',
+      //   description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
+      //   duration: 4
+      // });
     }
   }
 };
