@@ -2,6 +2,7 @@ package com.project.csr.advice;
 
 import com.project.csr.common.enums.ResCodeEnum;
 import com.project.csr.common.exceptions.GlobalException;
+import com.project.csr.common.exceptions.ServiceException;
 import com.project.csr.common.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -108,6 +109,10 @@ public class GlobalExceptionHandler {
 //    public BaseResponse requestStackOverflow(StackOverflowError ex) {
 //        return resultFormat(13, ex);
 //    }
+    @ExceptionHandler({ServiceException.class})
+    public BaseResponse serviceException(ServiceException ex){
+        return resultFormat(ex.getResCodeEnum(), ex);
+    }
 
     //其他错误
     @ExceptionHandler({Exception.class})

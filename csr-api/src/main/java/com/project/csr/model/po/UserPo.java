@@ -44,6 +44,9 @@ public class UserPo extends BasePo {
     @ApiModelProperty(value = "性别")
     private String sex;
 
+    @ApiModelProperty(value = "电子邮箱")
+    private String email;
+
     @ApiModelProperty(value = "地址")
     private String address;
 
@@ -59,7 +62,10 @@ public class UserPo extends BasePo {
     @ApiModelProperty(value = "用户描述")
     private String description;
 
-    @ApiModelProperty(value = "登陆类型：0需要设置密码；1不需要设置密码")
-    private Integer loginType;
+    @ApiModelProperty(value = "是否需要修改密码：0需要；1不需要")
+    private Integer changeFlag;
+
+    @ApiModelProperty(value = "是否锁定")
+    private Boolean isLocked;
 
 }

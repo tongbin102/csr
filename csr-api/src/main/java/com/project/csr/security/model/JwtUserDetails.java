@@ -1,5 +1,6 @@
 package com.project.csr.security.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.project.csr.constants.CsrConstant;
 import com.project.csr.constants.DictionaryType;
 import com.project.csr.model.vo.UserVo;
@@ -25,14 +26,19 @@ public class JwtUserDetails extends UserVo implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
+    private String accessToken;
+
+    private String refreshToken;
+
     public JwtUserDetails() {
     }
 
-    public JwtUserDetails(String userName, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUserDetails(String userName, Boolean isLocked, Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
         this.setUsername(userName);
         String encode = new BCryptPasswordEncoder().encode(CsrConstant.DEFAULT_RAW_PASSWORD);
         this.setPassword(encode);
+        this.setIsLocked(isLocked);
         this.setAuthorities(authorities);
     }
 
@@ -68,7 +74,7 @@ public class JwtUserDetails extends UserVo implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !getIsLocked();
     }
 
     /**

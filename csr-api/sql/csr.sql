@@ -641,12 +641,14 @@ CREATE TABLE `user`
     `role_id`     bigint(20)                         DEFAULT NULL COMMENT '角色id',
     `ref`         varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '负责范围',
     `sex`         varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '性别',
+    `email`       varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '电子邮箱',
     `address`     varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '地址',
     `birth_date`  datetime                           DEFAULT NULL COMMENT '出生日期',
     `phone`       varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '手机号',
     `icon_url`    varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户头像',
     `description` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户描述',
-    `login_type`  int(1)                             DEFAULT NULL COMMENT '登陆类型：0需要设置密码；1不需要设置密码',
+    `change_flag` int(1)                             DEFAULT NULL COMMENT '是否需要修改密码：0需要；1不需要',
+    `isLocked`    int(1)                             DEFAULT NULL COMMENT '是否锁定',
     `valid_ind`   bit(1)                             DEFAULT NULL COMMENT '有效标识',
     `creator`     varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
     `create_time` datetime                           DEFAULT NULL COMMENT '创建时间',
@@ -662,8 +664,8 @@ CREATE TABLE `user`
 -- Records of user
 -- ----------------------------
 INSERT INTO `user`
-VALUES ('1', 'admin', 'admin', '$2a$10$mseea54Txd8r7f9Qi/8CV.cPEnUe55gC/2MJRcpCFCFKu6I58t4P.', '1', null, '3', null,
-        null, null, null, null, '', 'admin', '2020-10-30 09:52:38', 'admin', '2020-10-30 09:52:38');
+VALUES ('1', 'admin', 'admin', '$2a$10$mseea54Txd8r7f9Qi/8CV.cPEnUe55gC/2MJRcpCFCFKu6I58t4P.', '1', '3', null,
+        null, null, null, null, null, null, '', 'admin', '2020-10-30 09:52:38', 'admin', '2020-10-30 09:52:38');
 
 -- ----------------------------
 -- Table structure for user_store
@@ -689,4 +691,28 @@ CREATE TABLE `user_store`
 
 -- ----------------------------
 -- Records of user_store
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for validate
+-- ----------------------------
+DROP TABLE IF EXISTS `validate`;
+CREATE TABLE `validate`
+(
+    `id`          bigint(20) NOT NULL,
+    `username`    varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户名',
+    `email`       varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '邮箱',
+    `reset_token` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '重置token',
+    `type`        varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '类型',
+    `valid_ind`   bit(1)                             DEFAULT NULL COMMENT '有效标识',
+    `creator`     VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
+    `create_time` datetime                           DEFAULT NULL COMMENT '创建时间',
+    `updater`     VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后更新人',
+    `update_time` datetime                           DEFAULT NULL COMMENT '最后更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8mb4 COMMENT = '验证表';
+
+-- ----------------------------
+-- Records of validate
 -- ----------------------------

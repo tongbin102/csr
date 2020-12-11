@@ -1,14 +1,16 @@
 package com.project.csr.properties;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author: bin.tong
- * @date: 2020/10/30 17:20
+ * @author bin.tong
+ * @since 2020/10/30 17:20
  **/
 @Component
 @ConfigurationProperties(prefix = "jwt.security")
+@Data
 public class JwtProperties {
 
     /**
@@ -29,41 +31,47 @@ public class JwtProperties {
     /**
      * 过期时长，单位为秒,可以通过配置写入
      */
-    private int expiration = 60 * 60 * 24 * 30;
+    // private int expiration = 60 * 60 * 24 * 30;
 
-    public String getPath() {
-        return path;
-    }
+    private Integer accessExpiration = 60 * 60;
 
-    public JwtProperties setPath(String path) {
-        this.path = path;
-        return this;
-    }
+    private Integer rolesExpiration = 60 * 5;
 
-    public String getTokenHeader() {
-        return tokenHeader;
-    }
+    private Integer refreshExpiration = 60 * 60 * 24 * 7;
 
-    public JwtProperties setTokenHeader(String tokenHeader) {
-        this.tokenHeader = tokenHeader;
-        return this;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public JwtProperties setSecret(String secret) {
-        this.secret = secret;
-        return this;
-    }
-
-    public int getExpiration() {
-        return expiration;
-    }
-
-    public JwtProperties setExpiration(int expiration) {
-        this.expiration = expiration;
-        return this;
-    }
+    // public String getPath() {
+    //     return path;
+    // }
+    //
+    // public JwtProperties setPath(String path) {
+    //     this.path = path;
+    //     return this;
+    // }
+    //
+    // public String getTokenHeader() {
+    //     return tokenHeader;
+    // }
+    //
+    // public JwtProperties setTokenHeader(String tokenHeader) {
+    //     this.tokenHeader = tokenHeader;
+    //     return this;
+    // }
+    //
+    // public String getSecret() {
+    //     return secret;
+    // }
+    //
+    // public JwtProperties setSecret(String secret) {
+    //     this.secret = secret;
+    //     return this;
+    // }
+    //
+    // public int getExpiration() {
+    //     return expiration;
+    // }
+    //
+    // public JwtProperties setExpiration(int expiration) {
+    //     this.expiration = expiration;
+    //     return this;
+    // }
 }

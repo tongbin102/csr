@@ -43,6 +43,10 @@ public class RedisUtils {
         }
     }
 
+    public boolean expire(final String key, final long time) {
+        return expire(key, time, TimeUnit.SECONDS);
+    }
+
     /**
      * 普通缓存放入
      *

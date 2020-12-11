@@ -2,8 +2,8 @@ package com.project.csr.security.handle;
 
 import com.alibaba.fastjson.JSON;
 import com.project.csr.common.response.BaseResponse;
+import com.project.csr.security.model.JwtUserDetails;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -25,6 +25,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("Login Success!" + authentication.getPrincipal());
+        // 设置返回请求头
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(JSON.toJSONString(BaseResponse.success(authentication.getPrincipal())));
     }

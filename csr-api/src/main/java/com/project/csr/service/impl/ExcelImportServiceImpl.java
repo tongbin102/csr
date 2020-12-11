@@ -193,7 +193,6 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         List<StorePo> storePoList = new ArrayList<>(storePoSet);
         storeService.saveBatch(storePoList);
 
-
         // 导入用户Users
         // 同时导入一级 / 二级店的用户与所辖店关系
         DefaultExcelListener<T> userImportListener = new DefaultExcelListener<>();
@@ -201,57 +200,63 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         List<UserImportVo> userImportVoList = ConvertUtils.convert(userImportListener.getRows(), UserImportVo.class);
         String defaultPassword = encoder.encode(CsrConstant.DEFAULT_RAW_PASSWORD);
 
+        List<UserPo> existUserPoList = userService.list();
         List<UserPo> userPoList = new ArrayList<>();
         userImportVoList.forEach(userImportVo -> {
-            UserPo userPo = new UserPo();
-            userPo.setUsername(userImportVo.getUsername());
-            userPo.setName(userImportVo.getName());
-            userPo.setPassword(defaultPassword);
-            userPo.setLoginType(0);
-            // 如果用户名称与权限码相等
-            String roleCode = userImportVo.getRuleCode().trim();
-            if ("ADM".equals(roleCode.trim())) {
-                // 系统管理员
-                userPo.setRoleId(DictionaryType.ROLE_ID_ADMIN);
-            } else if ("OEM".equals(roleCode.trim())) {
-                // 厂家账户
-                userPo.setRoleId(DictionaryType.ROLE_ID_NATIONAL);
-                // userPo.setRef(DictionaryType.ROLE_NAME_NATIONAL);
-            } else {
-                if (null == userPo.getRoleId()) {
-                    // 大区账户
-                    storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getRegionManager().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
-                        userPo.setRoleId(DictionaryType.ROLE_ID_REGION);
-                        userPo.setRef(storeImportVo.getRegion());
-                    });
+            List<UserPo> list = existUserPoList.stream().filter(userPo -> userPo.getUsername().equals(userImportVo.getUsername())).collect(Collectors.toList());
+            if (list.size() == 0) {
+                UserPo userPo = new UserPo();
+                userPo.setUsername(userImportVo.getUsername());
+                userPo.setName(userImportVo.getName());
+                userPo.setPassword(defaultPassword);
+                userPo.setChangeFlag(DictionaryType.CHANGE_PASSWORD_NEED);
+                // 如果用户名称与权限码相等
+                String roleCode = userImportVo.getRuleCode().trim();
+                if ("ADM".equals(roleCode.trim())) {
+                    // 系统管理员
+                    userPo.setRoleId(DictionaryType.ROLE_ID_ADMIN);
+                } else if ("OEM".equals(roleCode.trim())) {
+                    // 厂家账户
+                    userPo.setRoleId(DictionaryType.ROLE_ID_NATIONAL);
+                    // userPo.setRef(DictionaryType.ROLE_NAME_NATIONAL);
+                } else {
+                    if (null == userPo.getRoleId()) {
+                        // 大区账户
+                        storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getRegionManager().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
+                            userPo.setRoleId(DictionaryType.ROLE_ID_REGION);
+                            userPo.setRef(storeImportVo.getRegion());
+                        });
+                    }
+                    if (null == userPo.getRoleId()) {
+                        // 区域用户
+                        storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getAreaManager().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
+                            userPo.setRoleId(DictionaryType.ROLE_ID_AREA);
+                            userPo.setRef(storeImportVo.getRegion());
+                            // userPo.setRef(storeImportVo.getAreaManager());
+                        });
+                    }
+                    if (null == userPo.getRoleId()) {
+                        // 一级店账户
+                        storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getSuperiorCode().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
+                            userPo.setRoleId(DictionaryType.ROLE_ID_SUPERIOR);
+                            userPo.setRef(storeImportVo.getSuperiorCode());
+                        });
+                    }
+                    if (null == userPo.getRoleId()) {
+                        // 二级店账户
+                        storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getCode().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
+                            userPo.setRoleId(DictionaryType.ROLE_ID_STORE);
+                            userPo.setRef(storeImportVo.getCode());
+                        });
+                    }
                 }
-                if (null == userPo.getRoleId()) {
-                    // 区域用户
-                    storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getAreaManager().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
-                        userPo.setRoleId(DictionaryType.ROLE_ID_AREA);
-                        userPo.setRef(storeImportVo.getRegion());
-                        // userPo.setRef(storeImportVo.getAreaManager());
-                    });
-                }
-                if (null == userPo.getRoleId()) {
-                    // 一级店账户
-                    storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getSuperiorCode().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
-                        userPo.setRoleId(DictionaryType.ROLE_ID_SUPERIOR);
-                        userPo.setRef(storeImportVo.getSuperiorCode());
-                    });
-                }
-                if (null == userPo.getRoleId()) {
-                    // 二级店账户
-                    storeImportVoList.stream().filter(storeImportVo -> storeImportVo.getCode().trim().equals(roleCode)).findFirst().ifPresent(storeImportVo -> {
-                        userPo.setRoleId(DictionaryType.ROLE_ID_STORE);
-                        userPo.setRef(storeImportVo.getCode());
-                    });
-                }
+                userPoList.add(userPo);
             }
-            userPoList.add(userPo);
         });
-        userService.deleteUsersExceptAdmin();
-        userService.saveBatch(userPoList);
+        // userService.deleteUsersExceptAdmin();
+        if (userPoList != null && userPoList.size() > 0) {
+            userService.saveBatch(userPoList);
+        }
 
         // 导入用户与区域/城市关系
         Set<UserStorePo> userStorePoSet = new HashSet<>();
@@ -748,7 +753,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
     public void resetPasswordBatch(MultipartFile file) throws IOException {
         UserPo userPo = new UserPo();
         userPo.setPassword(encoder.encode(CsrConstant.DEFAULT_RAW_PASSWORD));
-        userPo.setLoginType(0);
+        userPo.setChangeFlag(DictionaryType.CHANGE_PASSWORD_NEED);
 
         DefaultExcelListener<T> resetPasswordBatchImportListener = new DefaultExcelListener<>();
         EasyExcelUtils.asyncReadModel(file.getInputStream(), resetPasswordBatchImportListener, ResetPasswordBatchImportVo.class, 0, 1);

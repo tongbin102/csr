@@ -25,6 +25,8 @@ public class DictionaryType {
     public static final Long ROLE_ID_STORE = 6L;
     public static final String ROLE_NAME_STORE = "store";
 
+    public static final Integer CHANGE_PASSWORD_NEED = 0;
+    public static final Integer CHANGE_PASSWORD_DONT_NEED = 1;
 
     /************************** Channel 渠道 ********************************/
 
