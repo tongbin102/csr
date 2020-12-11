@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <a-form id="formSubmit" class="user-layout-submit" ref="formSubmit" :form="form" @submit="handleSubmit">
-      <a-alert v-if="isSubmitError" type="error" showIcon style="margin-bottom: 24px;" message="密码输入错误" />
+    <a-form id="formSubmit" class="user-layout-submit" ref="formSubmit" :form="form">
+      <a-alert v-if="isSubmitError" type="error" showIcon style="margin-bottom: 24px;" :message="errMsg" />
       <a-form-item>
         <span>欢迎来到上汽通用五菱满意度评估系统，这是您第一次登陆，重新设置您的专属密码</span>
       </a-form-item>
@@ -59,7 +59,8 @@
           htmlType="submit"
           class="submit-button"
           :loading="state.submitBtn"
-          :disabled="state.submitBtn">确认</a-button>
+          :disabled="state.submitBtn"
+          @click="handleSubmit">确认</a-button>
         <a-button size="large" type="default" @click="$router.go(-1)">返回</a-button>
       </a-form-item>
     </a-form>
@@ -67,22 +68,20 @@
 </template>
 
 <script>
-import store from '@/store';
-import { changeUserPassword } from '@/api/login';
-
+import { resetPassword } from '@/api/login';
 export default {
+
   data () {
     return {
+      errMsg: '',
+      token: this.$route.query.token,
       submitBtn: false,
       isSubmitError: false,
-      form: '',
+      form: this.$form.createForm(this, { name: 'changePassword' }),
       state: {
         submitBtn: false
       }
     };
-  },
-  beforeCreate () {
-    this.form = this.$form.createForm(this, { name: 'changePassword' });
   },
   methods: {
     compareToFirstPassword (rule, value, callback) {
@@ -102,31 +101,33 @@ export default {
       callback();
     },
     handleSubmit (e) {
-      e.preventDefault();
+      // e.preventDefault();
       const {
         form: { validateFields },
         state
       } = this;
 
-      state.loginBtn = true;
+      state.recoverBtn = true;
 
       const validateFieldsKey = ['password', 'confirmPassword'];
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
-          const params = { ...values };
-          params.username = store.getters.userInfo.username;
-          console.log(params.username);
-          params.password = values.password;
-          params.confirmPassword = values.confirmPassword;
-          changeUserPassword(params)
-            .then(res => {
-              if (res.resCode === 200) {
-                this.changePasswordSuccess(res);
-              } else {
-                this.requestFailed(res);
-              }
-            })
-            .catch(err => this.requestFailed(err))
+          const resetParams = { ...values };
+          delete resetParams.password;
+          resetParams.token = this.token;
+          resetParams.password = values.password;
+          resetParams.confirmPassword = values.confirmPassword;
+          console.log(resetParams);
+          // 重置密码
+          resetPassword(resetParams).then((res) => {
+              this.resetSuccess(res);
+              console.log(res);
+            // if (res.resCode === 200) {
+            // } else {
+            //   console.log(555);
+            //   this.resetFailed(res);
+            // }
+          }).catch(err => this.requestFailed(err))
             .finally(() => {
               state.submitBtn = false;
             });
@@ -137,18 +138,29 @@ export default {
         }
       });
     },
-    changePasswordSuccess (res) {
+    resetSuccess (res) {
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
           message: '成功',
-          description: '密码修改成功！'
+          description: '密码重置成功！'
         });
-        this.$router.push({ path: '/' });
       }, 1000);
       this.isLoginError = false;
     },
+    resetFailed (res) {
+      // 延迟 1 秒显示欢迎信息
+      setTimeout(() => {
+        this.$notification.success({
+          message: '错误信息',
+          description: res.resMsg
+        });
+      }, 1000);
+      this.errMsg = res.resMsg;
+      this.isLoginError = true;
+    },
     requestFailed (err) {
+      this.errMsg = err.resMsg;
       this.isSubmitError = true;
       this.$notification.error({
         message: '错误',
@@ -160,7 +172,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style>
 .form-button .ant-btn {
   margin: 0 20px;
 }

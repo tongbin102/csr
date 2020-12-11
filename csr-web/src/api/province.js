@@ -1,7 +1,9 @@
 import request from '@/utils/request';
 
 const provinceApi = {
-  findProvinceByCode: '/provinceApi/findByCode'
+  findProvinceByCode: '/provinceApi/findByCode',
+
+  ResetPassword: '/validateApi/resetPassword'
 };
 
 export default provinceApi;
@@ -13,5 +15,13 @@ export function getProvinceByCode (code) {
     params: {
       code: code
     }
+  });
+}
+
+export function resetPassword (parameter) {
+  return request({
+    url: provinceApi.ResetPassword,
+    method: 'post',
+    params: parameter
   });
 }

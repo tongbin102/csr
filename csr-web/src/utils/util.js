@@ -1,3 +1,6 @@
+import storage from 'store';
+import { CREATE_AT, EXPIRATION_ACCESS_TOKEN, EXPIRATION_REFRESH_TOKEN } from '@/store/mutation-types';
+
 export function timeFix () {
   const time = new Date();
   const hour = time.getHours();
@@ -64,4 +67,22 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
   setTimeout(() => {
     document.body.removeChild(document.getElementById(id));
   }, timeout);
+}
+
+export function isAccessTokenExpired () {
+  const createAt = storage.get(CREATE_AT) / 1000;
+  const nowTime = new Date().getTime() / 1000;
+  const expireTime = createAt + EXPIRATION_ACCESS_TOKEN;
+
+  // 小于10分钟，表示即将
+  return expireTime - nowTime < 60;
+}
+
+export function isRefreshTokenExpired () {
+  const createAt = storage.get(CREATE_AT) / 1000;
+  const nowTime = new Date().getTime() / 1000;
+  const expireTime = createAt + EXPIRATION_REFRESH_TOKEN;
+
+  // 小于10分钟，表示即将
+  return expireTime - nowTime < 0 * 60;
 }

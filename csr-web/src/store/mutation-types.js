@@ -1,4 +1,10 @@
 export const ACCESS_TOKEN = 'Access-Token';
+export const REFRESH_TOKEN = 'Refresh-Token';
+export const CREATE_AT = 'Create-At';
+// export const EXPIRATION_ACCESS_TOKEN = 30;
+// export const EXPIRATION_REFRESH_TOKEN = 60;
+export const EXPIRATION_ACCESS_TOKEN = 60 * 60;
+export const EXPIRATION_REFRESH_TOKEN = 7 * 24 * 60 * 60;
 export const TOKEN_PREFIX = 'Bearer ';
 
 export const SIDEBAR_TYPE = 'sidebar_type';
