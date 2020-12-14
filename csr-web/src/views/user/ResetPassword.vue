@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import qs from 'qs';
 import { resetPassword } from '@/api/login';
 export default {
 
@@ -113,20 +114,16 @@ export default {
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
           const resetParams = { ...values };
-          delete resetParams.password;
           resetParams.token = this.token;
           resetParams.password = values.password;
           resetParams.confirmPassword = values.confirmPassword;
-          console.log(resetParams);
           // 重置密码
-          resetPassword(resetParams).then((res) => {
+          resetPassword(qs.stringify(resetParams)).then((res) => {
+            if (res.resCode === 200) {
               this.resetSuccess(res);
-              console.log(res);
-            // if (res.resCode === 200) {
-            // } else {
-            //   console.log(555);
-            //   this.resetFailed(res);
-            // }
+            } else {
+              this.resetFailed(res);
+            }
           }).catch(err => this.requestFailed(err))
             .finally(() => {
               state.submitBtn = false;
@@ -145,19 +142,19 @@ export default {
           message: '成功',
           description: '密码重置成功！'
         });
+        this.$router.push({ path: '/' });
       }, 1000);
-      this.isLoginError = false;
+      this.isSubmitError = false;
     },
     resetFailed (res) {
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '错误信息',
-          description: res.resMsg
-        });
-      }, 1000);
-      this.errMsg = res.resMsg;
-      this.isLoginError = true;
+      this.errMsg = res.resData;
+      this.isSubmitError = true;
+      // setTimeout(() => {
+      //   this.$notification.success({
+      //     message: '错误信息',
+      //     description: res.resMsg
+      //   });
+      // }, 1000);
     },
     requestFailed (err) {
       this.errMsg = err.resMsg;

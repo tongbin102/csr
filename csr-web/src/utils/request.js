@@ -138,9 +138,7 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use(response => {
-  if (response.data.resCode === 200) {
-    return response.data;
-  }
+  return response.data;
 }, errorHandler);
 
 const installer = {

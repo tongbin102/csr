@@ -3,7 +3,7 @@
     <a-form id="formSubmit" class="user-layout-submit" ref="formSubmit" :form="form" @submit="handleSubmit">
       <a-alert v-if="isSubmitError" type="error" showIcon style="margin-bottom: 24px;" message="密码输入错误" />
       <a-form-item>
-        <span>欢迎来到上汽通用五菱满意度评估系统，这是您第一次登陆，重新设置您的专属密码</span>
+        <span>请设置您的专属密码</span>
       </a-form-item>
       <a-form-item>
         <a-input-password
@@ -23,7 +23,7 @@
                   validator: validateToNextPassword
                 }
               ],
-              validateTrigger: 'blur'
+              validateTrigger: ['blur']
             }
           ]">
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
@@ -47,8 +47,9 @@
                   validator: compareToFirstPassword
                 }
               ],
-              validateTrigger: 'blur'}
-          ]">
+              validateTrigger: ['blur']}
+          ]"
+          @blur="handleConfirmBlur">
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input-password>
       </a-form-item>
@@ -73,16 +74,14 @@ import { changeUserPassword } from '@/api/login';
 export default {
   data () {
     return {
+      confirmDirty: false,
       submitBtn: false,
       isSubmitError: false,
-      form: '',
+      form: this.$form.createForm(this, { name: 'changePassword' }),
       state: {
         submitBtn: false
       }
     };
-  },
-  beforeCreate () {
-    this.form = this.$form.createForm(this, { name: 'changePassword' });
   },
   methods: {
     compareToFirstPassword (rule, value, callback) {
@@ -97,9 +96,13 @@ export default {
     validateToNextPassword (rule, value, callback) {
       const form = this.form;
       if (value && this.confirmDirty) {
-        form.validateFields(['confirm'], { force: true });
+        form.validateFields(['confirmPassword'], { force: true });
       }
       callback();
+    },
+    handleConfirmBlur (e) {
+      const value = e.target.value;
+      this.confirmDirty = this.confirmDirty || !!value;
     },
     handleSubmit (e) {
       e.preventDefault();

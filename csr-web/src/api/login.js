@@ -117,7 +117,10 @@ export function sendValidationEmail (parameter) {
   return request({
     url: userApi.SendValidationEmail,
     method: 'post',
-    params: parameter
+    data: parameter
+    //   headers: {
+          //     'Content-Type': 'multipart/form-data'
+          //   }
   });
 }
 
@@ -125,6 +128,6 @@ export function resetPassword (parameter) {
   return request({
     url: userApi.ResetPassword,
     method: 'post',
-    params: parameter
+    data: parameter
   });
 }

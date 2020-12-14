@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <a-form id="formSubmit" class="user-layout-submit" ref="formSubmit" :form="form" @submit="handleSubmit">
-      <a-alert v-if="isSubmitError" type="error" showIcon style="margin-bottom: 24px;" message="邮箱输入错误" />
+      <a-alert v-if="isSubmitError" type="error" showIcon style="margin-bottom: 24px;" :message="errMsg" />
       <!-- <a-form-item>
         <span></span>
       </a-form-item> -->
@@ -42,11 +42,13 @@
 </template>
 
 <script>
+import qs from 'qs';
 import { sendValidationEmail } from '@/api/login';
 
 export default {
   data () {
     return {
+      errMsg: '',
       submitBtn: false,
       isSubmitError: false,
       form: this.$form.createForm(this, { name: 'recover' }),
@@ -72,12 +74,18 @@ export default {
       const validateFieldsKey = ['email'];
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
+          // console.log(values);
           const params = { ...values };
           params.email = values.email;
+          // const params = { email: 'aaa' };
           // 发送忘记密码邮件
-          sendValidationEmail(params).then(res => {
+          sendValidationEmail(qs.stringify(params)).then(res => {
             // console.log(res);
-            this.sendMailSuccess(res);
+            if (res.resCode === 200) {
+              this.sendMailSuccess(res);
+            } else {
+              this.sendMailFailed(res);
+            }
           }).catch(err => this.requestFailed(err))
             .finally(() => {
               state.submitBtn = false;
@@ -97,9 +105,19 @@ export default {
           description: '已成功发送邮件！'
         });
       }, 1000);
-      this.isLoginError = false;
+      this.isSubmitError = false;
+    },
+    sendMailFailed (res) {
+      this.errMsg = res.resData;
+      this.isSubmitError = true;
+      // this.$notification.error({
+      //   message: '错误信息',
+      //   description: err.resData,
+      //   duration: 4
+      // });
     },
     requestFailed (err) {
+      this.errMsg = err.resMsg;
       this.isSubmitError = true;
       this.$notification.error({
         message: '错误',

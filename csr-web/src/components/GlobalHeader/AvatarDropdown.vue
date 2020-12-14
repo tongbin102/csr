@@ -6,15 +6,15 @@
     </span>
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
-        <!-- <a-menu-item v-if="menu" key="center" @click="handleToCenter">
+        <a-menu-item key="center" @click="handleToCenter">
           <a-icon type="user" />
-          个人中心
+          修改密码
         </a-menu-item>
-        <a-menu-item v-if="menu" key="settings" @click="handleToSettings">
+        <!-- <a-menu-item v-if="menu" key="settings" @click="handleToSettings">
           <a-icon type="setting" />
           个人设置
         </a-menu-item>
-        <a-menu-divider v-if="menu" /> -->
+        <a-menu-divider /> -->
         <a-menu-item v-if="menu" key="import" @click="handleToSettings">
           <a-icon type="import" />
           数据导入
@@ -48,9 +48,9 @@ export default {
     }
   },
   methods: {
-    // handleToCenter () {
-    //   this.$router.push({ path: '/account/center' });
-    // },
+    handleToCenter () {
+      this.$router.push({ path: '/user/changePassword' });
+    },
     handleToSettings () {
       this.$router.push({ path: '/admin/upload' });
     },
