@@ -209,6 +209,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                 userPo.setUsername(userImportVo.getUsername());
                 userPo.setName(userImportVo.getName());
                 userPo.setPassword(defaultPassword);
+                userPo.setEmail(userImportVo.getEmail());
                 userPo.setChangeFlag(DictionaryType.CHANGE_PASSWORD_NEED);
                 // 如果用户名称与权限码相等
                 String roleCode = userImportVo.getRuleCode().trim();

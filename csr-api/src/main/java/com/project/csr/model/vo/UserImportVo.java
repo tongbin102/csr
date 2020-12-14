@@ -29,4 +29,9 @@ public class UserImportVo {
      * 权限码
      */
     private String ruleCode;
+
+    /**
+     * 邮箱地址
+     */
+    private String email;
 }

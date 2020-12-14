@@ -159,7 +159,7 @@ public class ValidateApi {
         if (validatePo == null) {
             throw new ServiceException(ResCodeEnum.RESCODE_BAD_REQUEST, "该重置请求不存在");
         } else {
-            if (validateService.validateLimitation(validatePo.getEmail(), Long.MAX_VALUE, 50, token)) {
+            if (validateService.validateLimitation(validatePo.getEmail(), Long.MAX_VALUE, 5, token)) {
                 String username = validatePo.getUsername();
                 if (password.equals(confirmPassword)) {
                     UserPo userPo = new UserPo();
