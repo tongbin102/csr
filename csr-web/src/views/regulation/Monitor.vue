@@ -1,17 +1,18 @@
 <template>
   <div>
-    <!-- <a-breadcrumb separator="">
-      <a-breadcrumb-item>{{ elementName }}</a-breadcrumb-item>
-      <a-breadcrumb-separator>——</a-breadcrumb-separator>
-      <a-breadcrumb-item>{{ regulationDescription }}</a-breadcrumb-item>
-    </a-breadcrumb> -->
-    <a-row class="title">
-      <a-col :span="8"><span>{{ elementName + " —— " }}</span></a-col>
-      <a-col :span="16"><span v-html="regulationDescription"></span></a-col>
-    </a-row>
-    <a-divider></a-divider>
-    <a-row style="margin: 24px 0; font-weight: bold; color: #09CDFF;">
-      <a-col :span="8">过程监控{{ questionMonitor.seriesNo }}</a-col>
+    <a-affix :offset-top="top" @change="handleAffixChange">
+      <div style="background-color: #FFFFFF">
+        <a-row class="title">
+          <a-col :span="24">代码：<span>{{ storeCode }}</span></a-col>
+          <a-col :span="24">名称：<span>{{ storeName }}</span></a-col>
+          <a-col :span="8"><span>{{ elementName }}</span></a-col>
+          <a-col :span="16"><span v-html="regulationDescription"></span></a-col>
+        </a-row>
+        <a-divider></a-divider>
+      </div>
+    </a-affix>
+    <a-row class="channelName">
+      <a-col :span="8" style="color: #29D4D4;">过程监控{{ questionMonitor.seriesNo }}</a-col>
       <a-col :span="12" :offset="4">区域经理评分：{{ questionMonitor.grade }}</a-col>
     </a-row>
     <div class="suggestion">
@@ -48,6 +49,7 @@
 </template>
 <script>
 import moment from 'moment';
+import { getStoreByCode } from '@/api/store';
 import { getRegulationById } from '@/api/regulation';
 import { getQuestionMonitorList } from '@/api/question';
 
@@ -72,9 +74,11 @@ export default {
       }
     ];
     return {
+      top: 0,
       title: '',
       period: '',
       storeCode: '',
+      storeName: '',
       elementName: '',
       regulationId: '',
       regulationDescription: '',
@@ -88,25 +92,30 @@ export default {
     this.initialData();
   },
   methods: {
-    initialData (regulationId) {
+    async initialData (regulationId) {
       this.period = moment().add('month', 0).format('yyyyMM');
       this.storeCode = this.$route.query.store_code;
       this.regulationId = this.$route.query.regulation_id;
       if (this.regulationId) {
-        this.getRegulationById();
+        await getStoreByCode(this.storeCode).then(res => {
+          // console.log(res);
+          if (res.resCode === 200) {
+            this.storeName = res.resData.name;
+          }
+        });
+        await getRegulationById(this.regulationId).then(res => {
+          if (res.resCode === 200) {
+            const regulation = res.resData;
+            this.elementName = regulation.elementCode.split(';')[1];
+            this.regulationDescription = regulation.description;
+          }
+        });
         this.getQuestionMonitorList({
           period: this.period,
           store_code: this.storeCode,
           regulation_id: this.regulationId
         });
       }
-    },
-    getRegulationById () {
-      getRegulationById(this.regulationId).then(res => {
-        const regulation = res.resData;
-        this.elementName = regulation.elementCode.split(';')[1];
-        this.regulationDescription = regulation.description;
-      });
     },
     getQuestionMonitorList (params = {}) {
       getQuestionMonitorList(params).then(res => {

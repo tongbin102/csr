@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 // base library
 import {
+  Affix,
   ConfigProvider,
   Layout,
   Input,
@@ -97,6 +98,7 @@ Vue.use(PageHeader);
 Vue.use(Result);
 Vue.use(Statistic);
 Vue.use(Descriptions);
+Vue.use(Affix);
 
 Vue.prototype.$confirm = Modal.confirm;
 Vue.prototype.$message = message;

@@ -22,20 +22,22 @@
           <span slot="scoreTitle"></span>
 
           <template slot="rankCountry" slot-scope="text, record">
-            <span v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
-            <span v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
-            <span v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
+            <span>{{ record.rankCountry }}</span>
+            <span v-if="record.rankCountryDiff !== 0"><a-icon :type="record.rankCountryDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankCountryDiff > 0 ? record.rankCountryDiff: record.rankCountryDiff * (-1) }}</span>
           </template>
           <template slot="rankScope" slot-scope="text, record">
-            <span v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
-            <span v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
-            <span v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
+            <span>{{ record.rankScope }}</span>
+            <span v-if="record.rankScopeDiff !== 0"><a-icon :type="record.rankScopeDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankScopeDiff > 0 ? record.rankScopeDiff : record.rankScopeDiff * (-1) }}</span>
           </template>
           <template slot="scoreDiff" slot-scope="text, record">
+            <span v-if="record.scoreDiff !== 0"><a-icon :type="record.scoreDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.scoreDiff > 0 ? record.scoreDiff : record.scoreDiff * (-1) }}分</span>
+            <span v-else>持平</span>
+          </template>
+          <!-- <template slot="scoreDiff" slot-scope="text, record">
             <span v-if="record.scoreDiff > 0">{{ '提高+' + record.scoreDiff }}</span>
             <span v-if="record.scoreDiff === 0">持平</span>
             <span v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff }}</span>
-          </template>
+          </template> -->
         </a-table>
 
         <a-table
@@ -249,14 +251,16 @@ export default {
           key: 'score',
           slots: { title: 'scoreTitle' },
           scopedSlots: { customRender: 'score' },
-          width: '25%'
+          width: '40%',
+          align: 'left'
         },
         {
           title: '全国排名',
           dataIndex: 'rankCountry',
           key: 'rankCountry',
           scopedSlots: { customRender: 'rankCountry' },
-          width: '25%',
+          width: '20%',
+          align: 'center',
           customCell: function (record, index) {
             return {
               style: {
@@ -270,7 +274,8 @@ export default {
           dataIndex: 'rankScope',
           key: 'rankScope',
           scopedSlots: { customRender: 'rankScope' },
-          width: '25%',
+          width: '20%',
+          align: 'center',
           customCell: function (record, index) {
             return {
               style: {
@@ -284,7 +289,8 @@ export default {
           dataIndex: 'scoreDiff',
           key: 'scoreDiff',
           scopedSlots: { customRender: 'scoreDiff' },
-          width: '25%',
+          width: '20%',
+          align: 'center',
           customCell: function (record, index) {
             return {
               style: {

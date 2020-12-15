@@ -25,9 +25,9 @@
   margin-top: 20px;
 }
 
-#regulationScoreTable /deep/ .ant-table-thead > tr {
+// #regulationScoreTable /deep/ .ant-table-thead > tr {
   // line-height: 20px;
-}
+// }
 #regulationScoreTable /deep/ .ant-table-thead > tr > th {
   padding: 10px 5px;
   font-size: 14px;
@@ -48,7 +48,7 @@
   width: 100%;
   font-size: 14px;
 }
-#regulationScoreTable /deep/ .ant-table-tbody > tr > td button {
+#regulationScoreTable /deep/ .ant-table-tbody > tr > td .ant-btn {
   padding: 0;
 }
 
@@ -86,18 +86,31 @@
     font-size: 12px;
   }
 
-  #scoreFactorTable /deep/ .ant-table-tbody > tr > td {
+  // #scoreFactorTable /deep/ .ant-table-tbody > tr > td {
     // transform: scale(0.833333);
-  }
-  #regulationScoreTable /deep/ .ant-table-tbody > tr > td {
-    transform: scale(0.7);
-  }
+  // }
+  // #regulationScoreTable /deep/ .ant-table-tbody > tr > td {
+    // transform: scale(0.7);
+    // font-size: 8px;
+  // }
+
   #regulationScoreTable /deep/ .ant-table-tbody > tr > td:first-child,
   #regulationScoreTable /deep/ .ant-table-tbody > tr > td:nth-child(2) {
+    font-size: 6px;
+    overflow: auto;
+    // transform-origin: 0;
+  }
+  #regulationScoreTable /deep/ .ant-table-tbody > tr > td:nth-child(3) {
+    font-size: 6px;
+  }
+  #regulationScoreTable /deep/ .ant-table-tbody > tr > td .ant-btn {
+    transform: scale(0.8);
     transform-origin: 0;
+    font-size: 6px;
   }
   #deductTable /deep/ .ant-table-tbody > tr > td {
-    transform: scale(0.7);
-    transform-origin: 0;
+    font-size: 6px;
+    // transform: scale(0.7);
+    // transform-origin: 0;
   }
 }

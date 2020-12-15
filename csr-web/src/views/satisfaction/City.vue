@@ -13,31 +13,27 @@
           :data-source="scoreData"
           :pagination="false"
           :loading="scoreLoading">
-          <template slot="score" slot-scope="text, record, index">
-            <span v-if="index === 0">{{ name }}总得分：{{ record.score }}</span>
+          <template slot="name" slot-scope="text, record, index">
+            <span v-if="index === 0">{{ name }}</span>
             <a-button type="link" v-else @click="handleClickSuperior(record.storeCode)">
-              <span class="label">{{ record.storeName }}得分：</span>
-              <span class="value">{{ record.score }}</span>
+              <span class="label">{{ record.storeName }}</span>
             </a-button>
           </template>
           <span slot="scoreTitle"></span>
-
+          <template slot="score" slot-scope="text, record">
+            <span>{{ record.score }}</span>
+          </template>
           <template slot="rankCountry" slot-scope="text, record">
-            <span v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
-            <span v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
-            <span v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
+            <span>{{ record.rankCountry }}</span>
+            <span v-if="record.rankCountryDiff !== 0"><a-icon :type="record.rankCountryDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankCountryDiff > 0 ? record.rankCountryDiff: record.rankCountryDiff * (-1) }}</span>
           </template>
-
           <template slot="rankScope" slot-scope="text, record">
-            <span v-if="record.rankScopeDiff > 0">{{ record.rankScope + ' 上升+' + record.rankScopeDiff }}</span>
-            <span v-if="record.rankScopeDiff === 0">{{ record.rankScope + ' 持平' }}</span>
-            <span v-if="record.rankScopeDiff < 0">{{ record.rankScope + ' 下降' + record.rankScopeDiff }}</span>
+            <span>{{ record.rankScope }}</span>
+            <span v-if="record.rankScopeDiff !== 0"><a-icon :type="record.rankScopeDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankScopeDiff > 0 ? record.rankScopeDiff : record.rankScopeDiff * (-1) }}</span>
           </template>
-
           <template slot="diff" slot-scope="text, record">
-            <span v-if="record.scoreDiff > 0">{{ '提高' + record.scoreDiff + '分' }}</span>
-            <span v-if="record.scoreDiff === 0">持平</span>
-            <span v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff + '分' }}</span>
+            <span v-if="record.scoreDiff !== 0"><a-icon :type="record.scoreDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.scoreDiff > 0 ? record.scoreDiff : record.scoreDiff * (-1) }}分</span>
+            <span v-else>持平</span>
           </template>
         </a-table>
         <div class="channelInfo">
@@ -89,18 +85,26 @@ export default {
   data () {
     const scoreColumns = [
       {
-        dataIndex: 'score',
-        key: 'score',
+        dataIndex: 'name',
+        key: 'name',
         width: '40%',
         align: 'left',
-        slots: { title: 'scoreTitle' },
+        slots: { title: 'nameTitle' },
+        scopedSlots: { customRender: 'name' }
+      },
+      {
+        title: '得分',
+        dataIndex: 'score',
+        key: 'score',
+        width: '10%',
+        align: 'center',
         scopedSlots: { customRender: 'score' }
       },
       {
         title: '全国排名',
         dataIndex: 'rankCountry',
         key: 'rankCountry',
-        width: '20%',
+        width: '15%',
         align: 'center',
         scopedSlots: { customRender: 'rankCountry' },
         customCell: function (record, index) {
@@ -115,7 +119,7 @@ export default {
         title: '区域排名',
         dataIndex: 'rankScope',
         key: 'rankScope',
-        width: '20%',
+        width: '15%',
         align: 'center',
         scopedSlots: { customRender: 'rankScope' },
         customCell: function (record, index) {
@@ -127,10 +131,10 @@ export default {
         }
       },
       {
-        title: '环比上期',
+        title: '环比',
         dataIndex: 'diff',
         key: 'diff',
-        width: '20%',
+        width: '10%',
         align: 'center',
         scopedSlots: { customRender: 'diff' },
         customCell: function (record, index) {

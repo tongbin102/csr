@@ -14,14 +14,13 @@
           :pagination="false"
           :loading="scoreLoading">
           <template slot="score" slot-scope="text, record, index">
-            <span v-if="index === 0" class="totalSpan">本期全网总得分：{{ record.score }}</span>
+            <span v-if="index === 0" class="totalSpan">全国：{{ record.score }}</span>
             <a-button type="link" v-else @click="handleClickRegion(record.storeCode)">
-              <span class="label">{{ record.storeName }}大区得分：</span>
+              <span class="label">{{ record.storeName }}区：</span>
               <span class="value">{{ record.score }}</span>
             </a-button>
           </template>
           <span slot="scoreTitle"></span>
-
           <template slot="rankCountry" slot-scope="text, record, index" v-if="index !== 0">
             <span v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
             <span v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
@@ -106,7 +105,7 @@ export default {
         }
       },
       {
-        title: '环比上期',
+        title: '环比',
         dataIndex: 'diff',
         key: 'diff',
         width: '30%',
