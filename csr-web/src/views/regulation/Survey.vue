@@ -27,7 +27,7 @@
       <div>
         <a-row v-if="questionSurvey.scoreItem =='综合分'">
           <a-col :span="24">
-            <span style="font-size: 12px; font-style: italic; color: #0000FF">综合得分S=答案1分值*答案1占比%+答案2分值*答案2占比%+答案3分值*答案3占比%+答案4分值*答案4占比%+答案5分值*答案5占比%</span>
+            <span style="font-size: 12px; font-style: italic; color: #0000FF">综合得分S=A分值*A占比%+B分值*B占比%+C分值*C占比%+D分值*D占比%+E分值*E占比%</span>
           </a-col>
         </a-row>
         <a-row style="margin: 24px 0;">
@@ -64,32 +64,32 @@ export default {
   data () {
     const regulationColumns1 = [
       {
-        title: '答案1',
+        title: 'A',
         dataIndex: 'answer1',
         key: 'answer1'
       },
       {
-        title: '答案2',
+        title: 'B',
         dataIndex: 'answer2',
         key: 'answer2'
       },
       {
-        title: '答案3',
+        title: 'C',
         dataIndex: 'answer3',
         key: 'answer3'
       },
       {
-        title: '答案4',
+        title: 'D',
         dataIndex: 'answer4',
         key: 'answer4'
       },
       {
-        title: '答案5',
+        title: 'E',
         dataIndex: 'answer5',
         key: 'answer5'
       },
       {
-        title: '积分答案项',
+        title: '计分答案项',
         dataIndex: 'scoreItem',
         key: 'scoreItem'
       },
@@ -121,7 +121,7 @@ export default {
     ];
     const regulationColumns2 = [
       {
-        title: '积分答案项',
+        title: '计分答案项',
         dataIndex: 'scoreItem',
         key: 'scoreItem'
       },
