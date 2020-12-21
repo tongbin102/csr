@@ -18,7 +18,7 @@
       </a-row>
       <a-row class="complain-content">
         <a-col :span="24">
-          <span>{{ complain.description }}</span>
+          <span>{{ complain.seriesNo }} {{ complain.description }}</span>
         </a-col>
       </a-row>
     </div>

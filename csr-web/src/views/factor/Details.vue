@@ -1,5 +1,14 @@
 <template>
   <div class="card-container">
+    <a-affix :offset-top="top" @change="handleAffixChange">
+      <div style="background-color: #FFFFFF">
+        <a-row class="title">
+          <a-col :span="24">代码：<span>{{ storeCode }}</span></a-col>
+          <a-col :span="24">名称：<span>{{ storeName }}</span></a-col>
+        </a-row>
+        <!-- <a-divider></a-divider> -->
+      </div>
+    </a-affix>
     <a-tabs
       id="factorDetailsTab"
       v-model="activeKey"
@@ -23,14 +32,20 @@
 
           <template slot="rankCountry" slot-scope="text, record">
             <span>{{ record.rankCountry }}</span>
-            <span v-if="record.rankCountryDiff !== 0"><a-icon :type="record.rankCountryDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankCountryDiff > 0 ? record.rankCountryDiff: record.rankCountryDiff * (-1) }}</span>
+            <span v-if="record.rankCountryDiff !== 0">
+              <a-icon :type="record.rankCountryDiff > 0 ? 'arrow-up' : 'arrow-down'" />{{ record.rankCountryDiff > 0 ? record.rankCountryDiff: record.rankCountryDiff * (-1) }}
+            </span>
           </template>
           <template slot="rankScope" slot-scope="text, record">
             <span>{{ record.rankScope }}</span>
-            <span v-if="record.rankScopeDiff !== 0"><a-icon :type="record.rankScopeDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankScopeDiff > 0 ? record.rankScopeDiff : record.rankScopeDiff * (-1) }}</span>
+            <span v-if="record.rankScopeDiff !== 0">
+              <a-icon :type="record.rankScopeDiff > 0 ? 'arrow-up' : 'arrow-down'" />{{ record.rankScopeDiff > 0 ? record.rankScopeDiff : record.rankScopeDiff * (-1) }}
+            </span>
           </template>
           <template slot="scoreDiff" slot-scope="text, record">
-            <span v-if="record.scoreDiff !== 0"><a-icon :type="record.scoreDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.scoreDiff > 0 ? record.scoreDiff : record.scoreDiff * (-1) }}分</span>
+            <span v-if="record.scoreDiff !== 0">
+              <a-icon :type="record.scoreDiff > 0 ? 'arrow-up' : 'arrow-down'" />{{ record.scoreDiff > 0 ? record.scoreDiff : record.scoreDiff * (-1) }}分
+            </span>
             <span v-else>持平</span>
           </template>
           <!-- <template slot="scoreDiff" slot-scope="text, record">
@@ -46,7 +61,8 @@
           :columns="regulationScoreColumns"
           :data-source="regulationScoreData"
           :pagination="false"
-          :loading="regulationScoreLoading">
+          :loading="regulationScoreLoading"
+          :scroll="{ y: 300 }">
           <template slot="element" slot-scope="text, record">
             <span>{{ record.elementCode.split(';')[1] || '' }}</span>
           </template>
@@ -125,6 +141,7 @@
 <script>
 import moment from 'moment';
 import merge from 'webpack-merge';
+import { getStoreByCode } from '@/api/store';
 import { getAllFactor } from '@/api/factor';
 import { getScoreFactorInfoForFactor } from '@/api/score';
 import { getAllChannelList } from '@/api/channel';
@@ -148,7 +165,9 @@ export default {
       }
     ];
     return {
+      top: 0,
       storeCode: '',
+      storeName: '',
       factorCode: '',
       month: moment().add('month', 0).format('yyyy年MM月'),
       period: moment().add('month', 0).format('yyyyMM'),
@@ -230,6 +249,12 @@ export default {
     initialData () {
       this.storeCode = this.$route.query.store_code;
       this.factorCode = this.$route.query.factor_code;
+      getStoreByCode(this.storeCode).then(res => {
+        // console.log(res);
+        if (res.resCode === 200) {
+          this.storeName = res.resData.name;
+        }
+      });
       getAllFactor().then(res => {
         const factorList = res.resData;
         const panes = [];
@@ -451,6 +476,9 @@ export default {
           regulation_id: regulationId
         }
       });
+    },
+    handleAffixChange (affixed) {
+      console.log(affixed);
     }
   }
 

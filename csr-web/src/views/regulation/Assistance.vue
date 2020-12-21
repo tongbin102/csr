@@ -118,6 +118,9 @@ export default {
         //   this.questionAssistance = this.questionAssistanceList[0];
         // }
       });
+    },
+    handleAffixChange (affixed) {
+      console.log(affixed);
     }
   }
 };
