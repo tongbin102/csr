@@ -48,7 +48,7 @@ const SelectLang = {
     return (
       <Dropdown overlay={langMenu} placement="bottomRight">
         <span class={prefixCls}>
-          <Icon type="global" title={i18nRender('navBar.lang')} />
+          <Icon type="global" title={i18nRender('navBar.lang')}/>
         </span>
       </Dropdown>
     );

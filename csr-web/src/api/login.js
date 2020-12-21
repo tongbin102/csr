@@ -105,6 +105,7 @@ export function resetUserPassword (parameter) {
     params: parameter
   });
 }
+
 export function changeUserPassword (parameter) {
   return request({
     url: userApi.ChangeUserPassword,
@@ -119,8 +120,8 @@ export function sendValidationEmail (parameter) {
     method: 'post',
     data: parameter
     //   headers: {
-          //     'Content-Type': 'multipart/form-data'
-          //   }
+    //     'Content-Type': 'multipart/form-data'
+    //   }
   });
 }
 

@@ -18,6 +18,7 @@ export function getQuestionSurveyList (parameter) {
     params: parameter
   });
 }
+
 export function getQuestionMonitorList (parameter) {
   return request({
     url: questionApi.getQuestionMonitorList,

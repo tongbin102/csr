@@ -145,7 +145,8 @@ const user = {
           .catch(() => {
             resolve();
           })
-          .finally(() => {});
+          .finally(() => {
+          });
       });
     }
   }

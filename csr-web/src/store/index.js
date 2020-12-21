@@ -19,14 +19,8 @@ export default new Vuex.Store({
     user,
     permission
   },
-  state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
+  state: {},
+  mutations: {},
+  actions: {},
   getters
 });

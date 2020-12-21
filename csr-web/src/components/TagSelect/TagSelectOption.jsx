@@ -1,5 +1,6 @@
-import { Tag } from 'ant-design-vue';
-const { CheckableTag } = Tag;
+import {Tag} from 'ant-design-vue';
+
+const {CheckableTag} = Tag;
 
 export default {
   name: 'TagSelectOption',
@@ -17,13 +18,13 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       localChecked: this.checked || false
     };
   },
   watch: {
-    checked (val) {
+    checked(val) {
       this.localChecked = val;
     },
     '$parent.items': {
@@ -34,10 +35,10 @@ export default {
       deep: true
     }
   },
-  render () {
-    const { $slots, value } = this;
+  render() {
+    const {$slots, value} = this;
     const onChange = checked => {
-      this.$emit('change', { value, checked });
+      this.$emit('change', {value, checked});
     };
     return (
       <CheckableTag key={value} vModel={this.localChecked} onChange={onChange}>

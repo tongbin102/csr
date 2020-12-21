@@ -6,7 +6,7 @@ const elementApi = {
 
 export default elementApi;
 
-export function getElementById (id) {
+export function getElementById(id) {
   return request({
     url: elementApi.getElementById + '/' + id,
     method: 'get'

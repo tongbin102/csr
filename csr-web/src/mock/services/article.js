@@ -1,5 +1,5 @@
 import Mock from 'mockjs2';
-import { builder, getQueryParameters } from '../util';
+import {builder, getQueryParameters} from '../util';
 
 const titles = [
   'Alipay',
