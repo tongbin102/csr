@@ -201,10 +201,15 @@ public class ExcelImportServiceImpl implements ExcelImportService {
         String defaultPassword = encoder.encode(CsrConstant.DEFAULT_RAW_PASSWORD);
 
         List<UserPo> existUserPoList = userService.list();
+        // 新增用户列表
         List<UserPo> userPoList = new ArrayList<>();
+        // 更新用户列表
+        List<UserPo> updateUserPoList = new ArrayList<>();
+
         userImportVoList.forEach(userImportVo -> {
             List<UserPo> list = existUserPoList.stream().filter(userPo -> userPo.getUsername().equals(userImportVo.getUsername())).collect(Collectors.toList());
             if (list.size() == 0) {
+                // 不存在该用户
                 UserPo userPo = new UserPo();
                 userPo.setUsername(userImportVo.getUsername());
                 userPo.setName(userImportVo.getName());
@@ -252,12 +257,22 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                     }
                 }
                 userPoList.add(userPo);
+            } else {
+                // 用户名已存在则更新
+                UserPo userPo = userPoList.get(0);
+                userPo.setName(userImportVo.getName());
+                userPo.setEmail(userImportVo.getEmail());
+                updateUserPoList.add(userPo);
             }
         });
         // userService.deleteUsersExceptAdmin();
         if (userPoList != null && userPoList.size() > 0) {
             userService.saveBatch(userPoList);
         }
+        if(updateUserPoList != null && updateUserPoList.size() > 0){
+            userService.updateBatchById(updateUserPoList);
+        }
+
 
         // 导入用户与区域/城市关系
         Set<UserStorePo> userStorePoSet = new HashSet<>();
