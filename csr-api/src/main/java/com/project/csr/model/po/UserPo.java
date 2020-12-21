@@ -2,7 +2,9 @@ package com.project.csr.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
 import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.project.csr.common.model.BasePo;
 import io.swagger.annotations.ApiModel;
@@ -21,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("user")
-@ApiModel(value="UserPo对象", description="用户表")
+@ApiModel(value = "UserPo对象", description = "用户表")
 public class UserPo extends BasePo {
 
     private static final long serialVersionUID = 1L;

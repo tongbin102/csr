@@ -2,58 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.csr.dao.ScoreMapper">
 
-        <!-- 开启二级缓存 -->
-        <!-- 注意：默认为 flushCache="true" useCache="true" -->
-        <!-- 1.自定义查询方法时，必须 flushCache="false" useCache="false"， -->
-        <!-- 2.更新，添加，删除时，必须 flushCache="true" useCache="true" 或者不添加 -->
-        <!-- 3.请务修改 cache-ref 中的配置 -->
-        <cache-ref namespace="com.project.csr.dao.ScoreMapper"/>
-        <!-- 通用查询映射结果 -->
-        <resultMap id="BaseResultMap" type="com.project.csr.model.po.ScorePo">
-                <result column="id" property="id"/>
-                <result column="valid_ind" property="validInd"/>
-                <result column="creator" property="creator"/>
-                <result column="create_time" property="createTime"/>
-                <result column="updater" property="updater"/>
-                <result column="update_time" property="updateTime"/>
-                    <result column="period" property="period"/>
-                    <result column="scope_id" property="scopeId"/>
-                    <result column="store_code" property="storeCode"/>
-                    <result column="name" property="name"/>
-                    <result column="score" property="score"/>
-                    <result column="rank_country" property="rankCountry"/>
-                    <result column="rank_scope" property="rankScope"/>
-        </resultMap>
+    <!-- 开启二级缓存 -->
+    <!-- 注意：默认为 flushCache="true" useCache="true" -->
+    <!-- 1.自定义查询方法时，必须 flushCache="false" useCache="false"， -->
+    <!-- 2.更新，添加，删除时，必须 flushCache="true" useCache="true" 或者不添加 -->
+    <!-- 3.请务修改 cache-ref 中的配置 -->
+    <cache-ref namespace="com.project.csr.dao.ScoreMapper"/>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.project.csr.model.po.ScorePo">
+        <result column="id" property="id"/>
+        <result column="valid_ind" property="validInd"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="period" property="period"/>
+        <result column="scope_id" property="scopeId"/>
+        <result column="store_code" property="storeCode"/>
+        <result column="name" property="name"/>
+        <result column="score" property="score"/>
+        <result column="rank_country" property="rankCountry"/>
+        <result column="rank_scope" property="rankScope"/>
+    </resultMap>
 
-        <!-- 通用查询结果列 -->
-        <sql id="Base_Column_List">
-                id,
-                valid_ind,
-                creator,
-                create_time,
-                updater,
-                update_time,
-            period, scope_id, store_code, name, score, rank_country, rank_scope
-        </sql>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        valid_ind,
+        creator,
+        create_time,
+        updater,
+        update_time,
+        period, scope_id, store_code, name, score, rank_country, rank_scope
+    </sql>
 
     <select id="findVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-            current.period,
-            current.scope_id,
-            current.store_code,
-            current.name,
-            s.name AS store_name,
-            current.score,
-            current.rank_country,
-            current.rank_scope,
-            current.valid_ind,
-            current.creator,
-            current.create_time,
-            current.updater,
-            current.update_time,
-            current.score - IFNULL(last.score, 0) AS score_diff,
-            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
-            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
+        current.period,
+        current.scope_id,
+        current.store_code,
+        current.name,
+        s.name AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+        IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM store s
         LEFT JOIN score current
         ON current.store_code = s.code AND current.period = #{current_period}
@@ -72,22 +72,22 @@
 
     <select id="findNationalVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-            current.period,
-            current.scope_id,
-            current.store_code,
-            current.name,
-            '全国' AS store_name,
-            current.score,
-            current.rank_country,
-            current.rank_scope,
-            current.valid_ind,
-            current.creator,
-            current.create_time,
-            current.updater,
-            current.update_time,
-            current.score - IFNULL(last.score, 0) AS score_diff,
-            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
-            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
+        current.period,
+        current.scope_id,
+        current.store_code,
+        current.name,
+        '全国' AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+        IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
@@ -102,22 +102,22 @@
 
     <select id="findRegionVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-            current.period,
-            current.scope_id,
-            current.store_code,
-            current.name,
-            s.name AS store_name,
-            current.score,
-            current.rank_country,
-            current.rank_scope,
-            current.valid_ind,
-            current.creator,
-            current.create_time,
-            current.updater,
-            current.update_time,
-            current.score - IFNULL(last.score, 0) AS score_diff,
-            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
-            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
+        current.period,
+        current.scope_id,
+        current.store_code,
+        current.name,
+        s.name AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+        IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
@@ -133,22 +133,22 @@
 
     <select id="findProvinceVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-            current.period,
-            current.scope_id,
-            current.store_code,
-            current.name,
-            s.name AS store_name,
-            current.score,
-            current.rank_country,
-            current.rank_scope,
-            current.valid_ind,
-            current.creator,
-            current.create_time,
-            current.updater,
-            current.update_time,
-            current.score - IFNULL(last.score, 0) AS score_diff,
-            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
-            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
+        current.period,
+        current.scope_id,
+        current.store_code,
+        current.name,
+        s.name AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+        IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
@@ -161,31 +161,32 @@
             #{store_code}
         </foreach>
         <if test="permission_codes != null">
-        AND s.code IN
-        <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
-            #{permission_code}
-        </foreach>
+            AND s.code IN
+            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")"
+                     separator=",">
+                #{permission_code}
+            </foreach>
         </if>
     </select>
 
     <select id="findCityVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-            current.period,
-            current.scope_id,
-            current.store_code,
-            current.name,
-            s.name AS store_name,
-            current.score,
-            current.rank_country,
-            current.rank_scope,
-            current.valid_ind,
-            current.creator,
-            current.create_time,
-            current.updater,
-            current.update_time,
-            current.score - IFNULL(last.score, 0) AS score_diff,
-            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
-            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
+        current.period,
+        current.scope_id,
+        current.store_code,
+        current.name,
+        s.name AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+        IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
@@ -199,7 +200,8 @@
         </foreach>
         <if test="permission_codes != null">
             AND s.code IN
-            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
+            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")"
+                     separator=",">
                 #{permission_code}
             </foreach>
         </if>
@@ -207,22 +209,22 @@
 
     <select id="findSuperiorVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-            current.period,
-            current.scope_id,
-            current.store_code,
-            current.name,
-            s.name AS store_name,
-            current.score,
-            current.rank_country,
-            current.rank_scope,
-            current.valid_ind,
-            current.creator,
-            current.create_time,
-            current.updater,
-            current.update_time,
-            current.score - IFNULL(last.score, 0) AS score_diff,
-            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
-            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
+        current.period,
+        current.scope_id,
+        current.store_code,
+        current.name,
+        s.name AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+        IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
@@ -236,7 +238,8 @@
         </foreach>
         <if test="permission_codes != null">
             AND s.code IN
-            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
+            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")"
+                     separator=",">
                 #{permission_code}
             </foreach>
         </if>
@@ -244,22 +247,22 @@
 
     <select id="findStoreVoList" resultType="com.project.csr.model.vo.ScoreVo">
         SELECT current.id,
-            current.period,
-            current.scope_id,
-            current.store_code,
-            current.name,
-            s.name AS store_name,
-            current.score,
-            current.rank_country,
-            current.rank_scope,
-            current.valid_ind,
-            current.creator,
-            current.create_time,
-            current.updater,
-            current.update_time,
-            current.score - IFNULL(last.score, 0) AS score_diff,
-            IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
-            IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
+        current.period,
+        current.scope_id,
+        current.store_code,
+        current.name,
+        s.name AS store_name,
+        current.score,
+        current.rank_country,
+        current.rank_scope,
+        current.valid_ind,
+        current.creator,
+        current.create_time,
+        current.updater,
+        current.update_time,
+        current.score - IFNULL(last.score, 0) AS score_diff,
+        IFNULL(last.rank_country, 1) - current.rank_country AS rank_country_diff,
+        IFNULL(last.rank_scope, 1) - current.rank_scope AS rank_scope_diff
         FROM score current
         LEFT JOIN score last ON last.store_code = current.store_code
         and last.scope_id = current.scope_id
@@ -273,7 +276,8 @@
         </foreach>
         <if test="permission_codes != null">
             AND s.code IN
-            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")" separator=",">
+            <foreach collection="permission_codes" item="permission_code" index="index" open="(" close=")"
+                     separator=",">
                 #{permission_code}
             </foreach>
         </if>

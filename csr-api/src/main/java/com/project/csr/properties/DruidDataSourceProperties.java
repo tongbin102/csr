@@ -12,7 +12,7 @@ import java.util.Properties;
 @Data
 @ConfigurationProperties(prefix = "spring.datasource")
 public class DruidDataSourceProperties {
-    
+
     private String type;
     private String url;
     private String username;

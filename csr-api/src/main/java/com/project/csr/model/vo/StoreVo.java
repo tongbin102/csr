@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *  信息
+ * 信息
  * </p>
  *
  * @author bin.tong

@@ -259,20 +259,22 @@ public class ExcelImportServiceImpl implements ExcelImportService {
                 userPoList.add(userPo);
             } else {
                 // 用户名已存在则更新
-                UserPo userPo = userPoList.get(0);
-                userPo.setName(userImportVo.getName());
-                userPo.setEmail(userImportVo.getEmail());
-                updateUserPoList.add(userPo);
+                UserPo userPo = list.get(0);
+                if (StringUtils.isNotEmpty(userPo.getUsername()) && !userPo.getUsername().equals(userImportVo.getName())
+                        && StringUtils.isNotEmpty(userPo.getEmail()) && !userPo.getEmail().equals(userImportVo.getEmail())) {
+                    userPo.setUsername(userImportVo.getName());
+                    userPo.setEmail(userImportVo.getEmail());
+                    updateUserPoList.add(userPo);
+                }
             }
         });
         // userService.deleteUsersExceptAdmin();
         if (userPoList != null && userPoList.size() > 0) {
             userService.saveBatch(userPoList);
         }
-        if(updateUserPoList != null && updateUserPoList.size() > 0){
+        if (updateUserPoList != null && updateUserPoList.size() > 0) {
             userService.updateBatchById(updateUserPoList);
         }
-
 
         // 导入用户与区域/城市关系
         Set<UserStorePo> userStorePoSet = new HashSet<>();

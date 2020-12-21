@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author bin.tong
@@ -41,6 +41,7 @@ public interface StoreService extends IService<StorePo> {
 
     /**
      * 根据父节点id获取store列表
+     *
      * @param parentCode
      * @return
      */

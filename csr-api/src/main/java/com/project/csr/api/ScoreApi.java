@@ -97,7 +97,7 @@ public class ScoreApi {
         Map<String, Object> resultMap = new HashMap<>();
         List<ScoreVo> totalScoreVoList = scoreService.findVoList(scopeId, parentCode, currentPeriod, lastPeriod);
         resultMap.put("totalScoreList", totalScoreVoList);
-        if(totalScoreVoList == null || totalScoreVoList.size() == 0){
+        if (totalScoreVoList == null || totalScoreVoList.size() == 0) {
             throw new GlobalException(ResCodeEnum.RESCODE_FORBIDDEN);
         }
         List<ScoreVo> childScoreVoList = scoreService.findScoreInfo(scopeId, parentCode, currentPeriod, lastPeriod);

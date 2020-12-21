@@ -66,15 +66,15 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         }
         log.info(String.format("用户%s登陆成功", username));
         // 生成新token
-        Map<String,String> tokens = jwtTokenUtils.generateToken(userDetails);
+        Map<String, String> tokens = jwtTokenUtils.generateToken(userDetails);
         String accessToken = tokens.get(jwtTokenUtils.getAccessTokenKey());
         String refreshToken = tokens.get(jwtTokenUtils.getRefreshTokenKey());
         String rolesToken = tokens.get(jwtTokenUtils.getRoleTokenKey());
         // 保存到 redis
         redisUtils.setString(jwtTokenUtils.getAccessTokenKey(username), accessToken);
         redisUtils.expire(jwtTokenUtils.getAccessTokenKey(username), jwtProperties.getAccessExpiration());
-        redisUtils.setString(jwtTokenUtils.getRefreshTokenKey(username),refreshToken);
-        redisUtils.expire(jwtTokenUtils.getRefreshTokenKey(username),jwtProperties.getRefreshExpiration());
+        redisUtils.setString(jwtTokenUtils.getRefreshTokenKey(username), refreshToken);
+        redisUtils.expire(jwtTokenUtils.getRefreshTokenKey(username), jwtProperties.getRefreshExpiration());
         redisUtils.setString(jwtTokenUtils.getRoleTokenKey(username), rolesToken);
         redisUtils.expire(jwtTokenUtils.getRoleTokenKey(username), jwtProperties.getRolesExpiration());
         // 绑定到当前用户

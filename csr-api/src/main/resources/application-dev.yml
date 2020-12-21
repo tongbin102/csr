@@ -71,6 +71,7 @@ spring:
             required: true
     default-encoding: UTF-8
     requestPerDay: 10
+    interval: 20
 
 ## 关闭安全验证
 #management:

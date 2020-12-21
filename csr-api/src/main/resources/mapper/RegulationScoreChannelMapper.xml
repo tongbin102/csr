@@ -2,64 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.csr.dao.RegulationScoreChannelMapper">
 
-        <!-- 开启二级缓存 -->
-        <!-- 注意：默认为 flushCache="true" useCache="true" -->
-        <!-- 1.自定义查询方法时，必须 flushCache="false" useCache="false"， -->
-        <!-- 2.更新，添加，删除时，必须 flushCache="true" useCache="true" 或者不添加 -->
-        <!-- 3.请务修改 cache-ref 中的配置 -->
-        <cache-ref namespace="com.project.csr.dao.RegulationScoreChannelMapper"/>
-        <!-- 通用查询映射结果 -->
-        <resultMap id="BaseResultMap" type="com.project.csr.model.po.RegulationScoreChannelPo">
-                <result column="id" property="id"/>
-                <result column="valid_ind" property="validInd"/>
-                <result column="creator" property="creator"/>
-                <result column="create_time" property="createTime"/>
-                <result column="updater" property="updater"/>
-                <result column="update_time" property="updateTime"/>
-                    <result column="period" property="period"/>
-                    <result column="store_code" property="storeCode"/>
-                    <result column="regulation_description" property="regulationDescription"/>
-                    <result column="channel_code" property="channelCode"/>
-                    <result column="score_type" property="scoreType"/>
-                    <result column="score" property="score"/>
-                    <result column="grade" property="grade"/>
-        </resultMap>
+    <!-- 开启二级缓存 -->
+    <!-- 注意：默认为 flushCache="true" useCache="true" -->
+    <!-- 1.自定义查询方法时，必须 flushCache="false" useCache="false"， -->
+    <!-- 2.更新，添加，删除时，必须 flushCache="true" useCache="true" 或者不添加 -->
+    <!-- 3.请务修改 cache-ref 中的配置 -->
+    <cache-ref namespace="com.project.csr.dao.RegulationScoreChannelMapper"/>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.project.csr.model.po.RegulationScoreChannelPo">
+        <result column="id" property="id"/>
+        <result column="valid_ind" property="validInd"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="period" property="period"/>
+        <result column="store_code" property="storeCode"/>
+        <result column="regulation_description" property="regulationDescription"/>
+        <result column="channel_code" property="channelCode"/>
+        <result column="score_type" property="scoreType"/>
+        <result column="score" property="score"/>
+        <result column="grade" property="grade"/>
+    </resultMap>
 
-        <!-- 通用查询结果列 -->
-        <sql id="Base_Column_List">
-                id,
-                valid_ind,
-                creator,
-                create_time,
-                updater,
-                update_time,
-            period, store_code, regulation_description, channel_code, score_type, score, grade
-        </sql>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        valid_ind,
+        creator,
+        create_time,
+        updater,
+        update_time,
+        period, store_code, regulation_description, channel_code, score_type, score, grade
+    </sql>
 
     <select id="findVoList" resultType="com.project.csr.model.vo.RegulationScoreChannelVo">
         SELECT
-            rsc.id,
-            rsc.period,
-            rsc.store_id,
-            e.id AS element_id,
-            e.`name` AS element_name,
-            rsc.regulation_id,
-            r.`description` AS regulation_description,
-            rsc.channel_id,
-            rsc.score_type,
-            rsc.score,
-            rsc.grade,
-            rsc.valid_ind,
-            rsc.creator,
-            rsc.create_time,
-            rsc.updater,
-            rsc.update_time
+        rsc.id,
+        rsc.period,
+        rsc.store_id,
+        e.id AS element_id,
+        e.`name` AS element_name,
+        rsc.regulation_id,
+        r.`description` AS regulation_description,
+        rsc.channel_id,
+        rsc.score_type,
+        rsc.score,
+        rsc.grade,
+        rsc.valid_ind,
+        rsc.creator,
+        rsc.create_time,
+        rsc.updater,
+        rsc.update_time
         FROM element e
         LEFT JOIN regulation r ON r.element_id = e.id
         LEFT JOIN regulation_score_channel rsc ON rsc.regulation_id = r.id
         WHERE rsc.period = #{period}
-          AND e.factor_id = #{factor_id}
-          AND rsc.store_id = #{store_id}
+        AND e.factor_id = #{factor_id}
+        AND rsc.store_id = #{store_id}
         ORDER BY e.id, r.id, rsc.channel_id, rsc.score_type
     </select>
 

@@ -21,5 +21,5 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class UserVo extends UserPo implements Serializable {
-	private String roleName;
+    private String roleName;
 }

@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("validate")
-@ApiModel(value="ValidatePo对象", description="验证表")
+@ApiModel(value = "ValidatePo对象", description = "验证表")
 public class ValidatePo extends BasePo {
 
     private static final long serialVersionUID = 1L;

@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("regulation_score")
-@ApiModel(value="RegulationScorePo对象", description="细则-分数关系表")
+@ApiModel(value = "RegulationScorePo对象", description = "细则-分数关系表")
 public class RegulationScorePo extends BasePo {
 
     private static final long serialVersionUID = 1L;

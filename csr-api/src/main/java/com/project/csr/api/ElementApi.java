@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
  * @version v1.0
+ * @since 2020-11-05
  */
 @Slf4j
-@Api(tags = {"ElementApi"},value = "因子要素表")
+@Api(tags = {"ElementApi"}, value = "因子要素表")
 @RestController
 @RequestMapping("/elementApi")
 public class ElementApi {
@@ -32,20 +32,20 @@ public class ElementApi {
 
     @ApiOperation(value = "查询分页因子要素表数据")
     @PostMapping(value = "/findListByPage")
-    public IPage<ElementPo> findListByPage(@RequestBody ElementVo elementVo){
+    public IPage<ElementPo> findListByPage(@RequestBody ElementVo elementVo) {
         return elementService.findListByPage(elementVo);
     }
 
     @ApiOperation(value = "根据id查询因子要素表数据")
     @GetMapping(value = "/findById/{id}")
-    public ElementVo findById(@PathVariable("id") String id){
+    public ElementVo findById(@PathVariable("id") String id) {
         ElementPo po = elementService.getById(id);
         return ConvertUtils.convert(po, ElementVo.class);
     }
 
     @ApiOperation(value = "新增因子要素表数据")
     @PostMapping(value = "/add")
-    public ElementVo add(@RequestBody ElementVo elementVo){
+    public ElementVo add(@RequestBody ElementVo elementVo) {
         ElementPo po = ConvertUtils.convert(elementVo, ElementPo.class);
         elementService.save(po);
         return ConvertUtils.convert(po, ElementVo.class);
@@ -53,13 +53,13 @@ public class ElementApi {
 
     @ApiOperation(value = "删除因子要素表数据")
     @DeleteMapping(value = "/delById/{id}")
-    public boolean delById(@PathVariable("id") String id){
+    public boolean delById(@PathVariable("id") String id) {
         return elementService.removeById(id);
     }
 
     @ApiOperation(value = "更新因子要素表数据")
     @PutMapping(value = "/update")
-    public ElementVo update(@RequestBody ElementVo elementVo){
+    public ElementVo update(@RequestBody ElementVo elementVo) {
         ElementPo po = ConvertUtils.convert(elementVo, ElementPo.class);
         elementService.updateById(po);
         return ConvertUtils.convert(po, ElementVo.class);

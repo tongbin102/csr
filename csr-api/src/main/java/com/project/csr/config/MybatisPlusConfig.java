@@ -39,9 +39,10 @@ public class MybatisPlusConfig {
     public ConfigurationCustomizer configurationCustomizer() {
         return configuration -> configuration.setUseDeprecatedExecutor(false);
     }
+
     @Bean
     @ConditionalOnMissingBean(name = "auditMetaObjectHandler")
-    public AuditMetaObjectHandler auditMetaObjectHandler(){
+    public AuditMetaObjectHandler auditMetaObjectHandler() {
         return new AuditMetaObjectHandler();
     }
 }

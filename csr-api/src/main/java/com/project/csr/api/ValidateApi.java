@@ -71,6 +71,9 @@ public class ValidateApi {
     @Value("${spring.mail.requestPerDay}")
     private long requestPerDay;
 
+    @Value("${spring.mail.interval}")
+    private long interval;
+
     @ApiOperation(value = "查询分页验证表数据")
     @PostMapping(value = "/findListByPage")
     public IPage<ValidatePo> findListByPage(@RequestBody ValidateVo validateVo) {
@@ -153,7 +156,7 @@ public class ValidateApi {
         return resultMap;
     }
 
-    @ApiOperation(value = "重置密码,邮箱中的token有效时间为5分钟,每天每个用户最多发10次邮件", notes = "重置密码")
+    @ApiOperation(value = "重置密码,邮箱中的token有效时间为20分钟,每天每个用户最多发10次邮件", notes = "重置密码")
     @PostMapping(value = "/resetPassword")
     public String resetPassword(@ApiParam("token") @RequestParam("token") String token,
                                 @ApiParam("密码") @RequestParam("password") String password,
@@ -166,7 +169,7 @@ public class ValidateApi {
         if (validatePo == null) {
             throw new ServiceException(ResCodeEnum.RESCODE_BAD_REQUEST, "该重置请求不存在");
         } else {
-            if (validateService.validateLimitation(validatePo.getEmail(), Long.MAX_VALUE, 5, token)) {
+            if (validateService.validateLimitation(validatePo.getEmail(), Long.MAX_VALUE, interval, token)) {
                 String username = validatePo.getUsername();
                 if (password.equals(confirmPassword)) {
                     UserPo userPo = new UserPo();

@@ -10,8 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("com.project.*.dao")
 public class CsrApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CsrApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CsrApiApplication.class, args);
+    }
 
 }

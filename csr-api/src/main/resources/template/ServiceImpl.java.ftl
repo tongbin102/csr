@@ -15,36 +15,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * <p>
- * ${table.comment!} 服务实现类
- * </p>
- *
- * @author ${author}
- * @version v1.0
- * @since ${date}
- */
+* <p>
+    * ${table.comment!} 服务实现类
+    * </p>
+*
+* @author ${author}
+* @version v1.0
+* @since ${date}
+*/
 @Service
 public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
-    @Autowired
-    private ${table.mapperName} ${table.mapperName?uncap_first};
+@Autowired
+private ${table.mapperName} ${table.mapperName?uncap_first};
 
-    @Override
-    public IPage<${entity}> findListByPage(${VO} ${Vo}) {
-        IPage<${entity}> page = new Page<>(${Vo}.getPageNo(), ${Vo}.getPageSize());
-        LambdaQueryWrapper<${entity}> wrapper = Wrappers.lambdaQuery();
-        // 查询条件
-        IPage<${entity}> selectPage = ${table.mapperName?uncap_first}.selectPage(page, wrapper);
-        return selectPage;
-    }
+@Override
+public IPage<${entity}> findListByPage(${VO} ${Vo}) {
+IPage<${entity}> page = new Page<>(${Vo}.getPageNo(), ${Vo}.getPageSize());
+LambdaQueryWrapper<${entity}> wrapper = Wrappers.lambdaQuery();
+// 查询条件
+IPage<${entity}> selectPage = ${table.mapperName?uncap_first}.selectPage(page, wrapper);
+return selectPage;
+}
 
-    @Override
-    public boolean prohibitById(String id) {
-        ${entity} po = new ${entity}();
-        po.setValidInd(false);
-        LambdaQueryWrapper<${entity}> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(${entity}::getId, id);
-        return ${table.mapperName?uncap_first}.update(po, wrapper) >= 1;
-    }
+@Override
+public boolean prohibitById(String id) {
+${entity} po = new ${entity}();
+po.setValidInd(false);
+LambdaQueryWrapper<${entity}> wrapper = Wrappers.lambdaQuery();
+wrapper.eq(${entity}::getId, id);
+return ${table.mapperName?uncap_first}.update(po, wrapper) >= 1;
+}
 }
 

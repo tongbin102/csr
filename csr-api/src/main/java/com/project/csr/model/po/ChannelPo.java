@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("channel")
-@ApiModel(value="ChannelPo对象", description="渠道表")
+@ApiModel(value = "ChannelPo对象", description = "渠道表")
 public class ChannelPo extends BasePo {
 
     private static final long serialVersionUID = 1L;

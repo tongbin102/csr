@@ -161,7 +161,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ScorePo> implemen
             } else if (isRole(userRole, DictionaryType.ROLE_NAME_REGION) || isRole(userRole, DictionaryType.ROLE_NAME_AREA)) {
                 String cityCodes = userStoreService.findVoByUserCode(username).stream().map(UserStoreVo::getCityCode).distinct().collect(Collectors.joining(","));
                 params.put("permission_codes", cityCodes.split(","));
-            } else{
+            } else {
                 return null;
             }
             return scoreMapper.findCityVoList(params);

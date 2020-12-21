@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
         return resultFormat(ex.getResCodeEnum(), ex);
     }
 
-//    //运行时异常
+    //    //运行时异常
 //    @ExceptionHandler(RuntimeException.class)
 //    public BaseResponse runtimeExceptionHandler(RuntimeException ex) {
 //        return resultFormat(1, ex);
@@ -110,7 +110,7 @@ public class GlobalExceptionHandler {
 //        return resultFormat(13, ex);
 //    }
     @ExceptionHandler({ServiceException.class})
-    public BaseResponse serviceException(ServiceException ex){
+    public BaseResponse serviceException(ServiceException ex) {
         return resultFormat(ex.getResCodeEnum(), ex);
     }
 

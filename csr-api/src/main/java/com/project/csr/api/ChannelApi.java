@@ -21,11 +21,11 @@ import java.util.List;
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
  * @version v1.0
+ * @since 2020-11-05
  */
 @Slf4j
-@Api(tags = {"ChannelApi"},value = "渠道表")
+@Api(tags = {"ChannelApi"}, value = "渠道表")
 @RestController
 @RequestMapping("/channelApi")
 public class ChannelApi {
@@ -35,20 +35,20 @@ public class ChannelApi {
 
     @ApiOperation(value = "查询分页渠道表数据")
     @PostMapping(value = "/findListByPage")
-    public IPage<ChannelPo> findListByPage(@RequestBody ChannelVo channelVo){
+    public IPage<ChannelPo> findListByPage(@RequestBody ChannelVo channelVo) {
         return channelService.findListByPage(channelVo);
     }
 
     @ApiOperation(value = "根据id查询渠道表数据")
     @GetMapping(value = "/findById/{id}")
-    public ChannelVo findById(@PathVariable("id") String id){
+    public ChannelVo findById(@PathVariable("id") String id) {
         ChannelPo po = channelService.getById(id);
         return ConvertUtils.convert(po, ChannelVo.class);
     }
 
     @ApiOperation(value = "新增渠道表数据")
     @PostMapping(value = "/add")
-    public ChannelVo add(@RequestBody ChannelVo channelVo){
+    public ChannelVo add(@RequestBody ChannelVo channelVo) {
         ChannelPo po = ConvertUtils.convert(channelVo, ChannelPo.class);
         channelService.save(po);
         return ConvertUtils.convert(po, ChannelVo.class);
@@ -56,13 +56,13 @@ public class ChannelApi {
 
     @ApiOperation(value = "删除渠道表数据")
     @DeleteMapping(value = "/delById/{id}")
-    public boolean delById(@PathVariable("id") String id){
+    public boolean delById(@PathVariable("id") String id) {
         return channelService.removeById(id);
     }
 
     @ApiOperation(value = "更新渠道表数据")
     @PutMapping(value = "/update")
-    public ChannelVo update(@RequestBody ChannelVo channelVo){
+    public ChannelVo update(@RequestBody ChannelVo channelVo) {
         ChannelPo po = ConvertUtils.convert(channelVo, ChannelPo.class);
         channelService.updateById(po);
         return ConvertUtils.convert(po, ChannelVo.class);
@@ -76,13 +76,13 @@ public class ChannelApi {
 
     @ApiOperation("获取所有渠道列表")
     @GetMapping("/findAll")
-    public List<ChannelPo> findAll(){
+    public List<ChannelPo> findAll() {
         return channelService.list();
     }
 
     @ApiOperation("获取所有渠道列表")
     @GetMapping("/findListByCtype")
-    public List<ChannelPo> findListByCtype(@RequestParam("ctype")Integer ctype){
+    public List<ChannelPo> findListByCtype(@RequestParam("ctype") Integer ctype) {
         return channelService.findListByCtype(ctype);
     }
 

@@ -10,14 +10,14 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * <p>
- * ${table.comment!} 信息
- * </p>
- *
- * @author ${author}
- * @version v1.0
- * @since ${date}
- */
+* <p>
+    * ${table.comment!} 信息
+    * </p>
+*
+* @author ${author}
+* @version v1.0
+* @since ${date}
+*/
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)

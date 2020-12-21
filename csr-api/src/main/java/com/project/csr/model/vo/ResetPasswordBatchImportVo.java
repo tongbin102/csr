@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ResetPasswordBatchImportVo {
-    
+
     private String username;
 
 }

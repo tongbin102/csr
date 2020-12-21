@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-24
  * @version v1.0
+ * @since 2020-11-24
  */
 @Slf4j
-@Api(tags = {"UserStoreApi"},value = "用户-区域/店关系表")
+@Api(tags = {"UserStoreApi"}, value = "用户-区域/店关系表")
 @RestController
 @RequestMapping("/userStoreApi")
 public class UserStoreApi {
@@ -32,20 +32,20 @@ public class UserStoreApi {
 
     @ApiOperation(value = "查询分页用户-区域/店关系表数据")
     @PostMapping(value = "/findListByPage")
-    public IPage<UserStorePo> findListByPage(@RequestBody UserStoreVo userStoreVo){
+    public IPage<UserStorePo> findListByPage(@RequestBody UserStoreVo userStoreVo) {
         return userStoreService.findListByPage(userStoreVo);
     }
 
     @ApiOperation(value = "根据id查询用户-区域/店关系表数据")
     @GetMapping(value = "/findById/{id}")
-    public UserStoreVo findById(@PathVariable("id") String id){
+    public UserStoreVo findById(@PathVariable("id") String id) {
         UserStorePo po = userStoreService.getById(id);
         return ConvertUtils.convert(po, UserStoreVo.class);
     }
 
     @ApiOperation(value = "新增用户-区域/店关系表数据")
     @PostMapping(value = "/add")
-    public UserStoreVo add(@RequestBody UserStoreVo userStoreVo){
+    public UserStoreVo add(@RequestBody UserStoreVo userStoreVo) {
         UserStorePo po = ConvertUtils.convert(userStoreVo, UserStorePo.class);
         userStoreService.save(po);
         return ConvertUtils.convert(po, UserStoreVo.class);
@@ -53,13 +53,13 @@ public class UserStoreApi {
 
     @ApiOperation(value = "删除用户-区域/店关系表数据")
     @DeleteMapping(value = "/delById/{id}")
-    public boolean delById(@PathVariable("id") String id){
+    public boolean delById(@PathVariable("id") String id) {
         return userStoreService.removeById(id);
     }
 
     @ApiOperation(value = "更新用户-区域/店关系表数据")
     @PutMapping(value = "/update")
-    public UserStoreVo update(@RequestBody UserStoreVo userStoreVo){
+    public UserStoreVo update(@RequestBody UserStoreVo userStoreVo) {
         UserStorePo po = ConvertUtils.convert(userStoreVo, UserStorePo.class);
         userStoreService.updateById(po);
         return ConvertUtils.convert(po, UserStoreVo.class);

@@ -2,45 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.csr.dao.UserMapper">
 
-        <!-- 开启二级缓存 -->
-        <!-- 注意：默认为 flushCache="true" useCache="true" -->
-        <!-- 1.自定义查询方法时，必须 flushCache="false" useCache="false"， -->
-        <!-- 2.更新，添加，删除时，必须 flushCache="true" useCache="true" 或者不添加 -->
-        <!-- 3.请务修改 cache-ref 中的配置 -->
-        <cache-ref namespace="com.project.csr.dao.UserMapper"/>
-        <!-- 通用查询映射结果 -->
-        <resultMap id="BaseResultMap" type="com.project.csr.model.po.UserPo">
-                <result column="id" property="id"/>
-                <result column="valid_ind" property="validInd"/>
-                <result column="creator" property="creator"/>
-                <result column="create_time" property="createTime"/>
-                <result column="updater" property="updater"/>
-                <result column="update_time" property="updateTime"/>
-                    <result column="username" property="username"/>
-                    <result column="name" property="name"/>
-                    <result column="password" property="password"/>
-                    <result column="role_id" property="roleId"/>
-                    <result column="ref" property="ref"/>
-                    <result column="sex" property="sex"/>
-                    <result column="email" property="email"/>
-                    <result column="address" property="address"/>
-                    <result column="birth_date" property="birthDate"/>
-                    <result column="phone" property="phone"/>
-                    <result column="icon_url" property="iconUrl"/>
-                    <result column="description" property="description"/>
-                    <result column="change_flag" property="changeFlag"/>
-                    <result column="is_locked" property="isLocked"/>
-        </resultMap>
+    <!-- 开启二级缓存 -->
+    <!-- 注意：默认为 flushCache="true" useCache="true" -->
+    <!-- 1.自定义查询方法时，必须 flushCache="false" useCache="false"， -->
+    <!-- 2.更新，添加，删除时，必须 flushCache="true" useCache="true" 或者不添加 -->
+    <!-- 3.请务修改 cache-ref 中的配置 -->
+    <cache-ref namespace="com.project.csr.dao.UserMapper"/>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.project.csr.model.po.UserPo">
+        <result column="id" property="id"/>
+        <result column="valid_ind" property="validInd"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="username" property="username"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="role_id" property="roleId"/>
+        <result column="ref" property="ref"/>
+        <result column="sex" property="sex"/>
+        <result column="email" property="email"/>
+        <result column="address" property="address"/>
+        <result column="birth_date" property="birthDate"/>
+        <result column="phone" property="phone"/>
+        <result column="icon_url" property="iconUrl"/>
+        <result column="description" property="description"/>
+        <result column="change_flag" property="changeFlag"/>
+        <result column="is_locked" property="isLocked"/>
+    </resultMap>
 
-        <!-- 通用查询结果列 -->
-        <sql id="Base_Column_List">
-                id,
-                valid_ind,
-                creator,
-                create_time,
-                updater,
-                update_time,
-            username, name, password, role_id, ref, sex, email, address, birth_date, phone, icon_url, description, change_flag, is_locked
-        </sql>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        valid_ind,
+        creator,
+        create_time,
+        updater,
+        update_time,
+        username, name, password, role_id, ref, sex, email, address, birth_date, phone, icon_url, description,
+        change_flag, is_locked
+    </sql>
 
 </mapper>

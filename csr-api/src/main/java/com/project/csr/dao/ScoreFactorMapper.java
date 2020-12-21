@@ -20,6 +20,6 @@ import java.util.Map;
 @CacheNamespace(implementation = MybatisRedisCache.class)
 public interface ScoreFactorMapper extends BaseMapper<ScoreFactorPo> {
 
-	List<ScoreFactorVo> findVoList(Map<String, Object> params);
+    List<ScoreFactorVo> findVoList(Map<String, Object> params);
 
 }

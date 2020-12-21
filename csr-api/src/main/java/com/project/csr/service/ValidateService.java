@@ -70,6 +70,7 @@ public interface ValidateService extends IService<ValidatePo> {
 
     /**
      * 插入一条记录，userid，email属性来自user表，token由UUID生成
+     *
      * @param validatePo
      * @param userPo
      * @param token

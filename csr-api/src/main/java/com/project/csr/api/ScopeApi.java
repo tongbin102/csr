@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author bin.tong
- * @since 2020-11-05
  * @version v1.0
+ * @since 2020-11-05
  */
 @Slf4j
-@Api(tags = {"ScopeApi"},value = "范围表")
+@Api(tags = {"ScopeApi"}, value = "范围表")
 @RestController
 @RequestMapping("/scopeApi")
 public class ScopeApi {
@@ -32,20 +32,20 @@ public class ScopeApi {
 
     @ApiOperation(value = "查询分页范围表数据")
     @PostMapping(value = "/findListByPage")
-    public IPage<ScopePo> findListByPage(@RequestBody ScopeVo scopeVo){
+    public IPage<ScopePo> findListByPage(@RequestBody ScopeVo scopeVo) {
         return scopeService.findListByPage(scopeVo);
     }
 
     @ApiOperation(value = "根据id查询范围表数据")
     @GetMapping(value = "/findById/{id}")
-    public ScopeVo findById(@PathVariable("id") String id){
+    public ScopeVo findById(@PathVariable("id") String id) {
         ScopePo po = scopeService.getById(id);
         return ConvertUtils.convert(po, ScopeVo.class);
     }
 
     @ApiOperation(value = "新增范围表数据")
     @PostMapping(value = "/add")
-    public ScopeVo add(@RequestBody ScopeVo scopeVo){
+    public ScopeVo add(@RequestBody ScopeVo scopeVo) {
         ScopePo po = ConvertUtils.convert(scopeVo, ScopePo.class);
         scopeService.save(po);
         return ConvertUtils.convert(po, ScopeVo.class);
@@ -53,13 +53,13 @@ public class ScopeApi {
 
     @ApiOperation(value = "删除范围表数据")
     @DeleteMapping(value = "/delById/{id}")
-    public boolean delById(@PathVariable("id") String id){
+    public boolean delById(@PathVariable("id") String id) {
         return scopeService.removeById(id);
     }
 
     @ApiOperation(value = "更新范围表数据")
     @PutMapping(value = "/update")
-    public ScopeVo update(@RequestBody ScopeVo scopeVo){
+    public ScopeVo update(@RequestBody ScopeVo scopeVo) {
         ScopePo po = ConvertUtils.convert(scopeVo, ScopePo.class);
         scopeService.updateById(po);
         return ConvertUtils.convert(po, ScopeVo.class);

@@ -22,7 +22,7 @@ import java.util.Objects;
 @Data
 // @EqualsAndHashCode(callSuper = true)
 @TableName("factor")
-@ApiModel(value="FactorPo对象", description="因子表")
+@ApiModel(value = "FactorPo对象", description = "因子表")
 public class FactorPo extends BasePo {
 
     private static final long serialVersionUID = 1L;

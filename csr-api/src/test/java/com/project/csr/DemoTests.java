@@ -28,9 +28,9 @@ public class DemoTests {
     }
 
     @Test
-    public void testGetChannelId(){
+    public void testGetChannelId() {
         String questionSeriesNo = "F1-1";
-        log.info(questionSeriesNo.substring(0,1));
+        log.info(questionSeriesNo.substring(0, 1));
     }
 
 }

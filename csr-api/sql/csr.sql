@@ -648,7 +648,7 @@ CREATE TABLE `user`
     `icon_url`    varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户头像',
     `description` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户描述',
     `change_flag` int(1)                             DEFAULT 0 DEFAULT NULL COMMENT '是否需要修改密码：0需要；1不需要',
-    `is_locked`    int(1)                             DEFAULT 0 DEFAULT NULL COMMENT '是否锁定',
+    `is_locked`   int(1)                             DEFAULT 0 DEFAULT NULL COMMENT '是否锁定',
     `valid_ind`   bit(1)                             DEFAULT NULL COMMENT '有效标识',
     `creator`     varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '创建人',
     `create_time` datetime                           DEFAULT NULL COMMENT '创建时间',

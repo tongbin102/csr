@@ -79,13 +79,13 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
                 //     authorities = jwtTokenUtils.getRolesFromToken(rolesToken);
                 //     userDetails = new JwtUserDetails(username, false, authorities);
                 // } else {
-                    // 提取数据，并存入缓存
-                    userDetails = userDetailsService.loadUserByUsername(username);
-                    authorities = (List<GrantedAuthority>) userDetails.getAuthorities();
-                    //生成三个token，只有用一个
-                    String newRoleToken = jwtTokenUtils.generateToken(userDetails).get(jwtTokenUtils.getRoleTokenKey());
-                    redisUtils.setString(jwtTokenUtils.getRoleTokenKey(username), newRoleToken);
-                    redisUtils.expire(jwtTokenUtils.getRoleTokenKey(username),jwtProperties.getRolesExpiration());
+                // 提取数据，并存入缓存
+                userDetails = userDetailsService.loadUserByUsername(username);
+                authorities = (List<GrantedAuthority>) userDetails.getAuthorities();
+                //生成三个token，只有用一个
+                String newRoleToken = jwtTokenUtils.generateToken(userDetails).get(jwtTokenUtils.getRoleTokenKey());
+                redisUtils.setString(jwtTokenUtils.getRoleTokenKey(username), newRoleToken);
+                redisUtils.expire(jwtTokenUtils.getRoleTokenKey(username), jwtProperties.getRolesExpiration());
                 // }
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

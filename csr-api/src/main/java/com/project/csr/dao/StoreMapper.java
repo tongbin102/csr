@@ -8,7 +8,7 @@ import com.project.csr.cache.MybatisRedisCache;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author bin.tong

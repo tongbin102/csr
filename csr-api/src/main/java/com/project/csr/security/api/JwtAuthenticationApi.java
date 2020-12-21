@@ -86,7 +86,7 @@ public class JwtAuthenticationApi {
             throw new GlobalException(ResCodeEnum.RESCODE_BAD_REQUEST);
         }
         redisUtils.setString(jwtTokenUtils.getAccessTokenKey(username), newAccessToken);
-        redisUtils.expire(jwtTokenUtils.getAccessTokenKey(username),jwtProperties.getAccessExpiration());
+        redisUtils.expire(jwtTokenUtils.getAccessTokenKey(username), jwtProperties.getAccessExpiration());
         return newAccessToken;
     }
 
@@ -106,8 +106,8 @@ public class JwtAuthenticationApi {
         }
     }
 
-    @DeleteMapping(value="/token/{token}")
-    public void deleteToken(@PathVariable(value="token")String token){
+    @DeleteMapping(value = "/token/{token}")
+    public void deleteToken(@PathVariable(value = "token") String token) {
         if (token == null) {
             throw new ServiceException(ResCodeEnum.RESCODE_BAD_REQUEST, "令牌不能为空");
         }

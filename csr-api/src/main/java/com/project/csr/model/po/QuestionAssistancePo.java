@@ -22,7 +22,7 @@ import java.util.Objects;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("question_assistance")
-@ApiModel(value="QuestionAssistancePo对象", description="服务助手-题目明细表")
+@ApiModel(value = "QuestionAssistancePo对象", description = "服务助手-题目明细表")
 public class QuestionAssistancePo extends BasePo {
 
     private static final long serialVersionUID = 1L;
