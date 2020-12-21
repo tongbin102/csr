@@ -2,28 +2,34 @@ package com.project.csr.api;
 
 import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.project.csr.common.enums.ResCodeEnum;
 import com.project.csr.common.exceptions.ServiceException;
 import com.project.csr.constants.CsrConstant;
 import com.project.csr.model.po.UserPo;
+import com.project.csr.model.po.ValidatePo;
 import com.project.csr.model.vo.ValidateVo;
 import com.project.csr.service.UserService;
+import com.project.csr.service.ValidateService;
+import com.project.csr.utils.ConvertUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.project.csr.service.ValidateService;
-import com.project.csr.utils.ConvertUtils;
-import com.project.csr.model.po.ValidatePo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
@@ -122,7 +128,8 @@ public class ValidateApi {
             validateService.insertNewResetRecord(validatePo, userPo, UUID.randomUUID().toString());
             // 设置邮件内容
             // String appUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            String appUrl = request.getScheme() + "://" + request.getServerName() + ":8000";
+//            String appUrl = request.getScheme() + "://" + request.getServerName() + ":8000";
+            String appUrl = "http://wlcsi.sgmwsales.com:8443";
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             // multipart模式
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
