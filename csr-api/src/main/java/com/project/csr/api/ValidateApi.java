@@ -173,7 +173,8 @@ public class ValidateApi {
                 String username = validatePo.getUsername();
                 if (password.equals(confirmPassword)) {
                     UserPo userPo = new UserPo();
-                    userPo.setPassword(encoder.encode(CsrConstant.DEFAULT_RAW_PASSWORD));
+                    userPo.setPassword(encoder.encode(password));
+                    // userPo.setPassword(encoder.encode(CsrConstant.DEFAULT_RAW_PASSWORD));
                     // userPo.setUsername(username);
                     UserPo tmpUserPo = userService.findByUsername(username);
                     if (null == tmpUserPo) {

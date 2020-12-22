@@ -260,8 +260,7 @@ public class ExcelImportServiceImpl implements ExcelImportService {
             } else {
                 // 用户名已存在则更新
                 UserPo userPo = list.get(0);
-                if (StringUtils.isNotEmpty(userPo.getUsername()) && !userPo.getUsername().equals(userImportVo.getName())
-                        && StringUtils.isNotEmpty(userPo.getEmail()) && !userPo.getEmail().equals(userImportVo.getEmail())) {
+                if (!userPo.getUsername().equals(userImportVo.getName()) && !userPo.getEmail().equals(userImportVo.getEmail())) {
                     userPo.setUsername(userImportVo.getName());
                     userPo.setEmail(userImportVo.getEmail());
                     updateUserPoList.add(userPo);
