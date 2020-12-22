@@ -40,14 +40,29 @@
         </a-row>
         <a-row v-if="questionSurvey.scoreItem == '综合分'">
           <a-col :xs="24" :sm="16">
-            <a-table :columns="regulationColumns1" :data-source="[ questionSurvey ]" :pagination="false" bordered>
+            <a-table
+              id="questionTable"
+              :table-layout="tableLayout"
+              :columns="regulationColumns1"
+              :data-source="[ questionSurvey ]"
+              :pagination="false"
+              bordered>
             </a-table>
           </a-col>
         </a-row>
         <a-row v-if="questionSurvey.scoreItem != '综合分'">
           <a-col :xs="24" :sm="16">
-            <a-table table-layout="fixed" :columns="regulationColumns2" :data-source="[ questionSurvey ]" :pagination="false" bordered>
+            <a-table
+              id="questionTable"
+              :table-layout="tableLayout"
+              :columns="regulationColumns2"
+              :data-source="[ questionSurvey ]"
+              :pagination="false"
+              bordered>
             </a-table>
+            <a-row>
+              <a-col :span="24">备注：1代表选项A、2代表选项B、3代表选项C、4代表选项D、5代表选项E</a-col>
+            </a-row>
           </a-col>
         </a-row>
       </div>
@@ -66,93 +81,128 @@ export default {
       {
         title: 'A',
         dataIndex: 'answer1',
-        key: 'answer1'
+        key: 'answer1',
+        align: 'center',
+        width: '5%'
       },
       {
         title: 'B',
         dataIndex: 'answer2',
-        key: 'answer2'
+        key: 'answer2',
+        align: 'center',
+        width: '5%'
       },
       {
         title: 'C',
         dataIndex: 'answer3',
-        key: 'answer3'
+        key: 'answer3',
+        align: 'center',
+        width: '5%'
       },
       {
         title: 'D',
         dataIndex: 'answer4',
-        key: 'answer4'
+        key: 'answer4',
+        align: 'center',
+        width: '5%'
       },
       {
         title: 'E',
         dataIndex: 'answer5',
-        key: 'answer5'
+        key: 'answer5',
+        align: 'center',
+        width: '5%'
       },
       {
         title: '计分答案项',
         dataIndex: 'scoreItem',
-        key: 'scoreItem'
+        key: 'scoreItem',
+        align: 'center',
+        width: '20%'
       },
       {
         title: '公式号',
         dataIndex: 'formula',
-        key: 'formula'
+        key: 'formula',
+        align: 'center',
+        width: '15%'
       },
       {
         title: '优秀',
         dataIndex: 'excellent',
-        key: 'excellent'
+        key: 'excellent',
+        align: 'center',
+        width: '10%'
       },
       {
         title: '优良',
         dataIndex: 'good',
-        key: 'good'
+        key: 'good',
+        align: 'center',
+        width: '10%'
       },
       {
         title: '达标',
         dataIndex: 'standard',
-        key: 'standard'
+        key: 'standard',
+        align: 'center',
+        width: '10%'
       },
       {
         title: '薄弱',
         dataIndex: 'weak',
-        key: 'weak'
+        key: 'weak',
+        align: 'center',
+        width: '10%'
       }
     ];
     const regulationColumns2 = [
       {
         title: '计分答案项',
         dataIndex: 'scoreItem',
-        key: 'scoreItem'
+        key: 'scoreItem',
+        align: 'center',
+        width: '25%'
       },
       {
         title: '公式号',
         dataIndex: 'formula',
-        key: 'formula'
+        key: 'formula',
+        align: 'center',
+        width: '15%'
       },
       {
         title: '优秀',
         dataIndex: 'excellent',
-        key: 'excellent'
+        key: 'excellent',
+        align: 'center',
+        width: '15%'
       },
       {
         title: '优良',
         dataIndex: 'good',
-        key: 'good'
+        key: 'good',
+        align: 'center',
+        width: '15%'
       },
       {
         title: '达标',
         dataIndex: 'standard',
-        key: 'standard'
+        key: 'standard',
+        align: 'center',
+        width: '15%'
       },
       {
         title: '薄弱',
         dataIndex: 'weak',
-        key: 'weak'
+        key: 'weak',
+        align: 'center',
+        width: '15%'
       }
     ];
     return {
       top: 0,
+      tableLayout: 'fixed',
       title: '',
       period: '',
       storeCode: '',

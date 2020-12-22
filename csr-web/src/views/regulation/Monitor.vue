@@ -142,6 +142,9 @@ export default {
           ];
         }
       });
+    },
+    handleAffixChange (affixed) {
+      console.log(affixed);
     }
   }
 };

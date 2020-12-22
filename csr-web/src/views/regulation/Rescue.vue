@@ -102,6 +102,9 @@ export default {
           // console.log(this.questionRescue);
         }
       });
+    },
+    handleAffixChange (affixed) {
+      console.log(affixed);
     }
   }
 };

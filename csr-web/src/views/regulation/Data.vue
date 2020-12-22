@@ -96,6 +96,9 @@ export default {
           // console.log(this.questionData);
         }
       });
+    },
+    handleAffixChange (affixed) {
+      console.log(affixed);
     }
   }
 };

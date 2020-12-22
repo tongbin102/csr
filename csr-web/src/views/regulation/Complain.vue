@@ -80,6 +80,9 @@ export default {
       getQuestionComplainList(params).then(res => {
         this.questionComplainList = res.resData;
       });
+    },
+    handleAffixChange (affixed) {
+      console.log(affixed);
     }
   }
 };
