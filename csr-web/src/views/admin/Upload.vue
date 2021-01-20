@@ -151,6 +151,10 @@ export default {
       {
         title: '8. TSS-8. 数据准确性扣分规则',
         status: ''
+      },
+      {
+        title: '9. TSS-13 缺值配置',
+        status: ''
       }
     ];
     const scoreFileData = [
@@ -258,6 +262,17 @@ export default {
           this.configFileData[5].status = 'done';
           this.configFileData[6].status = 'done';
           this.configFileData[7].status = 'done';
+        }
+      });
+      // 导入缺省值配置
+      this.configFileData[8].status = 'loading';
+      this.$http.post('/fileApi/importDefaultSettings', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => {
+        if (res.resCode === 200) {
+          this.configFileData[8].status = 'done';
         }
       });
     },

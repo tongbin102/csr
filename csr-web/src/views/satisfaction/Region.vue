@@ -22,13 +22,13 @@
           <span slot="scoreTitle"></span>
           <template slot="rankCountry" slot-scope="text, record">
             <span>{{ record.rankCountry }}</span>
-            <span v-if="record.rankCountryDiff !== 0"><a-icon :type="record.rankCountryDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankCountryDiff > 0 ? record.rankCountryDiff: record.rankCountryDiff * (-1) }}</span>
+            <span v-if="record.rankCountryDiff !== 0 && record.score != record.scoreDiff"><a-icon :type="record.rankCountryDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankCountryDiff > 0 ? record.rankCountryDiff: record.rankCountryDiff * (-1) }}</span>
           </template>
           <template slot="rankScope" slot-scope="text, record">
             <span>{{ record.rankScope }}</span>
-            <span v-if="record.rankScopeDiff !== 0"><a-icon :type="record.rankScopeDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankScopeDiff > 0 ? record.rankScopeDiff : record.rankScopeDiff * (-1) }}</span>
+            <span v-if="record.rankScopeDiff !== 0 && record.score != record.scoreDiff"><a-icon :type="record.rankScopeDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.rankScopeDiff > 0 ? record.rankScopeDiff : record.rankScopeDiff * (-1) }}</span>
           </template>
-          <template slot="diff" slot-scope="text, record">
+          <template slot="diff" slot-scope="text, record" v-if="record.score != record.scoreDiff">
             <span v-if="record.scoreDiff !== 0"><a-icon :type="record.scoreDiff > 0 ? 'arrow-up' : 'arrow-down'"/>{{ record.scoreDiff > 0 ? record.scoreDiff : record.scoreDiff * (-1) }}分</span>
             <span v-else>持平</span>
           </template>
@@ -105,9 +105,13 @@ export default {
         align: 'center',
         scopedSlots: { customRender: 'rankCountry' },
         customCell: function (record, index) {
+          let color = '';
+          if (record.score - record.scoreDiff !== 0) {
+            color = record.rankCountryDiff > 0 ? '#31D582' : record.rankCountryDiff < 0 ? '#FF4B4B' : '';
+          }
           return {
             style: {
-              color: record.rankCountryDiff > 0 ? '#31D582' : record.rankCountryDiff < 0 ? '#FF4B4B' : ''
+              color: color
             }
           };
         }
@@ -120,9 +124,13 @@ export default {
         align: 'center',
         scopedSlots: { customRender: 'rankScope' },
         customCell: function (record, index) {
+          let color = '';
+          if (record.score - record.scoreDiff !== 0) {
+            color = record.score === record.scoreDiff ? '' : (record.rankScopeDiff > 0 ? '#31D582' : record.rankScopeDiff < 0 ? '#FF4B4B' : '');
+          }
           return {
             style: {
-              color: record.rankScopeDiff > 0 ? '#31D582' : record.rankScopeDiff < 0 ? '#FF4B4B' : ''
+              color: color
             }
           };
         }
@@ -135,9 +143,13 @@ export default {
         align: 'center',
         scopedSlots: { customRender: 'diff' },
         customCell: function (record, index) {
+          let color = '';
+          if (record.score - record.scoreDiff !== 0) {
+            color = record.score === record.scoreDiff ? '' : (record.scoreDiff > 0 ? '#31D582' : record.scoreDiff < 0 ? '#FF4B4B' : '');
+          }
           return {
             style: {
-              color: record.scoreDiff > 0 ? '#31D582' : record.scoreDiff < 0 ? '#FF4B4B' : ''
+              color: color
             }
           };
         }

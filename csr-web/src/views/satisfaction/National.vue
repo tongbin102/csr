@@ -22,11 +22,11 @@
           </template>
           <span slot="scoreTitle"></span>
           <template slot="rankCountry" slot-scope="text, record, index" v-if="index !== 0">
-            <span v-if="record.rankCountryDiff > 0">{{ record.rankCountry + ' 上升+' + record.rankCountryDiff }}</span>
-            <span v-if="record.rankCountryDiff === 0">{{ record.rankCountry + ' 持平' }}</span>
-            <span v-if="record.rankCountryDiff < 0">{{ record.rankCountry + ' 下降' + record.rankCountryDiff }}</span>
+            <span v-if="record.rankCountryDiff > 0">{{ record.rankCountry }}<div v-if="record.score != record.scoreDiff">{{ ' 上升+' + record.rankCountryDiff }}</div></span>
+            <span v-if="record.rankCountryDiff === 0">{{ record.rankCountry }}<div v-if="record.score != record.scoreDiff"> 持平</div></span>
+            <span v-if="record.rankCountryDiff < 0">{{ record.rankCountry }}<div v-if="record.score != record.scoreDiff">{{ ' 下降' + record.rankCountryDiff }}</div></span>
           </template>
-          <template slot="diff" slot-scope="text, record">
+          <template slot="diff" slot-scope="text, record" v-if="record.score != record.scoreDiff">
             <span v-if="record.scoreDiff > 0">{{ '提高' + record.scoreDiff + '分' }}</span>
             <span v-if="record.scoreDiff === 0">持平</span>
             <span v-if="record.scoreDiff < 0">{{ '降低' + record.scoreDiff + '分' }}</span>
@@ -97,9 +97,13 @@ export default {
         align: 'center',
         scopedSlots: { customRender: 'rankCountry' },
         customCell: function (record, index) {
+          let color = '';
+          if (record.score - record.scoreDiff !== 0) {
+            color = record.rankCountryDiff > 0 ? '#31D582' : record.rankCountryDiff < 0 ? '#FF4B4B' : '';
+          }
           return {
             style: {
-              color: record.rankCountryDiff > 0 ? '#31D582' : record.rankCountryDiff < 0 ? '#FF4B4B' : ''
+              color: color
             }
           };
         }
@@ -112,9 +116,13 @@ export default {
         align: 'center',
         scopedSlots: { customRender: 'diff' },
         customCell: function (record, index) {
+          let color = '';
+          if (record.score - record.scoreDiff !== 0) {
+            color = record.scoreDiff > 0 ? '#31D582' : record.scoreDiff < 0 ? '#FF4B4B' : '';
+          }
           return {
             style: {
-              color: record.scoreDiff > 0 ? '#31D582' : record.scoreDiff < 0 ? '#FF4B4B' : ''
+              color: color
             }
           };
         }
