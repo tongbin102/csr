@@ -26,6 +26,13 @@ public class FileController {
     @Autowired
     private ExcelImportService importService;
 
+	@ApiOperation("导入缺省值配置")
+	@PostMapping("/importDefaultSettings")
+	public String importDefaultSettings(@RequestParam("file") MultipartFile file) throws IOException {
+		importService.importDefaultSettings(file);
+		return "success";
+	}
+
     @ApiOperation("导入用户及店信息")
     @PostMapping("/importUsersAndStores")
     public String importUsersAndStores(@RequestParam("file") MultipartFile file) throws IOException {
